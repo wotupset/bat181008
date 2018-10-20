@@ -1,2 +1,1 @@
-# bat181008
-bat181008
+https://wotupset.github.io/bat181008/
