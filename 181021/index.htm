@@ -45,8 +45,8 @@ function poi_getjs(){
   });
 }
 function poi_ajax(){
-  $( document ).ajaxComplete(function() {
-    console.log( 'ajaxComplete' );
+  $(document).ajaxComplete(function() {
+    //console.log( 'ajaxComplete' );
   });
   $(document).ajaxStop(function() {
     console.log( 'ajaxStop' );
@@ -62,7 +62,7 @@ function poi3(qq,pp){
       $("#ddd").append( $(data.html)[0] );
     },
     complete:function(data){
-      console.log( pp,qq.length,qq[pp] );
+      //console.log( pp,qq.length,qq[pp] );
       if(pp<(qq.length-1)){
         pp++;
         poi3(qq,pp);
@@ -71,9 +71,18 @@ function poi3(qq,pp){
       }
     },
   });
-  jqxhr.done(function(data){
-      //console.log( 'jqxhr.done' );
+  jqxhr.done(function(a,b,c){
+    //console.log( a,b,c );
+    //console.log( pp,qq.length,qq[pp] );
+	$("pre").html("<b>("+pp+"/"+qq.length+") "+b+" "+qq[pp]+"</b>");
+    //console.log( 'jqxhr.done' );
   });
+  jqxhr.fail(function(a,b,c){
+    console.log( a,b,c );
+  	throw "錯誤error";
+	//throw new Error("錯誤error");
+  });
+  
 }
 function poi2(){
   var qq=$("pre").text();
