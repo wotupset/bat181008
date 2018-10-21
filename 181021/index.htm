@@ -7,21 +7,23 @@ body{
 </style>
 
 <script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+  console.log( 'DOMContentLoaded' );
+  var file='https://code.jquery.com/jquery-3.3.1.min.js';
+  var jsElm = document.createElement("script");
+  jsElm.type = "application/javascript";
+  jsElm.src = file;
+  jsElm.onload = function(e){
+    console.log('jsElm.onload');
+	//id01.insertAdjacentHTML('afterbegin', 'jquery讀取成功');
+	poi();
+  };
+  //document.body.appendChild(jsElm);
+  document.head.appendChild(jsElm);
+});
 
-try{
-  $(document).ready(function() {
-  	console.log('document.ready');
-    time = new Date();
-	//
-    poi_ajax();
-	//poi();
-    poi2();
-  });
-}catch(err){
-  	console.log( ''+err.message );
-}finally{
-    console.log( 'try-catch-finally' );
-}
+
+
 
 function poi0(){}
 function poi_getjs(){
@@ -75,9 +77,10 @@ function poi3(qq,pp){
 }
 function poi2(){
   var qq=$("pre").text();
+  $("pre").html("<b>讀取測試</b>");
   qq=qq.split("\n");
   qq=qq.filter(Boolean);
-  console.log( qq );
+  //console.log( qq );
   for(i=0;i<qq.length;i++){
     //$("#ddd").append(i+" "+qq[i]+"<br/>");
     //poi( qq[i] );
@@ -86,26 +89,23 @@ function poi2(){
 
 
 }
-function _poi(x){
-  var url=''+x;
-  $.ajax({
-    type:     "GET",
-    url:      "https://publish.twitter.com/oembed?url="+url,
-    dataType: "jsonp",
-    success: function(data){
-      //console.log(data.html);
-      //console.log($(data.html)[0]);
-      //var html = $.parseHTML( data.html , document, true);
-      //console.log(  $(data.html).find("blockquote").prevObject[0] );
-      //$("#ddd").html( $(data.html).find("blockquote").prevObject[0] );
-      $("#ddd").append( $(data.html)[0] );
-      //$("#ddd").after( $("p", data.html).html() );
-      //var qq=$("#ddd").find("blockquote").html();
-      //console.log(qq);
-      
-    }
+function poi(){
+
+try{
+  $(document).ready(function() {
+  	console.log('document.ready');
+    time = new Date();
+	//
+    poi_ajax();
+	//poi();
+    poi2();
   });
-  
+}catch(err){
+  	console.log( ''+err.message );
+}finally{
+    console.log( 'try-catch-finally' );
+}
+
 }
 </script>
 
@@ -121,7 +121,7 @@ https://twitter.com/habarag/status/1053840885505437696
 https://twitter.com/nonco331/status/1053993720217927680
 
 https://twitter.com/kanihamiso/status/1053857732841811968
-
+https://twitter.com/ebihurya332/status/1053811926659035136
 
 https://twitter.com/shiratamacaron/status/1053990681121718272
 
