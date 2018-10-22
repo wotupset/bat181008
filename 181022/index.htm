@@ -1,0 +1,165 @@
+﻿<html>
+	<head>
+<title>title</title>
+<style>
+body{
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+  console.log( 'DOMContentLoaded' );
+  var jsElm = document.createElement("script");
+  jsElm.type = "application/javascript";
+  jsElm.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
+  jsElm.onload = function(e){
+    console.log('jsElm.onload');
+	//id01.insertAdjacentHTML('afterbegin', 'jquery讀取成功');
+	poi();
+  };
+  //document.body.appendChild(jsElm);
+  document.head.appendChild(jsElm);
+});
+
+
+
+
+function poi0(){}
+function poi_getjs(){
+  $.getScript("https://platform.twitter.com/widgets.js").done(function(){
+    if(0){
+      var id01=document.getElementById('ppp');
+      //var id01=document.getElementsByTagName("pre")[0];
+      id01.insertAdjacentHTML('beforebegin', 'beforebegin');
+      id01.insertAdjacentHTML('afterbegin', 'afterbegin');
+      id01.insertAdjacentHTML('beforeend', 'beforeend');
+      id01.insertAdjacentHTML('afterend', 'afterend');
+      console.log( id01.outerHTML );
+    }else{
+      //$("pre").hide();
+	  $("pre").html("完成");
+    }
+    //
+
+
+  });
+}
+function poi_ajax(){
+  $(document).ajaxComplete(function() {
+    //console.log( 'ajaxComplete' );
+  });
+  $(document).ajaxStop(function() {
+    console.log( 'ajaxStop' );
+  });
+}
+function poi3(qq,pp){
+  var url=''+qq[pp];
+  var url2 = new URL(url);
+  console.log( url2 );
+  console.log( url2.pathname );
+  var tmp="";
+  tmp=url2.pathname.split("\/");
+  console.log( tmp );
+  //console.log( tmp.length );
+  if(url2.host == "twitter.com"){
+    //console.log("twitter.com");
+  }else{
+  	throw "推特網址?";
+	//throw new Error("錯誤error");
+  }
+
+  if(tmp.length>4){
+    tmp=url2.pathname.split("\/");
+	console.log( tmp.slice(0,4) );
+    url2.pathname=tmp.slice(0,4).join("\/");
+    console.log( tmp );
+    console.log( url2.href );
+    url=''+url2.href;
+  }
+  
+  
+  var jqxhr =$.ajax({
+    type:     "GET",
+    url:      "https://publish.twitter.com/oembed?url="+url,
+    dataType: "jsonp",
+    success: function(data){
+      $("#ddd").append( $(data.html)[0] );
+    },
+    complete:function(data){
+      //console.log( pp,qq.length,qq[pp] );
+      if(pp<(qq.length-1)){
+        pp++;
+        poi3(qq,pp);
+      }else{
+        poi_getjs();
+      }
+    },
+  });
+  jqxhr.done(function(a,b,c){
+    //console.log( a,b,c );
+    //console.log( pp,qq.length,qq[pp] );
+	$("pre").html("<b>("+pp+"/"+qq.length+") "+b+" "+qq[pp]+"</b>");
+    //console.log( 'jqxhr.done' );
+  });
+  jqxhr.fail(function(a,b,c){
+	$("pre").html("<b>("+pp+"/"+qq.length+") 錯誤</b>");
+    console.log( a,b,c );
+  	throw "錯誤error";
+	//throw new Error("錯誤error");
+  });
+  
+}
+function poi2(){
+  var qq=$("pre").text();
+  $("pre").html("<b>讀取測試</b>");
+  qq=qq.split("\n");
+  qq=qq.filter(Boolean);
+  //console.log( qq );
+  for(i=0;i<qq.length;i++){
+    //$("#ddd").append(i+" "+qq[i]+"<br/>");
+    //poi( qq[i] );
+  }
+  poi3(qq,0);
+
+
+}
+function poi(){
+
+try{
+  $(document).ready(function() {
+  	console.log('document.ready');
+    time = new Date();
+	//
+    poi_ajax();
+	//poi();
+    poi2();
+  });
+}catch(err){
+  	console.log( ''+err.message );
+}finally{
+    console.log( 'try-catch-finally' );
+}
+
+}
+</script>
+
+	</head>
+	<body>
+	
+<pre id="ppp">
+https://twitter.com/atikix/status/1050305390846439424
+
+https://twitter.com/poppuqn/status/1054325958042251264/photo/1
+https://twitter.com/satsumi624/status/1048627669380657152
+
+
+https://twitter.com/hdk124/status/1054009266191749121/photo/1
+https://twitter.com/aoiyukiko/status/1054129720999084032/photo/1
+
+</pre>
+
+<div id="ddd"></div>
+
+
+	</body>
+</html>
