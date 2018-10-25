@@ -8,6 +8,8 @@ https://wotupset.github.io/bat181008/181023
 
 https://wotupset.github.io/bat181008/2018/10/24/
 
+https://wotupset.github.io/bat181008/2018/10/25/
+
 
 # haha
 
