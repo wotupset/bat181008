@@ -10,6 +10,10 @@ https://wotupset.github.io/bat181008/2018/10/24/
 
 https://wotupset.github.io/bat181008/2018/10/25/
 
+https://wotupset.github.io/bat181008/2018/10/26/
+
+https://wotupset.github.io/bat181008/2018/10/26_2/  金瓜石照片
+
 
 # haha
 
