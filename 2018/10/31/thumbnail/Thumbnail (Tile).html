@@ -1,0 +1,102 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Thumbnail (Tile)</title>
+</head>
+
+<body>
+
+<center>
+<div id="thumbnail"></div>
+<script type="text/javascript"><!--
+window.thumb = {};
+window.thumb.numOfColumn = 3;
+window.thumb.insertTable = function(expectedNumOfImage){
+	window.thumb.numOfColumn = window.thumb.calcNumOfColumn();
+	var tableScript = "<table width=100% cellspacing=0 cellpadding=0 border=0>";
+	var imageIndex = 0;
+	while(imageIndex < expectedNumOfImage){
+		var upperRow = "<tr>";
+		var downerRow = "<tr>";
+		for(var n=0; n<window.thumb.numOfColumn; n++){
+			upperRow += "<td id=imageCell" + imageIndex
+			+ " align=center nowrap valign=bottom width=" + 100/window.thumb.numOfColumn + "%></td>";
+			downerRow += "<td id=textCell" + imageIndex
+			+ " align=center valign=top width=" + 100/window.thumb.numOfColumn + "%></td>";
+			imageIndex++;
+		}
+		upperRow += "</tr>";
+		downerRow += "</tr>";
+		tableScript += upperRow + downerRow;
+	}
+	tableScript += "</table>";
+	document.getElementById("thumbnail").innerHTML = tableScript;
+};
+
+window.thumb.cellWidth = 200;
+window.thumb.calcNumOfColumn = function(){
+	var availWidth = 0;
+	if(document && document.body && document.body.clientWidth){
+		availWidth = document.body.clientWidth;
+	}
+	else{availWidth = window.innerWidth}
+	var col = 0;
+	if(!availWidth){col = 1;}
+	else if(availWidth <= window.thumb.cellWidth){col = 1;}
+	else{col = Math.floor(availWidth / window.thumb.cellWidth);}
+	return col;
+};
+
+window.thumb.images = [];
+window.thumb.numOfImages = 0;
+window.thumb.addImage = function(sImagePath, sWidth, sHeight, bImageName, bImagePath, bWidth, bHeight, bSize, bType){
+	var theImage = new Image;
+	theImage.sImagePath = sImagePath;
+	theImage.sWidth = sWidth;
+	theImage.sHeight = sHeight;
+	theImage.bImageName = bImageName;
+	theImage.bImagePath = bImagePath;
+	theImage.bWidth = bWidth;
+	theImage.bHeight = bHeight;
+	theImage.bSize = bSize;
+	theImage.bType = bType;
+	window.thumb.images[window.thumb.numOfImages] = theImage;
+	window.thumb.insertImage(window.thumb.numOfImages);
+	window.thumb.numOfImages++;
+};
+
+window.thumb.insertImage = function(index){
+	if(index >= window.thumb.images.length){return;}
+	var theImage = window.thumb.images[index];
+	document.getElementById("imageCell" + index).style.paddingTop = index < window.thumb.numOfColumn ? "0px" : "20px";
+	var imageScript = "<a href=\"" + theImage.bImagePath + "\"><img style='border:0px solid; border-color:gray;' src=\"" + theImage.sImagePath + "\" width="
+				+ theImage.sWidth + " height=" + theImage.sHeight + "></a>";
+	document.getElementById("imageCell" + index).innerHTML = imageScript;
+	var fontScript = "<font face=arial,sans-serif size=-1><font size=3>" + theImage.bImageName + "</font><br>";
+	fontScript += theImage.bWidth + " x " + theImage.bHeight;
+	if(window.thumb.cellWidth < 155)fontScript += "<br>";
+	else {fontScript += " - ";}
+	fontScript += theImage.bSize + " - " + theImage.bType + "</font><br>";
+	document.getElementById("textCell" + index).innerHTML = fontScript;
+};
+
+window.onresize = function(){
+	if(window.thumb.numOfColumn != window.thumb.calcNumOfColumn()){
+		window.thumb.insertTable(window.thumb.numOfImages);
+		for(var index = 0; index < window.thumb.numOfImages; index++){window.thumb.insertImage(index);}
+	}
+};
+
+window.thumb.cellWidth = 155
+window.thumb.insertTable(5);
+window.thumb.addImage('simg/Dqw2MwHV4AI01vk_orig%20(150x146).jpg', 150, 146, 'Dqw2MwHV4AI01vk...', 'img/Dqw2MwHV4AI01vk_orig.jpg', 806, 788, '111k', 'jpg');
+window.thumb.addImage('simg/Dqv0Ol-UUAA0bCB_orig%20(150x88).jpg', 150, 88, 'Dqv0Ol-UUAA0bCB...', 'img/Dqv0Ol-UUAA0bCB_orig.jpg', 650, 385, '75k', 'jpg');
+window.thumb.addImage('simg/DqvylyAU8AQGXmg_orig%20(150x112).jpg', 150, 112, 'DqvylyAU8AQGXmg...', 'img/DqvylyAU8AQGXmg_orig.jpg', 516, 387, '51k', 'jpg');
+window.thumb.addImage('simg/DqwOgEzUcAATP0W_orig%20(150x84).jpg', 150, 84, 'DqwOgEzUcAATP0W...', 'img/DqwOgEzUcAATP0W_orig.jpg', 1334, 750, '98k', 'jpg');
+window.thumb.addImage('simg/Dqv1xBDVsAAF8Is_orig%20(99x150).jpg', 99, 150, 'Dqv1xBDVsAAF8Is...', 'img/Dqv1xBDVsAAF8Is_orig.jpg', 443, 668, '95k', 'jpg');
+//--></script>
+</center>
+
+</body>
+</html>
