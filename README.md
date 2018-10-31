@@ -18,7 +18,11 @@ https://wotupset.github.io/bat181008/pc.htm
 
 https://wotupset.github.io/bat181008/2018/10/30
 
-https://wotupset.github.io/bat181008/2018/10/31
+https://wotupset.github.io/bat181008/2018/10/31/thumbnail/index.html
+
+
+
+
 
 
 # haha
