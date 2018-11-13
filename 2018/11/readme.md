@@ -6,3 +6,8 @@ https://wotupset.github.io/bat181008/2018/11/07/video.htm
 
 https://wotupset.github.io/bat181008/2018/11/12/
 展示红树林如何保护海岸免受海浪侵蚀的尺度模型
+
+https://wotupset.github.io/bat181008/2018/11/13/
+在水族館使用LINNE LENS辨識魚類名稱
+
+
