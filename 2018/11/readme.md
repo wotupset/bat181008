@@ -12,3 +12,7 @@ https://wotupset.github.io/bat181008/2018/11/13/
 
 https://wotupset.github.io/bat181008/2018/11/14/
 李丽芬《爱江山更爱美人》，94版《倚天屠龙记》片尾曲
+
+https://wotupset.github.io/bat181008/2018/11/17/
+会走路的鱼，叫攀鲈”是一种亚洲淡水鱼，生命力顽强，能在陆上“行走”，并吸取空气中的氧气存活6天。
+
