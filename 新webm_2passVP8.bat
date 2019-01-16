@@ -1,22 +1,59 @@
-set qqq01=01.mp4
-set qqq02=_output_a.mp4
+set qqq01=_output_a.mp4
+set qqq02=_output_2passVP8.webm
 
 
-ffmpeg -y -i "%qqq01%" -s 360x640 -preset veryfast -tune fastdecode  -metadata title="不能只有我看到" "%qqq02%" 
-
-
+ffmpeg -i "%qqq01%" -c:v libvpx -crf 30 -b:v 1000K -pass 1 -c:a libopus -y -f webm NUL && ^
+ffmpeg -i "%qqq01%" -c:v libvpx -crf 30 -b:v 1000K -pass 2 -c:a libopus -y "%qqq02%" 
 
 
 start "" "%qqq02%" 
 
 
 
-exit
+
+exit 
 pause
 
--ss 00:00:00.0 -to 00:00:41.6
+-b:v 2M
+ffmpeg -i "%qqq01%"   -c:v libvpx-vp9 -b:v 2M  -y "%qqq02%" 
+start "" "%qqq02%" 
 
--preset veryfast -tune fastdecode
+
+
+
+-aq-mode 0 
+-crf 25 -b:v 0
+
+ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
+ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
+
+-ss 00:0:00.0 -t 00:0:30.0
+
+-c:v copy -c:a copy
+
+-c:v libvpx-vp9 -crf 30 -b:v 0
+-c:v libvpx-vp9 -b:v 1M
+-c:v libvpx-vp9 -pix_fmt yuv420p
+
+-r 30
+-g 30
+-c:v libvpx -cpu-used 2  -speed 4
+
+
+-c:v libvpx -deadline realtime -cpu-used 2
+-c:v libvpx -deadline realtime
+
+_output_aa.mp4
+
+ -speed 4
+-ss 00:20:00.0 -to 00:20:30.0
+-threads 8 
+-speed 4
+-speed 1
+
+-s 640x360
+-s 400x300
+-s 360x640
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 
