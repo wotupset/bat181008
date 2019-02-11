@@ -2,7 +2,7 @@ set qqq01=_output_a.mp4
 set qqq02=_output_vp8crf30_s.webm
 
 
-ffmpeg -i "%qqq01%"   -c:v libvpx -crf 30 -b:v 1000K -lag-in-frames 25 -deadline realtime -c:a libopus -y "%qqq02%" 
+ffmpeg -i "%qqq01%"   -c:v libvpx -crf 20 -b:v 1000K -lag-in-frames 25 -deadline realtime -c:a libopus -y "%qqq02%" 
 start "" "%qqq02%" 
 
 

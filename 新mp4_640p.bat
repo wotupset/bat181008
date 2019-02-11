@@ -1,48 +1,38 @@
-set qqq01=_output_a.mp4
-set qqq02=_output_vp9.webm
-
-
-ffmpeg -i "%qqq01%"   -c:v libvpx-vp9 -crf 20 -b:v 0  -c:a libopus -y "%qqq02%" 
-start "" "%qqq02%" 
+set fffin=E:\111\22\23dc.mkv
 
 
 
 
-exit 
+
+
+
+
+
+
+set fffout=_output_a.mp4
+set ppp01= -vf scale=640:640:force_original_aspect_ratio=decrease -metadata title="不能只有我看到" 
+set ppp02=-ss 00:00:00.0 -to 00:03:0.0
+set ppp03=-map 0:0 -map 0:2
+
+
+ffmpeg -y  -i "%fffin%" %ppp03% -preset veryfast -tune fastdecode  %ppp01%   "%fffout%" 
+
+
+
+
+start "" "%fffout%" 
+
+
+exit
 pause
--aq-mode 0 
--crf 25 -b:v 0
-
-ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
-ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
-
--ss 00:0:00.0 -t 00:0:30.0
-
--c:v copy -c:a copy
-
--c:v libvpx-vp9 -crf 30 -b:v 0
--c:v libvpx-vp9 -b:v 1M
--c:v libvpx-vp9 -pix_fmt yuv420p
-
--r 30
--g 30
--c:v libvpx -cpu-used 2  -speed 4
 
 
--c:v libvpx -deadline realtime -cpu-used 2
--c:v libvpx -deadline realtime
 
-_output_aa.mp4
+ -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
 
- -speed 4
--ss 00:20:00.0 -to 00:20:30.0
--threads 8 
--speed 4
--speed 1
+-ss 00:00:00.0 -to 00:00:41.6
 
--s 640x360
--s 400x300
--s 360x640
+-preset veryfast -tune fastdecode
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 

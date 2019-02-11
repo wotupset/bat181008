@@ -15,7 +15,7 @@ echo %RANDOM%
 echo %RANDOM%
 
 set parameter01=-y 
-set parameter02=-crf 30 -b:v 0 -vf scale=640:640:force_original_aspect_ratio=decrease -metadata title="不能只有我看到"
+set parameter02=-crf 20 -b:v 1000K -vf scale=640:640:force_original_aspect_ratio=decrease -metadata title="不能只有我看到"
 
 echo %parameter01%
 echo %parameter02%
