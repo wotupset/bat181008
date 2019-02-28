@@ -1,10 +1,10 @@
-set /p qqq01=ÀÉ®×:
+set qqq01=_output_a.mp4
 set qqq02=_output_vp9_mtCPU.webm
 
 
-ffmpeg -y -i "%qqq01%" -c:v libvpx-vp9  -row-mt 1 -aq-mode 1  "%qqq02%" 
+ffmpeg -y -i "%qqq01%" -c:v libvpx-vp9   -row-mt 1 -b:v 1000k -minrate 1000k -maxrate 1000k  "%qqq02%" 
 
-
+for %%F in ( %qqq02% ) do @echo %%~zF %%F
 start "" "%qqq02%" 
 
 
@@ -13,8 +13,23 @@ pause
 exit 
 pause
 
+set /p qqq01=ÀÉ®×:
+-ss 00:0:05.0 -to 00:0:20.0 
+
+
+-b:v 1000k -minrate 1000k -maxrate 1000k 
+
+-row-mt 1 -aq-mode 1  
+
+ -crf 30 -b:v 0
+ 
+
  -aq-mode 1
 -row-mt 1
+
+
+-crf 23 -b:v 1000k -minrate 1000k -maxrate 1000k
+
 
 -b:v 1M
 -crf 10 -b:v 0
@@ -28,7 +43,7 @@ ffmpeg -y -i "%qqq01%" -c:v libvpx   -crf 20 -b:v 0  -speed 4 "%qqq02%"
 
  -speed 4
 -slices 4
--threads 4 -tile-columns 4 -frame-parallel 0
+-threads 4 -tile-columns 2 -tile-rows 2 -frame-parallel 1
 -threads 4 -speed 4
 
 -crf 20 -b:v 0  -c:a libopus 

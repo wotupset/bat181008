@@ -1,21 +1,11 @@
-set fffin=E:\111\22\23dc.mkv
-
-
-
-
-
-
-
-
-
-
+set fffin=01.mp4
 set fffout=_output_a.mp4
 set ppp01= -vf scale=640:640:force_original_aspect_ratio=decrease -metadata title="不能只有我看到" 
-set ppp02=-ss 00:00:00.0 -to 00:03:0.0
+set ppp02=-ss 00:00:0.0 -to 00:00:30.0
 set ppp03=-map 0:0 -map 0:2
 
 
-ffmpeg -y  -i "%fffin%" %ppp03% -preset veryfast -tune fastdecode  %ppp01%   "%fffout%" 
+ffmpeg -y  -i "%fffin%" -preset veryfast -tune fastdecode  %ppp01%   "%fffout%" 
 
 
 
@@ -26,7 +16,10 @@ start "" "%fffout%"
 exit
 pause
 
+01.mp4
 
+
+%ppp02%
 
  -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
 

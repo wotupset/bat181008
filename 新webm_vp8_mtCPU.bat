@@ -1,8 +1,11 @@
-set /p qqq01=檔案:
+set qqq01=_output_a.mp4
 set qqq02=_output_vp8_mtCPU.webm
 
 
-ffmpeg -y -ss 00:0:00.0 -to 00:0:30.0 -i "%qqq01%" -c:v libvpx -crf 23 -b:v 1000k -minrate 1000k -maxrate 1000k -slices 4 -threads 4  "%qqq02%" 
+ffmpeg -y -i "%qqq01%" -c:v libvpx     -b:v 1000k -minrate 1000k -maxrate 1000k   "%qqq02%" 
+
+
+for %%F in ( %qqq02% ) do @echo %%~zF %%F
 
 
 start "" "%qqq02%" 
@@ -13,10 +16,18 @@ pause
 exit 
 pause
 
+set /p qqq01=檔案:
+ -ss 00:0:05.0 -to 00:0:20.0 
+
+
 vp8不支援
 -tile-columns 4 
 -frame-parallel 1 
 -aq-mode 1
+
+
+-ss 00:0:00.0 -to 00:0:30.0 
+-crf 23 -b:v 1000k -minrate 1000k -maxrate 1000k -slices 4 -threads 4 
 
 
 
