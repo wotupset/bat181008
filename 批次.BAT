@@ -8,17 +8,11 @@ set vcootime=%time:~0,2%
 if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
 set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 
-echo %vcoodate%_%vcootime%
+set nnn=%vcoodate%_%vcootime%
+echo %nnn%
 
-echo %RANDOM%
-echo %RANDOM%
-echo %RANDOM%
 
-set parameter01=-y 
-set parameter02=-crf 20 -b:v 1000K -vf scale=640:640:force_original_aspect_ratio=decrease -metadata title="不能只有我看到"
 
-echo %parameter01%
-echo %parameter02%
 
 set /a cc=0
 
@@ -26,7 +20,7 @@ for %%a in (*.mp4) do (
 
 set /a cc=cc+1
 echo %%a
-ffmpeg %parameter01% -i "%%a" %parameter02% "_%vcoodate%_%vcootime%_%%a.webm"
+ffmpeg -y -i "%%a" -crf 30 -b:v 0k  -vf "scale=640:640:force_original_aspect_ratio=decrease" -deadline realtime "_%nnn%_%RANDOM%_%%a.webm"
 
 )
 
@@ -34,6 +28,24 @@ echo %cc%
 
 CMD
 
+exit
+-c:v libvpx
+ -c:v libvpx-vp9  -vf "scale=640:640:force_original_aspect_ratio=decrease"
 
+
+:flags=lanczos
+
+-b:v 1000k -minrate 1000k -maxrate 1000k 
+-ss 00:00:00.0 -t 00:00:30.0
+
+-vf "scale=640:-2:force_original_aspect_ratio=decrease:flags=lanczos" 
+
+
+-b:v 1000k -minrate 1000k -maxrate 1000k 
+
+ -crf 30 -b:v 0
+
+
+-crf 25 -b:v 0
 -crf 30 -b:v 0
 ffmpeg %parameter01% -i "%%a" %parameter02% "%vcoodate%_%vcootime%_%%a.webm"
