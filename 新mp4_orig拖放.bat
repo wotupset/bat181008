@@ -16,7 +16,7 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 
-ffmpeg -y   -i %input%   -crf 20 -b:v 0k  -preset veryfast   "%output%"
+ffmpeg -y  -i %input%  -ss 00:0:01.2 -to 00:0:13.9  -crf 20 -b:v 0k  -preset veryfast   "%output%"
 
 
 

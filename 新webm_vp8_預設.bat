@@ -3,7 +3,7 @@ set output=_output_vp8_¹w³].webm
 
 
 
-ffmpeg -y  -i %input% -c:v libvpx -g 1000 -crf 20 -b:v 1000k   -deadline best  -vf "scale=640:640:force_original_aspect_ratio=decrease"  "%output%" 
+ffmpeg -y -ss 00:00:00.0 -to 00:00:10.0  -i %input% -c:v libvpx  -crf 20 -b:v 0k  -deadline realtime  -vf "scale=800:800:force_original_aspect_ratio=decrease"  "%output%" 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
 
@@ -12,11 +12,14 @@ start "" "%output%"
 
 
 
-
+pause
 
 exit 
 pause
-
+-r 30
+-g 1000
+-deadline best
+-deadline realtime
 -ss 00:00:00.0 -to 00:00:15.0 
 -g 200
 -c:a libopus
@@ -36,7 +39,7 @@ pause
 
 pause
 
--b:v 1000k -minrate 500k -maxrate 1000k 
+-b:v 1000k -minrate 1000k -maxrate 1000k 
 
 
 :flags=lanczos

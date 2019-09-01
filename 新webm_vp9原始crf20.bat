@@ -3,7 +3,7 @@ set qqq02=_output_vp9_¹w³].webm
 
 
 
-ffmpeg  -y -i "%qqq01%" -c:v libvpx-vp9  -b:v 1000k -row-mt 1  -quality best -deadline best   "%qqq02%" 
+ffmpeg  -y -i %qqq01% -c:v libvpx-vp9 -crf 20 -b:v 0k  -deadline realtime "%qqq02%"
 
 start "" "%qqq02%" 
 

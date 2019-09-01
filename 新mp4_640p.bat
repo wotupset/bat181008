@@ -17,7 +17,7 @@ set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 
 
-ffmpeg -y -i %input% -crf 20 -b:v 0k  -vf "scale=640:640:force_original_aspect_ratio=decrease"   -preset veryfast   "%output%"
+ffmpeg -y -i %input% -crf 20 -b:v 0k  -vf "scale=800:800:force_original_aspect_ratio=decrease"   -preset veryfast   "%output%"
 
 start "" "%output%" 
 
