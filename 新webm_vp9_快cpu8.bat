@@ -1,50 +1,130 @@
-@echo off
-
-echo %date%_%time%
-
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
+set /p qqq01=檔案:
+set qqq02=_output_vp9_快.webm
 
 
 
-set /p input=檔案:
-set output=_output_a_%nnn%_.mp4
+ffmpeg -y  -i %qqq01%  -c:v libvpx-vp9 -g 2000 -crf 20  -deadline realtime -cpu-used 8 -vf "scale=800:800:force_original_aspect_ratio=decrease"   "%qqq02%" 
 
 
-ffmpeg -y -i %input% -crf 40  -vf "scale=640:640:force_original_aspect_ratio=decrease"    "%output%"
+for %%F in ( %qqq02% ) do @echo %%~zF %%F
 
-start "" "%output%" 
+
+start "" "%qqq02%" 
+
+
+
+
 
 pause
-exit
+
+
+
+exit 
 pause
--preset veryfast 
--crf 20 -b:v 1000k
--ss 00:00:00.0 -to 00:10:0.0 
+-b:v 0k
+-deadline realtime
 
-  -preset veryfast -tune fastdecode
- -preset veryfast -tune fastdecode
+-sharpness 1 -tune psnr
 
-set ppp02= -ss 00:00:05.5 -t 00:00:8.5
-set ppp03= -map 0:0 -map 0:2
+-sharpness 1 -tune ssim -deadline best  -quality best 
 
 
- -vf "scale=640:640:force_original_aspect_ratio=decrease:flags=lanczos" 
+-speed 4 
+-row-mt 1 
+
+:aaa
+GOTO aaa
+
+-crf 25 -b:v 0
+
+ -c:a libopus
+
+-b:v 1000k -minrate 500k -maxrate 1000k
+  -crf 20 -b:v 0 
+
+ -ss 00:0:00.0 -to 00:0:10.0 
 
 
-%ppp02%
+set qqq01=_output_a.mp4
+-row-mt 1
+set /p qqq01=檔案:
+ -ss 00:0:05.0 -to 00:0:20.0 
+-c:v libvpx -b:v 2000k -minrate 1000k
+-crf 23 -b:v 0
+-vf "scale=640:640:force_original_aspect_ratio=decrease"
+-vf "scale=480:480:force_original_aspect_ratio=decrease"
 
- -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
+vp8不支援
+-tile-columns 4 
+-frame-parallel 1 
+-aq-mode 1
 
--ss 00:00:00.0 -to 00:00:41.6
 
--preset veryfast -tune fastdecode
+-ss 00:0:00.0 -to 00:0:30.0 
+-crf 23 -b:v 1000k -minrate 1000k -maxrate 1000k -slices 4 -threads 4 
+
+
+
+-b:v 2500k
+-crf 10 -b:v 1M
+-crf 10 -b:v 0
+ffmpeg -y -i "%qqq01%" -c:v libvpx -crf 10 -b:v 0 -g 150 -slices 4 -threads 4 -tile-columns 4    -vf scale=640:640:force_original_aspect_ratio=decrease  "%qqq02%" 
+
+ffmpeg -y -i "%qqq01%" -c:v libvpx -crf 10 -b:v 0 -g 150 -speed 4 -slices 4 -threads 4 -tile-columns 4 "%qqq02%" 
+set ppp01=_output_a.mp4
+
+
+ffmpeg -y -i "%qqq01%" -c:v libvpx   -crf 20 -b:v 0  -speed 4 "%qqq02%" 
+
+-speed 4
+-slices 4 
+
+
+-crf 20 -b:v 0  -c:a libopus 
+-f yuv4mpegpipe
+-cpu-used 使用cpu核心數量
+-g 150 關鍵幀之間最多有150幀
+
+
+-deadline good  
+
+-cpu-used 0
+-threads 4 
+-deadline realtime
+
+-aq-mode 0 
+-crf 25 -b:v 0
+
+ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
+ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
+
+-ss 00:0:00.0 -t 00:0:30.0
+
+-c:v copy -c:a copy
+
+-c:v libvpx-vp9 -crf 30 -b:v 0
+-c:v libvpx-vp9 -b:v 1M
+-c:v libvpx-vp9 -pix_fmt yuv420p
+
+-r 30
+-g 30
+-c:v libvpx -cpu-used 2  -speed 4
+
+
+-c:v libvpx -deadline realtime -cpu-used 2
+-c:v libvpx -deadline realtime
+
+_output_aa.mp4
+
+ -speed 4
+-ss 00:20:00.0 -to 00:20:30.0
+-threads 8 
+-speed 4
+-speed 1
+
+-s 640x360
+-s 400x300
+-s 360x640
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 

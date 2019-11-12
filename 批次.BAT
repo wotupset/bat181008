@@ -20,7 +20,7 @@ for %%a in (*.mp4) do (
 
 set /a cc=cc+1
 echo %%a
-ffmpeg -y -i "%%a" -crf 30 -b:v 1000k  -vf "scale=800:800:force_original_aspect_ratio=decrease" -deadline realtime "_%nnn%_%RANDOM%_%%a.webm"
+ffmpeg -y -i "%%a" -crf 30 -cpu-used 8 "_%nnn%_%RANDOM%_%%a.webm"
 
 )
 
@@ -29,6 +29,14 @@ echo %cc%
 CMD
 
 exit
+
+-cpu-used 8
+
+-vf "scale=800:800:force_original_aspect_ratio=decrease"
+
+ -deadline realtime
+
+
 -c:v libvpx
  -c:v libvpx-vp9  -vf "scale=640:640:force_original_aspect_ratio=decrease"
 

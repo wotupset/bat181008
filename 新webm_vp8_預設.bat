@@ -3,7 +3,7 @@ set output=_output_vp8_¹w³].webm
 
 
 
-ffmpeg -y -ss 00:00:00.0 -to 00:00:10.0  -i %input% -c:v libvpx  -crf 20 -b:v 0k  -deadline realtime  -vf "scale=800:800:force_original_aspect_ratio=decrease"  "%output%" 
+ffmpeg -y  -i %input% -c:v libvpx -g 1000 -crf 40 -b:v 1000k  -deadline realtime -cpu-used 8  -vf "scale=640:640:force_original_aspect_ratio=decrease"  "%output%" 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
 

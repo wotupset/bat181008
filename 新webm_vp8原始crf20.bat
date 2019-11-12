@@ -3,7 +3,7 @@ set output=_output_vp8_¹w³].webm
 
 
 
-ffmpeg -y   -i %input% -g 1000 -crf 28 -b:v 0k -c:v libvpx   -deadline realtime  "%output%" 
+ffmpeg -y   -i %input%  -c:v libvpx -crf 30 -b:v 0k  -deadline realtime -cpu-used 8 "%output%" 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
 
@@ -12,6 +12,9 @@ start "" "%output%"
 pause
 exit 
 pause
+-g 1000 -crf 30 -b:v 1000k
+ -cpu-used 4 -deadline realtime
+
 
  -deadline realtime
 

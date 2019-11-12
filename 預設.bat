@@ -13,38 +13,61 @@ echo %nnn%
 
 
 
-set /p input=檔案:
-set output=_output_a_%nnn%_.mp4
+set /p qqq01=檔案:
+set qqq02=_output_vp9_預設%nnn%.webm
 
 
-ffmpeg -y -i %input% -crf 40  -vf "scale=640:640:force_original_aspect_ratio=decrease"    "%output%"
 
-start "" "%output%" 
+ffmpeg  -y -i %qqq01% -c:v libvpx-vp9 -pix_fmt yuv420p -cpu-used 8   "%qqq02%"
 
+start "" "%qqq02%" 
+
+
+
+
+exit 
 pause
-exit
-pause
--preset veryfast 
--crf 20 -b:v 1000k
--ss 00:00:00.0 -to 00:10:0.0 
 
-  -preset veryfast -tune fastdecode
- -preset veryfast -tune fastdecode
+-row-mt 1
+-crf 20 -b:v 0k  -deadline realtime -cpu-used 8
+ -b:v 1000k  -sharpness 1 -tune psnr -quality best -deadline best 
 
-set ppp02= -ss 00:00:05.5 -t 00:00:8.5
-set ppp03= -map 0:0 -map 0:2
+-row-mt 1
 
 
- -vf "scale=640:640:force_original_aspect_ratio=decrease:flags=lanczos" 
+-aq-mode 0 
+-crf 25 -b:v 0
+ -c:a libopus
+ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
+ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
+
+-ss 00:0:00.0 -t 00:0:30.0
+
+-c:v copy -c:a copy
+
+-c:v libvpx-vp9 -crf 30 -b:v 0
+-c:v libvpx-vp9 -b:v 1M
+-c:v libvpx-vp9 -pix_fmt yuv420p
+
+-r 30
+-g 30
+-c:v libvpx -cpu-used 2  -speed 4
 
 
-%ppp02%
+-c:v libvpx -deadline realtime -cpu-used 2
+-c:v libvpx -deadline realtime
 
- -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
+_output_aa.mp4
 
--ss 00:00:00.0 -to 00:00:41.6
+ -speed 4
+-ss 00:20:00.0 -to 00:20:30.0
+-threads 8 
+-speed 4
+-speed 1
 
--preset veryfast -tune fastdecode
+-s 640x360
+-s 400x300
+-s 360x640
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 
