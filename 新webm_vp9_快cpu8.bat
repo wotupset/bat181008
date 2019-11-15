@@ -3,7 +3,7 @@ set qqq02=_output_vp9_§Ö.webm
 
 
 
-ffmpeg -y  -i %qqq01%  -c:v libvpx-vp9 -g 2000 -crf 20  -deadline realtime -cpu-used 8 -vf "scale=800:800:force_original_aspect_ratio=decrease"   "%qqq02%" 
+ffmpeg -y  -i %qqq01%  -c:v libvpx-vp9 -g 2000 -crf 30  -deadline realtime -cpu-used 8 -vf "scale=800:800:force_original_aspect_ratio=decrease"   "%qqq02%" 
 
 
 for %%F in ( %qqq02% ) do @echo %%~zF %%F
