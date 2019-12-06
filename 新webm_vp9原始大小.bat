@@ -1,20 +1,46 @@
-set /p qqq01=檔案:
-set qqq02=_output_vp9_原始大小.webm
+set /p input=檔案:
+
+echo %date%_%time%
+
+set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vcootime=%time:~0,2%
+
+if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
+set vcootime=%vcootime%%time:~3,2%%time:~6,2%
+
+set nnn=%vcoodate%_%vcootime%_%RANDOM%
+echo %nnn%
+
+
+set output=_output_vp9_原始大小.webm
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart -ac 2 ^
+-metadata title="標題" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
+
+
+ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9 -crf 30  -deadline realtime -cpu-used 8   %output%
+
+start "" %output%
 
 
 
-ffmpeg  -y  -i %qqq01% -c:v libvpx-vp9 -crf 10 -deadline realtime -cpu-used 8 "%qqq02%"
-
-start "" "%qqq02%" 
-
-
-
-
+pause
 exit 
 pause
 
+-c:v libvpx-vp9 -crf 25  -deadline realtime -cpu-used 8 
+-c:v vp9_qsv
 
--crf 20 -b:v 0k  -deadline realtime -cpu-used 8
+-b:a 32k 
+-threads 4 -speed 4
+-row-mt 1 -tile-rows 1 
+-row-mt 1 -tile-rows 1 -tile-columns 1
+-crf 10
+-crf 20 -b:v 0k 
+ -deadline realtime -cpu-used 8
  -b:v 1000k  -sharpness 1 -tune psnr -quality best -deadline best 
 
 -row-mt 1

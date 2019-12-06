@@ -1,15 +1,15 @@
-set /p qqq01=ÀÉ®×:
-set qqq02=_output_vp9_ºC.webm
+set /p input=ÀÉ®×:
+set output=_output_vp9_ºC.webm
 
 
 
-ffmpeg -y -i %qqq01%  -c:v libvpx-vp9 -g 2000 -crf 40 -b:v 1000k -cpu-used 4 -vf "scale=480:480:force_original_aspect_ratio=decrease"   "%qqq02%" 
+ffmpeg -y -i %input%  -c:v libvpx-vp9 -g 2000 -crf 50 -cpu-used 4 -vf "scale=480:480:force_original_aspect_ratio=decrease" %output%
 
 
 for %%F in ( %qqq02% ) do @echo %%~zF %%F
 
 
-start "" "%qqq02%" 
+start "" "%output%" 
 
 
 

@@ -1,8 +1,8 @@
-set input=_output_a_190916_201232_14644_.mp4
+set input=h264_lossless.mp4
 
 
 ffmpeg -y -i "%input%" -vf "palettegen" palette.png
-ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=12,paletteuse" output.gif
+ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=8,paletteuse" output.gif
 
 pause
 exit

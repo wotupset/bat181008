@@ -1,15 +1,32 @@
-set /p qqq01=檔案:
-set qqq02=_output_vp9_快.webm
+set /p input=檔案:
+
+echo %date%_%time%
+
+set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vcootime=%time:~0,2%
+
+if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
+set vcootime=%vcootime%%time:~3,2%%time:~6,2%
+
+set nnn=%vcoodate%_%vcootime%_%RANDOM%
+echo %nnn%
+
+set output=_output_vp9_快.webm
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart -ac 2 ^
+-metadata title="標題" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
 
 
-
-ffmpeg -y  -i %qqq01%  -c:v libvpx-vp9 -g 2000 -crf 30  -deadline realtime -cpu-used 8 -vf "scale=800:800:force_original_aspect_ratio=decrease"   "%qqq02%" 
-
-
-for %%F in ( %qqq02% ) do @echo %%~zF %%F
+ffmpeg -y    -i %input% %qqq03% -c:v libvpx-vp9  -crf 30  -deadline realtime -cpu-used 8  -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
 
 
-start "" "%qqq02%" 
+for %%F in ( %output% ) do @echo %%~zF %%F
+
+
+start ""  %output%
 
 
 
@@ -21,6 +38,10 @@ pause
 
 exit 
 pause
+
+-itsoffset 5 -fs 5000k 
+
+
 -b:v 0k
 -deadline realtime
 

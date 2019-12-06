@@ -15,8 +15,15 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart -ac 2 ^
+-metadata title="標題" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
 
-ffmpeg -y  -i %input%   -map_chapters -1 -map_metadata -1    -preset fast   "%output%"
+
+ffmpeg -y -itsoffset 5 -i %input% %qqq03%   -fs 5000k    -c:v libx264  -crf 30 -b:v 0k -preset fast  "%output%"
 
 
 start "" "%output%" 
@@ -24,10 +31,32 @@ start "" "%output%"
 pause
 exit
 pause
+-ss 00:17:47.2 -to 00:17:50.3
+ -c:v h264_nvenc -profile:v main -qp 30 
+ -c:v libx264 -crf 15 -b:v 0k -preset fast
+-c:v libx264
+-c:v libx264rgb 檔案變很大
+-noaccurate_seek
+-accurate_seek
+-hwaccel cuvid -c:v h264_cuvid   交給顯卡解碼 放在input前面
+
+-movflags faststart 邊下載邊撥放
+-qp 相當等於 -crf 但檔案很大
+-cq 20 
+-ac 2 雙聲道
+-profile:v baseline 無交錯
+-profile:v main
+
+-c:v h264_nvenc -profile:v baseline -preset fast 
+-crf 20 -b:v 0k -preset fast
+
+-sn 關掉字幕
 -r 24
 -c:v libx265
--c:v  h264_nvenc
--crf 50 
+-c:v h264_nvenc
+-c:v h264_nvenc  -b:v 1000k
+-c:v hevc_nvenc
+-crf 20
 -c:v libvpx-vp9
 -map_chapters -1 -map_metadata -1
 

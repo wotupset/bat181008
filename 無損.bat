@@ -1,8 +1,8 @@
-set input=xGrctbNemk6zbX3t.mp4
+set input=^
+01.m4v
+
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"
-
-
 pause
 exit
 
@@ -13,6 +13,7 @@ exit
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"
 ffmpeg -y -i "%input%" -crf 0   "h264_lossless.mp4"
+ffmpeg -y -i "%input%" -c:v copy  "h264_lossless.mp4"
 
+ffmpeg -y  -i "%input%"    -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"
 
-ffmpeg -y -i "%input%"  -ss 00:0:10.8 -to 00:0:14.8  -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"

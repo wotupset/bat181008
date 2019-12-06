@@ -15,15 +15,24 @@ echo %nnn%
 
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
+set qqq03=-map_chapters -1 -map_metadata -1 ^
+-metadata title="¼ÐÃD" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
 
 
-ffmpeg -y -i %input% -crf 40  -vf "scale=640:640:force_original_aspect_ratio=decrease"    "%output%"
+
+ffmpeg -y -i %input% %qqq03% -vf "scale=1280:1280:force_original_aspect_ratio=decrease"  -c:v h264_nvenc -profile:v baseline -preset fast -cq 20 "%output%"
 
 start "" "%output%" 
 
 pause
 exit
 pause
+-c:v h264_nvenc
+-preset fast 
 -preset veryfast 
 -crf 20 -b:v 1000k
 -ss 00:00:00.0 -to 00:10:0.0 
