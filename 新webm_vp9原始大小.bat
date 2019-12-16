@@ -13,7 +13,7 @@ echo %nnn%
 
 
 set output=_output_vp9_原始大小.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart -ac 2 ^
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
 -metadata title="標題" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
@@ -21,7 +21,7 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart
 -metadata copyright="%nnn%" 
 
 
-ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9 -crf 30  -deadline realtime -cpu-used 8   %output%
+ffmpeg  -y  -i %input%  %qqq03%  -c:v libvpx-vp9 -crf 32  -deadline realtime -cpu-used 8   %output%
 
 start "" %output%
 
@@ -30,7 +30,7 @@ start "" %output%
 pause
 exit 
 pause
-
+-movflags faststart
 -c:v libvpx-vp9 -crf 25  -deadline realtime -cpu-used 8 
 -c:v vp9_qsv
 

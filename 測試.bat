@@ -15,7 +15,7 @@ echo %nnn%
 
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt nv12  -ac 2 ^
 -metadata title="¼ÐÃD" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
@@ -23,7 +23,7 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
 -metadata copyright="%nnn%" 
 
 
-ffmpeg -y  -ss 00:0:24.0 -to 00:0:32.0  -i %input% %qqq03%   -c:v h264_nvenc -qp 25  "%output%"
+ffmpeg -y  -hwaccel qsv -c:v h264_qsv  -i %input%  -vf "hwdownload,format=nv12" -pix_fmt yuv420p  "%output%"
 
 
 
@@ -32,12 +32,10 @@ start "" "%output%"
 pause
 exit
 pause
-
   -c:v libx264  -crf 15 -b:v 0k -preset fast  "%output%"
 
- -b:v 2M -maxrate 2M -minrate 2M -bufsize 1M
 
--pix_fmt rgb24
+
 -pix_fmt yuv420p
 
 -ss 00:17:47.2 -to 00:17:50.3

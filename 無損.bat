@@ -1,8 +1,8 @@
 set input=^
-01.m4v
-
+h264_lossless.mp4
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"
+
 pause
 exit
 

@@ -12,7 +12,7 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart -ac 2 ^
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
 -metadata title="¼ÐÃD" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
@@ -20,7 +20,7 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -movflags faststart
 -metadata copyright="%nnn%" 
 
 
-ffmpeg -y    -i %input% %qqq03% -c:v libvpx-vp9  -crf 30  -deadline realtime -cpu-used 8  -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9  -crf 40  -deadline realtime -cpu-used 8  -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
@@ -38,7 +38,7 @@ pause
 
 exit 
 pause
-
+-movflags faststart
 -itsoffset 5 -fs 5000k 
 
 
