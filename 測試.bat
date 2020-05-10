@@ -1,37 +1,21 @@
 @echo off
 
-echo %date%_%time%
-
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
 
 
-
-set /p input=ÀÉ®×:
-set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt nv12  -ac 2 ^
--metadata title="¼ÐÃD" ^
--metadata ARTIST="ARTIST" ^
--metadata comment="comment" ^
--metadata description="description" ^
--metadata copyright="%nnn%" 
+ffmpeg -y -loop 1 -framerate 5 -t 1 -i image.jpg -i video.mp4 -filter_complex "[0]scale=400:400,setsar=1[im];[1]scale=400:400,setsar=1[vid];[im][vid]concat=n=2:v=1:a=0" out.mp4
 
 
-ffmpeg -y  -hwaccel qsv -c:v h264_qsv  -i %input%  -vf "hwdownload,format=nv12" -pix_fmt yuv420p  "%output%"
-
-
-
-start "" "%output%" 
 
 pause
 exit
 pause
+
+ -b:v 5M -maxrate 2M -bufsize 2M 
+
+
+-f rawvideo -pix_fmt yuv420p -s:v 1920x1080 
+
+
   -c:v libx264  -crf 15 -b:v 0k -preset fast  "%output%"
 
 

@@ -1,14 +1,14 @@
-set input=h264_lossless.mp4
+set input=_output_a_200503_130410_640p_9199_.mp4
 
 
 ffmpeg -y -i "%input%" -vf "palettegen" palette.png
-ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=8,paletteuse" output.gif
+ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=20,paletteuse" output.gif
 
 pause
 exit
 
 -vf "scale=400:-1:flags=lanczos,palettegen"
--filter_complex "fps=30,scale=400:-1:flags=lanczos,paletteuse"
+-filter_complex "fps=15,scale=400:-1:flags=lanczos,paletteuse"
 
 
 ffmpeg -y -i "_output_aa.mp4" -vf "scale=-1:-1:flags=lanczos,palettegen" palette.png

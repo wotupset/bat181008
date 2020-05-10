@@ -1,4 +1,4 @@
-ffmpeg -y -f concat -i mylist.txt -c copy merge.mp4
+ffmpeg -y -f concat  -i mylist.txt -c:v copy  merge.mp4
 pause
 exit
 

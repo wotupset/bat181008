@@ -8,14 +8,14 @@ set vcootime=%time:~0,2%
 if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
 set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
+set nnn=%vcoodate%_%vcootime%_640p_%RANDOM%
 echo %nnn%
 
 
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1 ^
+set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  ^
 -metadata title="標題" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
@@ -24,13 +24,29 @@ set qqq03=-map_chapters -1 -map_metadata -1 ^
 
 
 
-ffmpeg -y -i %input% %qqq03% -vf "scale=1280:1280:force_original_aspect_ratio=decrease"  -c:v h264_nvenc -profile:v baseline -preset fast -cq 20 "%output%"
+ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:-2,setsar=1/1"  -c:v h264_nvenc  -cq 30   "%output%"
 
 start "" "%output%" 
 
 pause
 exit
+
+-vf "scale=1280:720"
+-vf "scale=1280:720,setsar=1/1"
+-vf "scale=1280:720:force_original_aspect_ratio=decrease"
+
+
+-aspect 16:9 
+
+-pix_fmt yuv420p 8位元
+-pix_fmt yuv420p10le 10位元(x265) 
+-pix_fmt yuv420p12le 12位元(x265) 
+
+-qp 30
+-cq 30
+
 pause
+-c:v libx264
 -c:v h264_nvenc
 -preset fast 
 -preset veryfast 

@@ -1,23 +1,21 @@
-set oo1=^
--i "01.webm" ^
--loop 1 -i "01.jpg" 
 
 
-echo %oo1%
-
-set oo2=^
--shortest ^
--map 0:a -map 1:v 
 
 
-echo %oo2%
-
-
-ffmpeg -y  %oo1% %oo2%  "111.mp4"
+ffmpeg -y  -i "sd.mp4" -i "hd.mp4" -map 0:a -map 1:v -ss 00:10:0.0 -to 00:10:42.0 -c:v h264_nvenc  -cq 30   "HD1080.mp4"
 
 
 pause
 exit
+
+-qp 30
+-cq 30
+
+
+
+-c:v libx264 -preset fast -crf 30 
+
+
 -t 10
 -shortest
 

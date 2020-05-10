@@ -1,20 +1,20 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y  -an -i "%input%"    -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
+
+ffmpeg.exe -y -i "%input%" -vf "reverse" -af "areverse" ­Ë©ñ.mp4
 
 
 pause
 exit
+-af areverse
+-vf reverse
 
-
-
+ffmpeg -y -an -i "%input%" -filter:v "setpts=0.5*PTS" ºC³t.mp4
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -crf 10  "vp9_crf10.webm"
-ffmpeg -y  -an -i "%input%"    -c:v libvpx-vp9 -b:v 0 -crf 10  "vp9_crf10.webm"
 
 
 
-ffmpeg -y  -i %input% -crf 5   "h264_lossless.mp4"
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -lossless 1  "vp9_lossless.webm"
 

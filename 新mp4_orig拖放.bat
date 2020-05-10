@@ -15,15 +15,10 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
--metadata title="標題" ^
--metadata ARTIST="ARTIST" ^
--metadata comment="comment" ^
--metadata description="description" ^
--metadata copyright="%nnn%" 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
 
 
-ffmpeg -y  -ss 00:0:24.0 -to 00:0:32.0  -i %input% %qqq03%   -c:v h264_nvenc -qp 25  "%output%"
+ffmpeg -y -ss 00:19:47.265 -to 00:19:50.6  -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "%output%"
 
 
 
@@ -32,6 +27,12 @@ start "" "%output%"
 pause
 exit
 pause
+
+-cq 30
+-qp 30
+
+
+-vf reverse 影片倒放
 
   -c:v libx264  -crf 15 -b:v 0k -preset fast  "%output%"
 
@@ -51,6 +52,19 @@ pause
 
 -hwaccel dxva2
 -hwaccel qsv -c:v h264_qsv
+
+
+set /p input=檔案:
+set output=_output_a_%nnn%_.mp4
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
+-metadata title="標題" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
+
+
+
 
 -movflags faststart
 -movflags faststart 邊下載邊撥放
