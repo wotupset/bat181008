@@ -1,8 +1,9 @@
 ffmpeg -h encoder=libvpx >libvpx.txt
 ffmpeg -h encoder=libvpx-vp9 >libvpx-vp9.txt
+ffmpeg -h encoder=libopus >libopus.txt
+
 ffmpeg -h encoder=libx264 >libx264.txt
 ffmpeg -h encoder=h264_nvenc >h264_nvenc.txt
-
 
 ffmpeg -codecs >codecs.txt
 ffmpeg -encoders >encoders.txt

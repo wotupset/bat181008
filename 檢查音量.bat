@@ -2,8 +2,7 @@
 
 
 
-ffmpeg -i 1593145002-1.mp4  -af "volume=20dB" -c:v copy  123.mp4
-
+ffmpeg -i 1593140195-1.mp4 -af "volumedetect" -f null -y nul
 
 
 

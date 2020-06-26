@@ -12,9 +12,9 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 1 
 
-ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 20  -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 28  -vf "scale=640:640:force_original_aspect_ratio=decrease"  %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F

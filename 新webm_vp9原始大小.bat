@@ -17,7 +17,7 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2
 
 
 
-ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9   -crf 25  -deadline realtime -cpu-used 5  %output%
+ffmpeg  -y  -i %input%  %qqq03%  -c:v libvpx-vp9   -crf 30  -deadline realtime -cpu-used 5  %output%
 
 start "" %output%
 

@@ -1,4 +1,4 @@
-set input=_output_a_200503_130410_640p_9199_.mp4
+set input=_output_a_200604_111439_5214_.mp4
 
 
 ffmpeg -y -i "%input%" -vf "palettegen" palette.png

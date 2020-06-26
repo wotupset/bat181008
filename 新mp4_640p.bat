@@ -24,12 +24,15 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  ^
 
 
 
-ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:-2,setsar=1/1"  -c:v h264_nvenc  -cq 30   "%output%"
+ffmpeg -y  -i %input%  %qqq03% -vf "scale=640:-2,setsar=1/1"  -c:v h264_nvenc  -qp 30 "%output%"
 
 start "" "%output%" 
 
 pause
 exit
+
+-cq 35 
+
 
 -vf "scale=1280:720"
 -vf "scale=1280:720,setsar=1/1"

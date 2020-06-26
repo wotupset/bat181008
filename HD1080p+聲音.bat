@@ -2,7 +2,7 @@
 
 
 
-ffmpeg -y  -i "sd.mp4" -i "hd.mp4" -map 0:a -map 1:v -ss 00:10:0.0 -to 00:10:42.0 -c:v h264_nvenc  -cq 30   "HD1080.mp4"
+ffmpeg -y  -i "videoplayback.m4a" -i "videoplayback.mp4" -map 0:a -map 1:v  -c:v h264_nvenc  -cq 25   "youtube.mp4"
 
 
 pause

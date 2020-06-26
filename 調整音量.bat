@@ -2,7 +2,7 @@
 
 
 
-ffmpeg -i 1593145002-1.mp4  -af "volume=20dB" -c:v copy  123.mp4
+ffmpeg -i 1593140195-1.mp4 -af "volume=15dB" -c:v copy -y 123.mp4
 
 
 

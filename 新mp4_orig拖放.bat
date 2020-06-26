@@ -18,7 +18,11 @@ set output=_output_a_%nnn%_.mp4
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
 
 
-ffmpeg -y -ss 00:19:47.265 -to 00:19:50.6  -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "%output%"
+
+ffmpeg -y -ss 00:0:1.6 -to 00:1:30.0 -i %input% %qqq03%   -c:v h264_nvenc  -qp 25  "%output%"
+
+
+
 
 
 
@@ -27,6 +31,11 @@ start "" "%output%"
 pause
 exit
 pause
+
+ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc  -qp 25  "%output%"
+
+
+
 
 -cq 30
 -qp 30
