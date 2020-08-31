@@ -12,12 +12,14 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_快.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 1 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2
 
-ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 28  -vf "scale=640:640:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 30 -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
 
 
-for %%F in ( %output% ) do @echo %%~zF %%F
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
+
+
 
 
 start ""  %output%
@@ -32,6 +34,18 @@ pause
 
 exit 
 pause
+
+-vf "scale=640:360:force_original_aspect_ratio=decrease"
+
+音量
+ -af "volume=5dB"
+
+
+檔案大小(位元)
+for %%F in ( %output% ) do @echo %%~zF %%F
+
+
+
 -b:v 1M
 -ss 00:0:00.0 -to 00:0:10.0 
 

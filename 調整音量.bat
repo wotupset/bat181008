@@ -1,16 +1,16 @@
-@echo off
 
+ffmpeg -i 111.mp4 -af "volumedetect" -f null -y nul
 
+ffmpeg -i 111.mp4 -af "loudnorm=i=-5" -c:v copy -y 1234.mp4
 
-ffmpeg -i 1593140195-1.mp4 -af "volume=15dB" -c:v copy -y 123.mp4
-
-
-
-
+ffmpeg -i 1234.mp4 -af "volumedetect" -f null -y nul
 
 pause
 exit
 pause
+
+ffmpeg -i CPyvnOICe7AlyUrR.mp4 -af "volume=30dB" -c:v copy -y 1234.mp4
+
 
  -b:v 5M -maxrate 2M -bufsize 2M 
 

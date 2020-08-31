@@ -1,5 +1,5 @@
 set oo1=^
--i "01.webm" ^
+-i "01.mp3" ^
 -loop 1 -i "01.jpg" 
 
 
