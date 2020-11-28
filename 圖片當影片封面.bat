@@ -1,5 +1,5 @@
 set oo1=^
--i "01.mp3" ^
+-i "01.m4a" ^
 -loop 1 -i "01.jpg" 
 
 

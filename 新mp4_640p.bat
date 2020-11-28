@@ -15,24 +15,28 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  ^
--metadata title="標題" ^
--metadata ARTIST="ARTIST" ^
--metadata comment="comment" ^
--metadata description="description" ^
--metadata copyright="%nnn%" 
+set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  
 
 
 
-ffmpeg -y  -i %input%  %qqq03% -vf "scale=640:-2,setsar=1/1"  -c:v h264_nvenc  -qp 30 "%output%"
+ffmpeg -y  -i %input%  %qqq03% -vf "scale=1280:1280:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
 start "" "%output%" 
 
 pause
 exit
 
--cq 35 
+-ss 00:00:00.0 -to 00:10:0.0 
 
+
+-qp 35 固定品質
+-cq 35 固定頻寬
+^
+-metadata title="標題" ^
+-metadata ARTIST="ARTIST" ^
+-metadata comment="comment" ^
+-metadata description="description" ^
+-metadata copyright="%nnn%" 
 
 -vf "scale=1280:720"
 -vf "scale=1280:720,setsar=1/1"

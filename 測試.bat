@@ -2,7 +2,7 @@
 
 
 
-ffmpeg -i 1593145002-1.mp4  -af "volume=20dB" -c:v copy  123.mp4
+ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
 
 
 

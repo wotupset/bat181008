@@ -1,62 +1,27 @@
 @echo off
 
-echo %date%_%time%
-
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
 
 
-
-set /p input=檔案:
-set output=_output_a_%nnn%_.mp4
-set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
-
-
-
-ffmpeg -y  -ss 00:9:55.377 -to 00:9:56.838  -i %input% %qqq03%   -c:v h264_nvenc  -qp 25  "%output%"
+ffmpeg -i _output_a_201128_110726_5218_.mp4 -r 20 -qscale:v 1 out%%03d.jpg
 
 
 
 
-
-
-
-start "" "%output%" 
 
 pause
 exit
 pause
 
-ffmpeg -y -ss 00:0:21.725 -to 00:0:28.130 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "2-%output%"
-ffmpeg -y -ss 00:0:37.559 -to 00:0:41.131 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "3-%output%"
-ffmpeg -y -ss 00:0:43.858 -to 00:0:48.740 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "4-%output%"
+ -b:v 5M -maxrate 2M -bufsize 2M 
 
 
+-f rawvideo -pix_fmt yuv420p -s:v 1920x1080 
 
--map_chapters -1 -map_metadata -1
-
-ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc  -qp 25  "%output%"
-
-
-
-
--cq 30
--qp 30
-
-
--vf reverse 影片倒放
 
   -c:v libx264  -crf 15 -b:v 0k -preset fast  "%output%"
 
- -b:v 2M -maxrate 2M -minrate 2M -bufsize 1M
 
--pix_fmt rgb24
+
 -pix_fmt yuv420p
 
 -ss 00:17:47.2 -to 00:17:50.3
@@ -70,19 +35,6 @@ ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc
 
 -hwaccel dxva2
 -hwaccel qsv -c:v h264_qsv
-
-
-set /p input=檔案:
-set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
--metadata title="標題" ^
--metadata ARTIST="ARTIST" ^
--metadata comment="comment" ^
--metadata description="description" ^
--metadata copyright="%nnn%" 
-
-
-
 
 -movflags faststart
 -movflags faststart 邊下載邊撥放
