@@ -13,11 +13,9 @@ echo %nnn%
 
 
 set output=_output_vp9_原始大小.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 -af "loudnorm=i=-20" -an
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 
 
-
-
-ffmpeg  -y  -i %input%  %qqq03%  -c:v libvpx-vp9    -crf 30  -deadline realtime -cpu-used 5  %output%
+ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9   -crf 30  -deadline realtime -cpu-used 5  %output%
 
 start "" %output%
 
@@ -25,6 +23,11 @@ start "" %output%
 
 pause
 exit 
+-deadline realtime -cpu-used 5
+
+ -r 5
+-af "loudnorm=i=-20"
+
 -deadline realtime -cpu-used 5
 -deadline realtime -cpu-used 8 
 -c:v libvpx-vp9 

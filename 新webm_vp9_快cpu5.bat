@@ -12,9 +12,11 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 -af "loudnorm=i=-20" 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 
+set wh=800
+set tt=-ss 00:0:00.0 -to 00:0:10.0 
 
-ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 30  -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 35  -aq-mode 0   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -f webm %output%
 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
@@ -34,6 +36,9 @@ pause
 
 exit 
 pause
+-af "loudnorm=i=-20" 
+-g 9999
+
 
 
 ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 35 -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%

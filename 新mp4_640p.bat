@@ -18,13 +18,16 @@ set output=_output_a_%nnn%_.mp4
 set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  
 
 
+ffmpeg -y -ss 00:00:00.0 -to 00:1:0.0  -i %input%  %qqq03% -vf "scale=800:800:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
-ffmpeg -y  -i %input%  %qqq03% -vf "scale=1280:1280:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
+
 
 start "" "%output%" 
 
 pause
 exit
+
+ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:360:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
 -ss 00:00:00.0 -to 00:10:0.0 
 

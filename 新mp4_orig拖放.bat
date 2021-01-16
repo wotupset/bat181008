@@ -19,7 +19,7 @@ set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2
 
 
 
-ffmpeg -y  -ss 00:9:55.377 -to 00:9:56.838  -i %input% %qqq03%   -c:v h264_nvenc  -qp 25  "%output%"
+ffmpeg -y  -i %input%     %qqq03%   -c:v h264_nvenc -cq 30  "%output%"
 
 
 
@@ -32,6 +32,9 @@ start "" "%output%"
 pause
 exit
 pause
+-ss 00:10:0.0 -to 00:11:0.0
+-hwaccel cuda -hwaccel_output_format cuda
+
 
 ffmpeg -y -ss 00:0:21.725 -to 00:0:28.130 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "2-%output%"
 ffmpeg -y -ss 00:0:37.559 -to 00:0:41.131 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "3-%output%"
