@@ -13,7 +13,7 @@ echo %nnn%
 
 
 set output=_output_vp9_原始大小.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 -an
 
 ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9   -crf 30  -deadline realtime -cpu-used 5  %output%
 
