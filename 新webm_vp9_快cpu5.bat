@@ -12,11 +12,11 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_快.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 
 set wh=800
-set tt=-ss 00:0:0.0 -to 00:0:12.0 
+set tt=-ss 00:6:35.0 -to 00:6:46.0 
 echo %tt%
-ffmpeg -y %tt%  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 30  -aq-mode 0   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -f webm %output%
+ffmpeg -y  -i %input% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5  -crf 30 -b:v 1000K -maxrate 1000K -bufsize 500K    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
@@ -36,11 +36,17 @@ pause
 
 exit 
 pause
-
-
+-b:v 640K -maxrate 640K -bufsize 64K
+-crf 30
+-b:v 3000K
 -af "loudnorm=i=-20" 
--g 9999
+-g 9999 以幀為單位設置關鍵幀間隔（默認為240）
+-cpu-used = -speed (舊稱)
+-deadline = -quality (舊稱)
+ -row-mt 1 開啟多核心支援
 
+-crf 30 -b:v 0  模式Q
+-crf 30 -b:v 1000K -maxrate 1000K -bufsize 500K  模式CQ
 
 
 ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 35 -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
