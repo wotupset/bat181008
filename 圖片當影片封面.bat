@@ -1,23 +1,24 @@
 set oo1=^
--i "01.m4a" ^
--loop 1 -i "01.jpg" 
-
+-i "01.mp3"  ^
+-loop 1 -i "01.jpg" ^
+-shortest -map 0:a -map 1:v 
 
 echo %oo1%
 
-set oo2=^
--shortest ^
--map 0:a -map 1:v 
-
-
+set oo2=
 echo %oo2%
 
+set oo3=
+echo %oo3%
 
-ffmpeg -y  %oo1% %oo2%  "111.mp4"
+
+ffmpeg -y  %oo1%   -r 5 -af "loudnorm=i=-20"  -ss 00:13:00.0 -to 00:16:30.0  "222.mp4"
 
 
 pause
 exit
+-ss 00:4:32.0 -to 00:8:52.0
+
 -t 10
 -shortest
 

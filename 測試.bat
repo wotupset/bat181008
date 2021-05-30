@@ -2,15 +2,16 @@
 
 
 
-ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
 
 
 
 
+echo file '_output_.mp4' >mylist.txt
 
 pause
 exit
 pause
+ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
 
  -b:v 5M -maxrate 2M -bufsize 2M 
 

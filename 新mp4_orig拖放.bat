@@ -16,10 +16,10 @@ echo %nnn%
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
+set tt=-ss 00:12:14.9 -to 00:12:46.5
+echo %tt%
 
-
-
-ffmpeg -y  -i %input%     %qqq03%   -c:v h264_nvenc -cq 30  "%output%"
+ffmpeg -y %tt% -i %input%    %qqq03%  -c:v h264_nvenc -cq 30  "%output%"
 
 
 
@@ -31,7 +31,29 @@ start "" "%output%"
 
 pause
 exit
-pause
+
+
+-map 0:v:0 -map 0:a:0
+
+ffmpeg -y -ss 00:16:42.132 -to 00:16:46.430 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "8-%output%"
+
+
+ffmpeg -y %tt%  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%"
+
+
+-map 0:v:0 -map 0:a:1 -sn
+-map 0:v:0 序列0(第一個輸入檔案) 輸入v=影像 index=0(第一軌)
+-map 0:a:1 序列0(第一個輸入檔案) 輸入a=聲音 index=1(第二軌)
+-map 0:s:1 序列0(第一個輸入檔案) 輸入s=字幕 index=1(第二軌)
+
+
+
+
+-vf "subtitles=01.mkv"
+-vf "subtitles=01.mkv:si=1"
+
+
+
 -ss 00:10:0.0 -to 00:11:0.0
 -hwaccel cuda -hwaccel_output_format cuda
 

@@ -12,11 +12,16 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0  -af "loudnorm=i=-20" 
 set wh=800
-set tt=-ss 00:6:35.0 -to 00:6:46.0 
+set tt=-ss 0:0:0.0 -to 0:0:10.0 
 echo %tt%
-ffmpeg -y  -i %input% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5  -crf 30 -b:v 1000K -maxrate 1000K -bufsize 500K    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+
+
+
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 40  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+
+
 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
@@ -35,7 +40,21 @@ pause
 
 
 exit 
+
+-c:a libopus
+
 pause
+ -b:v 1000K -maxrate 1000K -bufsize 100K 
+
+-crf 35
+set tt=-ss 00:0:00.0 -to 00:0:10.0 
+
+-crf 30  -b:v 1500K -maxrate 1500K -bufsize 500K 
+
+ -af "loudnorm=i=-20" 
+ -af "loudnorm=i=-20" 
+
+
 -b:v 640K -maxrate 640K -bufsize 64K
 -crf 30
 -b:v 3000K

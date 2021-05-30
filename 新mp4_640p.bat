@@ -16,9 +16,10 @@ echo %nnn%
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
 set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  
-
-
-ffmpeg -y -ss 00:00:00.0 -to 00:1:0.0  -i %input%  %qqq03% -vf "scale=800:800:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
+set wh=1280
+set tt=-ss 00:00:00.0 -to 00:0:10.0 
+echo %tt%
+ffmpeg -y  -i %input% -map 0:v:0 -map 0:a:1 -sn %qqq03% -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 35 "%output%"
 
 
 
@@ -26,14 +27,21 @@ start "" "%output%"
 
 pause
 exit
+set output=_output_a_%nnn%_.mp4
+
+-map 0:v:0 -map 0:a:1 -sn
+-map 0:v:0 序列0(第一個輸入檔案) 輸入v=影像 index=0(第一軌)
+-map 0:a:1 序列0(第一個輸入檔案) 輸入a=聲音 index=1(第二軌)
+-map 0:s:1 序列0(第一個輸入檔案) 輸入s=字幕 index=1(第二軌)
+
 
 ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:360:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
 -ss 00:00:00.0 -to 00:10:0.0 
 
 
--qp 35 固定品質
--cq 35 固定頻寬
+-qp 30 固定品質
+-cq 30 固定頻寬
 ^
 -metadata title="標題" ^
 -metadata ARTIST="ARTIST" ^

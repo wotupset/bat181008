@@ -13,16 +13,25 @@ echo %nnn%
 
 
 set output=_output_vp9_原始大小.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 -an
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -row-mt 1 -aq-mode 0 
+set tt=-ss 00:0:18.0 -to 00:1:0.0 
+echo %tt%
 
-ffmpeg  -y -i %input%  %qqq03%  -c:v libvpx-vp9   -crf 30  -deadline realtime -cpu-used 5  %output%
+ffmpeg -y  -i %input%   -c:v libvpx-vp9 -deadline realtime  -cpu-used 5 -crf 30   %qqq03% %output%
+
+
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 start "" %output%
 
 
 
+
 pause
 exit 
+-deadline realtime -cpu-used 5
+
+-b:v 3000K -maxrate 3000K -bufsize 500K
 -deadline realtime -cpu-used 5
 
  -r 5
