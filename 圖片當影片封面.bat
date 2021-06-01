@@ -12,11 +12,24 @@ set oo3=
 echo %oo3%
 
 
-ffmpeg -y  %oo1%   -r 5 -af "loudnorm=i=-20"  -ss 00:13:00.0 -to 00:16:30.0  "222.mp4"
+ffmpeg -y  %oo1%     -ss 00:2:0.0 -to 00:4:0.0  "FFF.mp4"
 
+
+set qqq03= -pix_fmt yuv420p -ac 2 -r 5 -af "loudnorm=i=-20"
+
+ffmpeg -y  -i "FFF.mp4"    %qqq03%   -c:v h264_nvenc -cq 35 "cover.mp4"
+
+
+del "FFF.mp4"
+start "" "cover.mp4"
 
 pause
 exit
+-map_chapters -1 -map_metadata -1 
+-pix_fmt yuv420p -ac 2 
+
+再轉一次 是避免有些app無法讀取合併後的mp4
+
 -ss 00:4:32.0 -to 00:8:52.0
 
 -t 10
