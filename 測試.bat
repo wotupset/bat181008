@@ -2,15 +2,28 @@
 
 
 
+ffmpeg -i 01.mp4 -i 02.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+
+
+
+pause
+exit
+pause
+
+ffmpeg -i 01.mp4 -i 02.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+
+
+
+ffmpeg -i 01.mp4 -i 02.mp4 -i 03.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] [2:v] [2:a] concat=n=3:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+
 
 
 
 
 echo file '_output_.mp4' >mylist.txt
 
-pause
-exit
-pause
+
+
 ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
 
  -b:v 5M -maxrate 2M -bufsize 2M 

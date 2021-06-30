@@ -1,9 +1,12 @@
 set /p input=檔案:
 
-ffmpeg -y -an -i "%input%" -filter:v "setpts=5.0*PTS" 慢速.webm
+ffmpeg -y -an -i "%input%" -filter:v "setpts=0.5*PTS" aaa.mp4
 
 pause
 exit
+
+-filter:v "setpts=5.0*PTS" 慢速.webm
+-filter:v "setpts=0.5*PTS" 加速速.webm
 
 ffmpeg -y   -i "%input%"    -c:v libvpx-vp9 -crf 10  "vp9_crf10.webm"
 

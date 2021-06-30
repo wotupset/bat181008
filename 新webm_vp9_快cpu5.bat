@@ -12,14 +12,11 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_快.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0  -af "loudnorm=i=-20" 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 -sn -af "loudnorm=i=-22"
 set wh=800
-set tt=-ss 0:0:0.0 -to 0:0:10.0 
+set tt=-ss 0:0:20.725 -to 0:22:0.0 
 echo %tt%
-
-
-
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -deadline realtime  -cpu-used 5  -crf 40  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus -b:a 96K    -crf 35  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
 
 
 
@@ -41,10 +38,22 @@ pause
 
 exit 
 
+-deadline realtime  -cpu-used 5
+
+
+ -b:v 300K -maxrate 300K -bufsize 100K 
+
+
+-crf 45
+
+-af "loudnorm=i=-20" 
+
+ -af "loudnorm=i=-24" 預設=-24  -20變大聲 -30變小聲
+
 -c:a libopus
 
 pause
- -b:v 1000K -maxrate 1000K -bufsize 100K 
+
 
 -crf 35
 set tt=-ss 00:0:00.0 -to 00:0:10.0 
@@ -56,7 +65,7 @@ set tt=-ss 00:0:00.0 -to 00:0:10.0
 
 
 -b:v 640K -maxrate 640K -bufsize 64K
--crf 30
+-crf 30 預設自帶 -b:v 0K
 -b:v 3000K
 -af "loudnorm=i=-20" 
 -g 9999 以幀為單位設置關鍵幀間隔（默認為240）
