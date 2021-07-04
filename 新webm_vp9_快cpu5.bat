@@ -12,11 +12,11 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 -sn -af "loudnorm=i=-22"
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 -sn -af "loudnorm=i=-25" 
 set wh=800
-set tt=-ss 0:0:20.725 -to 0:22:0.0 
+set tt=-ss 0:0:0.0 -to 0:0:0.0 
 echo %tt%
-ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus -b:a 96K    -crf 35  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus -b:a 96K  -deadline realtime  -cpu-used 5  -crf 35  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
 
 
 
@@ -37,6 +37,9 @@ pause
 
 
 exit 
+
+-af "loudnorm=i=-22"
+
 
 -deadline realtime  -cpu-used 5
 

@@ -13,7 +13,7 @@ ffmpeg -decoders >decoders.txt
 
 ffmpeg -hwaccels >hwaccels.txt
 ffmpeg -help >help.txt
-
+ffmpeg -formats >formats.txt
 
 echo file '_output_.mp4' >mylist.txt
 
