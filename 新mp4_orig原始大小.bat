@@ -2,13 +2,13 @@
 
 echo %date%_%time%
 
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%
 
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
+set nnn=%vardate%_%vartime%_640p_%RANDOM%
 echo %nnn%
 
 
@@ -16,9 +16,9 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
-set tt=-ss 00:0:1.0 -to 00:0:35.0 
+set tt=-ss 00:16:48.250 -to 00:17:03.239 
 echo %tt%
-ffmpeg -y %tt% -i %input%    %qqq03%  -c:v h264_nvenc -cq 30  "%output%"
+ffmpeg -y  -i %input%    %qqq03%  -c:v h264_nvenc -cq 30  "%output%"
 
 
 
