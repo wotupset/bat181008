@@ -6,13 +6,4 @@
 
 # haha
 
-![Imgur](https://i.imgur.com/IYStgHr.jpg)
-![Imgur](https://i.imgur.com/SQL83YR.jpg)
-![Imgur](https://i.imgur.com/jj54aTa.jpg)
-![Imgur](https://i.imgur.com/R11gTmN.jpg)
-![Imgur](https://i.imgur.com/8C5eGQx.jpg)
-![Imgur](https://i.imgur.com/B2xDQNm.jpg)
-![Imgur](https://i.imgur.com/TN6Wx7M.jpg)
-![Imgur](https://i.imgur.com/sWSrHT4.jpg)
-![Imgur](https://i.imgur.com/qffIY3u.png)
-![Imgur](https://i.imgur.com/pAaynRS.jpg)
+![](https://files.gitter.im/5fef2da2d73408ce4ff7c97e/oYNq/38.jpg)
