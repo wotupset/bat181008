@@ -6,6 +6,12 @@ ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0  -an  "vp9_lossless.w
 
 pause
 exit
+out%Y-%m-%d_%H-%M-%S.mp4
+
+會以三位數字，自動編號的檔名。
+ffmpeg -i input.mp4 -map 0 -c copy -f segment -segment_time 1800 -reset_timestamps 1 output_%03d.mp4
+
+-c copy -f segment -segment_time 1800 -reset_timestamps 1
 
 
 ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -lossless 1  -vf "scale=800:800:force_original_aspect_ratio=decrease" "vp9_lossless.webm"
