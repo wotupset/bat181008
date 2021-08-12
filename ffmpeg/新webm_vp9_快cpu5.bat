@@ -13,10 +13,15 @@ echo %nnn%
 
 set output=_output_vp9_§Ö.webm
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 -sn 
+
+set wh=480
+set wh=640
 set wh=800
+
 set tt=-ss 0:0:0.0 -to 0:0:0.0 
+set tt=
 echo %tt%
-ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus   -deadline realtime  -cpu-used 5  -crf 34  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus    -crf 35   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
 
 
 
@@ -36,6 +41,9 @@ pause
 
 
 exit 
+
+ -deadline realtime  -cpu-used 5 
+
 set tt=-ss 0:0:0.0 -to 0:0:0.0 
 -deadline realtime  -cpu-used 5  -crf 45
 

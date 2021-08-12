@@ -15,7 +15,7 @@ ffmpeg -hwaccels >hwaccels.txt
 ffmpeg -help >help.txt
 ffmpeg -formats >formats.txt
 
-echo file '_output_.mp4' >mylist.txt
+
 
 
 ffmpeg -version
@@ -24,3 +24,9 @@ cmd
 
 pause
 exit
+
+ffmpeg  -colors 
+
+
+
+echo file '_output_.mp4' >mylist.txt

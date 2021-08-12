@@ -1,14 +1,52 @@
-@echo off
+xcopy *.mp4 .\123\*.mp4
+del *.mp4
+
+pause
+exit
 
 
 
-ffmpeg -i 01.mp4 -i 02.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+
+set ddd=%date:~0,10%
+echo %ddd%
+
+ffmpeg -y -i "_output_a_210804_134441_3034_.mp4" -vf "drawtext= fontfile=111.ttf:  text='%ddd%': x=10:y=10: fontsize=50: fontcolor=white: box=1:boxcolor=black@1:  timecode='00\:00\:00\:000': rate=30: " output.mp4
+
+
+
+cmd
+
+ffmpeg -i "_output_a_210804_134441_3034_.mp4" -vf "drawtext=fontfile=111.ttf: text='%DATE%':timecode='0\:0\:0\:0': r=30: x=10:y=10: fontcolor=white: fontsize=28: box=1: boxcolor=0x00000000@1" -y output.mp4
+
+
+cmd
+
+
+
 
 
 
 pause
 exit
+
+
+ffprobe -select_streams v -show_frames -show_entries frame=pkt_pts_time,pict_type "_output_a_210804_134441_3034_.mp4"
+
 pause
+exit
+
+
+enable='between(t,5,10)': 出現時間
+
+pause
+text='%ddd%_'
+
+text='Wed 29\.06\.2016 / '
+
+
+ffmpeg -i 01.mp4 -i 02.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+
+
 
 ffmpeg -i 01.mp4 -i 02.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
 

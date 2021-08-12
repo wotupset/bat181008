@@ -11,10 +11,19 @@ set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
-set output=_output_vp9_x.webm
+set output=_output_vp9_oped.webm
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1 -aq-mode 0 
+set wh=800
+set wh=640
+set wh=480
 
-ffmpeg -y -i %input% %qqq03%  -c:a libopus  -c:v libvpx-vp9  -deadline realtime  -cpu-used 5   -crf 55    -vf "scale=400:400:force_original_aspect_ratio=decrease"  %output%
+set crf=50
+set crf=40
+
+
+
+
+ffmpeg -y -i %input% %qqq03%  -c:a libopus  -c:v libvpx-vp9   -crf %crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
@@ -33,7 +42,7 @@ pause
 exit 
 pause
 
-
+ -deadline realtime  -cpu-used 5 
 
 -b:a 96K
 
