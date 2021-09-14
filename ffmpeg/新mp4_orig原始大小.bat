@@ -16,10 +16,12 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
-set tt=-ss 0:1:6.5 -to 0:1:25.7
-set tt2=
+set tt=-ss 0:0:5.0 -to 0:0:29.0
+set tt0=
 echo %tt%
-ffmpeg -y %tt% -i %input%    %qqq03%  -c:v h264_nvenc -cq 32  "%output%"
+ffmpeg -y %tt% -i %input%   %qqq03% -c:v h264_nvenc  -qp 30 "%output%"
+
+
 
 
 
@@ -28,13 +30,19 @@ start "" "%output%"
 pause
 exit
 
+ -crf 35
 
+ -c:v h264_nvenc 
+ -c:v libx264
+
+
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 -strftime 1 output_%Y-%m-%d_%H-%M-%S.mp4 ????
 
 -map 0:v:0 -map 0:a:0
 
-ffmpeg -y -ss 00:16:42.132 -to 00:16:46.430 -i %input% %qqq03%   -c:v h264_nvenc  -qp 30  "8-%output%"
+ffmpeg -y -ss 00:16:42.132 -to 00:16:46.430 -i %input% %qqq03%   -c:v h264_nvenc  -qp 35  "8-%output%"
 
 
 ffmpeg -y %tt%  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%"

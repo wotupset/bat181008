@@ -11,17 +11,40 @@ set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
+
+
 set output=_output_vp9_§Ö.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 -sn 
+
+
+set an=-an
+set an=
+
+
+set aq=-aq-mode 0
+set aq=
+
 
 set wh=480
 set wh=640
 set wh=800
 
-set tt=-ss 0:0:0.0 -to 0:0:0.0 
+
+set crf=-crf 50
+
+set crf=-crf 40
+set crf=-crf 30
+set crf=-crf 35
+set crf0=
+
+
+set tt=-ss 0:0:5.0 -to 0:1:0.0 
 set tt=
 echo %tt%
-ffmpeg -y  -i %input% -c:v libvpx-vp9  -c:a libopus    -crf 35   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% -f webm %output%
+
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1   -sn  
+set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
+
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
 
 
@@ -37,10 +60,20 @@ start ""  %output%
 
 
 pause
+exit
+ -deadline realtime 
+
+-row-mt 1 
+-f webm
+
+ -deadline realtime  -cpu-used 4 -crf %crf% 
 
 
-
-exit 
+-aq-mode 0
+-b:a 50K
+-b:v 500K -maxrate 500K -bufsize 100K 
+-b:v 1000K -maxrate 1000K
+-crf %crf%
 
  -deadline realtime  -cpu-used 5 
 

@@ -1,9 +1,67 @@
-xcopy *.mp4 .\123\*.mp4
-del *.mp4
+
+
 
 pause
 exit
+ffmpeg -i "1626561639803.png" -f rawvideo -y mmm.mkv
 
+ffmpeg -i "1626544532020.png" -f rawvideo  - | ffplay -i -
+轉檔後直接撥放
+
+
+ffplay -i "1626544532020.png" -f rawvideo
+
+
+ffmpeg -i 01.mp4 -filter_complex "showwavespic=s=640x120" -frames:v 1 output.png
+ffmpeg -i 01.mp4 -c:v libaom-av1 -crf 35 -b:v 1000k -usage realtime -cpu-used 8 -c:a libopus -f webm -y output.webm
+
+
+-y output.mkv  
+
+-c:a libopus -f webm -y output.webm
+
+
+ffmpeg -hwaccel cuvid -c:v h264_cuvid -i input.mp4 -c:v h264_qsv -c:v h264_qsv -y output.mp4
+使用獨立顯示卡的情況下 不能使用qsv (依賴CPU內建顯示卡)
+
+
+
+-f mpegts output.ts
+
+
+-c:v h264_qsv
+-c:v hevc_qsv 
+-c:v vp9_qsv      
+
+-init_hw_device d3d11va=qsv:MFX_IMPL_hw_any -hwaccel qsv -filter_hw_device qsv
+
+
+.\ffmpeg -y -i "01.mp3" -loop 1 -i "01.jpg" -shortest -map 0:a -map 1:v   -r 120 -c:v h264_nvenc   "FFF.mp4"
+.\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc  "output.mp4"
+del "FFF.mp4"
+
+
+
+
+
+ffmpeg -y -f lavfi -i anullsrc -t 1 "anullsrc.mp3"
+ffmpeg -y -i "anullsrc.mp3" -loop 1 -i "01.jpg" -t 0.1 -map 0:a -map 1:v     "FFF.mp4"
+
+
+
+
+
+
+pause
+exit
+-vf "scale=800:450"
+
+
+-shortest
+ -r 60
+-vf "scale=800:450"
+ -preset faster -tune stillimage
+-loop 1
 
 
 

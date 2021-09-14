@@ -22,5 +22,9 @@ xcopy *.webm .\%nnn%\*.webm
 del *.webm
 
 
+
+exit
 pause
 exit
+
+11

@@ -1,11 +1,19 @@
-set input=_output_a_201003_181723_17922_.mp4
+set /p input=ÀÉ®×:
+
+echo %date%_%time%
+
 
 
 ffmpeg -y -i "%input%" -vf "palettegen" palette.png
-ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=10,paletteuse" output.gif
+ffmpeg -y -i "%input%" -i palette.png  -filter_complex "fps=30,paletteuse" output.gif
 
 pause
 exit
+
+set input=_output_a_201003_181723_17922_.mp4
+
+
+
 
 -vf "scale=400:-1:flags=lanczos,palettegen"
 -filter_complex "fps=15,scale=400:-1:flags=lanczos,paletteuse"
