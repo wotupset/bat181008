@@ -1,5 +1,5 @@
-..\ffmpeg -y -i "01.jpg" -vf "scale=800:600" "01x.jpg" 
-..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "scale=480x360,setsar=1:1" -pix_fmt yuv420p -preset faster -tune stillimage  -an  "01x.mp4"
+..\ffmpeg -y -i "01.jpg" -vf "scale=800:-2" "01x.jpg" 
+..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "setsar=1:1" -c:v h264_nvenc -qp 30   -an  "01x.mp4"
 ..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
 ..\ffmpeg -y -stream_loop 9 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
 del "01x.jpg"
@@ -7,11 +7,11 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y -ss 00:25:0.0 -to 0:28:0.0  -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 00:27:0.0 -to 0:25:0.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
 
-..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 70   -preset faster -tune stillimage "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -cq 30 "cover.mp4"
+..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120  -c:v h264_nvenc -qp 30 -pix_fmt yuv420p -preset fast "FFF.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -qp 30 -preset p2 "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
@@ -20,6 +20,22 @@ del "FFF.mp4"
 
 pause
 exit
+ -af "loudnorm=i=-20" 
+
+-ss 00:8:30.0 -to 0:10:30.0
+-preset fast
+-preset p2  比fast更快的faster
+ -map_chapters -1 -map_metadata -1 
+
+-map 0:a
+-dn disable data
+-pix_fmt yuv420p -preset fast 
+
+-tune stillimage
+
+-qp 30
+-cq 30
+
 -ss 00:7:45.0 -to 0:9:45.0 a
 
 -ss 00:6:55.0 -to 0:8:55.0 c
