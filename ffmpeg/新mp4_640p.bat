@@ -18,13 +18,19 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  
+
+
 set wh=640
-set wh=800
 set wh=1280
-set tt=-ss 00:17:46.2 -to 00:18:28.61 
-set tt2=
+set wh=800
+
+
+set tt=-ss 00:0:1.2 -to 1:0:0.0 
+set tt=
 echo %tt%
-ffmpeg -y %tt% -i %input%  %qqq03% -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 32 "%output%"
+
+
+ffmpeg -y %tt% -i %input%  %qqq03% -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
 
 
@@ -32,6 +38,8 @@ start "" "%output%"
 
 pause
 exit
+-qp 30
+-cq 30
 -map 0:v:0 -map 0:a:1 -sn
 
 set output=_output_a_%nnn%_.mp4

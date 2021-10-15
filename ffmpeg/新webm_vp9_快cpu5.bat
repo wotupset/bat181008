@@ -12,39 +12,45 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 
-
 set output=_output_vp9_快.webm
 
 
 set an=-an
 set an=
 
-
 set aq=-aq-mode 0
 set aq=
 
 
+
+set wh=1440
+set wh=1024
+set wh=1280
+
 set wh=480
+set wh=400
+
 set wh=640
 set wh=800
 
 
-set crf=-crf 50
 
-set crf=-crf 40
+set crf=-crf 50
 set crf=-crf 30
 set crf=-crf 35
-set crf0=
+set crf=-crf 45
+set crf=-crf 40
+set crf=
 
 
-set tt=-ss 0:0:5.0 -to 0:1:0.0 
+set tt=-ss 0:0:0.0 -to 0:0:0.0
 set tt=
 echo %tt%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1   -sn  
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen  
 set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -deadline realtime  -cpu-used 4  -r 25    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
 
 
@@ -61,8 +67,25 @@ start ""  %output%
 
 pause
 exit
- -deadline realtime 
+-af "loudnorm=i=-20"
+ -af "loudnorm=i=-20" 音量正常化
 
+ -b:v 120k -b:a 120k 
+ -deadline realtime  -cpu-used 4
+
+ -tune-content screen
+-b:v 500k  -maxrate 500k -minrate 20k
+
+-dn                 disable data
+-sharpness 7 檔案變大了
+-tile-rows 2 -tile-columns 2 無感?
+-arnr_strength 6 無感?
+ffmpeg -i input.mp4 -c:v libvpx-vp9 -minrate 1M -maxrate 1M -b:v 1M output.webm
+-b:v 1000k  -maxrate 1000k -minrate 100k
+
+
+ -b:v 900K -maxrate 900K -r 30 
+-deadline realtime   -cpu-used 4
 -row-mt 1 
 -f webm
 
