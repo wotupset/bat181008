@@ -1,15 +1,30 @@
+@echo off
+
 set /p input=檔案:
 
-echo %date%_%time%
+
+
+echo %date%_%time% > 時間差.txt
 
 set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vcootime=%time:~0,2%
 
+
 if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
 set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 
+
+
+
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
+echo %nnn% 
+
+set /a time_hms1=%time:~0,2% *60 *60 + %time:~3,2% *60 + %time:~6,2%
+
+
+
+
+
 
 
 set output=_output_vp9_快.webm
@@ -29,16 +44,17 @@ set wh=1280
 
 set wh=480
 set wh=400
-
-set wh=640
 set wh=800
+set wh=640
 
 
 
-set crf=-crf 50
+
+
 set crf=-crf 30
-set crf=-crf 35
 set crf=-crf 45
+set crf=-crf 35
+set crf=-crf 50
 set crf=-crf 40
 set crf=
 
@@ -47,10 +63,10 @@ set tt=-ss 0:0:0.0 -to 0:0:0.0
 set tt=
 echo %tt%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen  
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen 
 set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -deadline realtime  -cpu-used 4  -r 25    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
 
 
@@ -65,9 +81,54 @@ start ""  %output%
 
 
 
+echo %date%_%time% >> 時間差.txt
+
+set /a time_hms2=%time:~0,2% *60 *60 + %time:~3,2% *60 + %time:~6,2%
+set /a time_hms3=%time_hms2% - %time_hms1%
+echo %time_hms3%
+
 pause
 exit
--af "loudnorm=i=-20"
+ -deadline realtime  -cpu-used 4
+預設=32秒
+cpu4=18秒
+cpu4+rt=16秒
+rt=94秒
+
+set vcootime_hh=%time:~0,2%
+set vcootime_mm=%time:~3,2%
+set vcootime_ss=%time:~6,2%
+
+echo %vcootime_hh%
+echo %vcootime_mm%
+echo %vcootime_ss%
+
+set vcootime_hh2=%time:~0,2%
+set vcootime_mm2=%time:~3,2%
+set vcootime_ss2=%time:~6,2%
+
+echo %vcootime_hh2%
+echo %vcootime_mm2%
+echo %vcootime_ss2%
+
+set /a vcootime_hh3 = %vcootime_hh2% - %vcootime_hh%
+set /a vcootime_mm3 = %vcootime_mm2% - %vcootime_mm%
+set /a vcootime_ss3 = %vcootime_ss2% - %vcootime_ss%
+
+echo %vcootime_hh3%
+echo %vcootime_mm3%
+echo %vcootime_ss3%
+
+
+
+-af "loudnorm=i=-20,volume=5dB" 
+
+-af "volume=5dB"
+ -af "loudnorm=i=-15"
+-deadline realtime  -cpu-used 4
+
+
+-af "loudnorm=i=-25"
  -af "loudnorm=i=-20" 音量正常化
 
  -b:v 120k -b:a 120k 

@@ -1,11 +1,23 @@
 set /p input=檔案:
 
-ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0  -an  "vp9_lossless.webm"
-
+ffmpeg -y -ss 0:0:0.0 -to 0:0:19.5 -i "%input%"  -crf 10 -b:v 0k  -pix_fmt yuv420p   "h264_lossless.mp4"
 
 
 pause
 exit
+
+
+You can use -crf 0 to create a lossless video.
+
+
+
+ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0   "vp9_lossless.webm"
+
+ffmpeg -y -i "%input%"  -crf 10 -b:v 0k  -pix_fmt yuv420p   "h264_lossless.mp4"
+
+ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0  -an  "vp9_lossless.webm"
+
+
 out%Y-%m-%d_%H-%M-%S.mp4
 
 會以三位數字，自動編號的檔名。

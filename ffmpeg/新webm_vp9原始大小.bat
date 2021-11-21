@@ -18,10 +18,10 @@ set an=-an
 set an=
 
 set crf=-crf 50
-
 set crf=-crf 30
 set crf=-crf 35
 set crf=-crf 40
+set crf=-crf 20
 set crf=
 
 
@@ -32,7 +32,7 @@ echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -row-mt 1 -aq-mode 0  -sn -dn  %an%
 
-ffmpeg -y -i %input%   -c:v libvpx-vp9  -deadline realtime  -cpu-used 4  -r 25  %qqq03%  %output%
+ffmpeg -y -i %input%   -c:v libvpx-vp9    %crf%   %qqq03%  %output%
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
@@ -47,7 +47,7 @@ exit
 
 -deadline realtime  -cpu-used 4 
 
- %crf% 
+
 
 
 -aq-mode 0

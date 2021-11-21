@@ -1,8 +1,36 @@
 
 
 
+ffmpeg -ss 0:0:0.0 -to 0:0:10.0  -i "01.mp4" -vf "setsar=sar=16/9,setdar=dar=200/200" -y "test.mp4"
+
+
+
+
+
 pause
 exit
+
+ffmpeg -i aa.mp3 -i bb.mp3 -filter_complex "amix=inputs=2"   -shortest output.mp3 
+
+
+
+set /p input=檔案:
+
+
+ffmpeg -y -ss 0:0:0.0 -to 0:0:1.0  -i "%input%" -r 30 -preset picture  -s 800:450 output.webp
+
+pause
+exit
+
+[0:a]volume=0.8[a0];[1:a]volume=0.8[a1];
+
+
+ffmpeg -i "01.wav"  -map 0:a  -y "01.mp3"
+mp3轉檔 去除內建的封面圖片(附加資源)
+
+
+-map_chapters -1 -map_metadata -1
+
 ffmpeg -i "1626561639803.png" -f rawvideo -y mmm.mkv
 
 ffmpeg -i "1626544532020.png" -f rawvideo  - | ffplay -i -

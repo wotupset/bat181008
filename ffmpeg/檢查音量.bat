@@ -1,15 +1,17 @@
 @echo off
 
+set /p input=ÀÉ®×:
 
+echo %date%_%time%
 
-ffmpeg -i _output_a_210517_232416_10993_.mp4 -af "volumedetect" -f null -y nul
-
+ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 
 
 
 pause
 exit
 pause
+/dev/null
 
  -b:v 5M -maxrate 2M -bufsize 2M 
 
