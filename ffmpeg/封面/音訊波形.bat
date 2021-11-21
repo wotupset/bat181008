@@ -1,4 +1,5 @@
 ..\ffmpeg -i "01.mp3" -filter_complex "showwavespic=s=1000x200" -frames:v 1 -y output.png
+..\ffmpeg -i "01.mp3" -af "volumedetect" -f null -y nul
 pause
 exit
 

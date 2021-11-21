@@ -1,5 +1,4 @@
-..\ffmpeg -y -i "01.jpg" -vf "scale=800:-2" "01x.jpg" 
-..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "setsar=1:1" -c:v h264_nvenc -qp 30   -an  "01x.mp4"
+..\ffmpeg -y -loop 1 -i "01.webp" -t 10   -vf "setsar=1:1" -c:v h264_nvenc  -an  "01x.mp4"
 ..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
 ..\ffmpeg -y -stream_loop 9 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
 del "01x.jpg"
@@ -7,19 +6,42 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 00:27:0.0 -to 0:25:0.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:15:20.0 -to 0:19:30.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
 
-..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120  -c:v h264_nvenc -qp 30 -pix_fmt yuv420p -preset fast "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -qp 30 -preset p2 "cover.mp4"
+16.0
+18.0
+
+
+
+..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120 -pix_fmt yuv420p -c:v h264_nvenc  "FFF.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -cq 35 -preset p1   "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
 del "FFF.mp4"
 
 
+..\ffmpeg -i "cover.mp4" -af "volumedetect" -f null -y nul
+
+
+
+
 pause
 exit
+
+-qp 30 
+-qp 35
+
+-cq 30
+-cq 35
+-preset p1 對應的是fastest
+
+圖片縮放
+..\ffmpeg -y -i "01.webp" -vf "scale=800:-2" "01x.jpg" 
+..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "setsar=1:1" -c:v h264_nvenc   -an  "01x.mp4"
+
+
  -af "loudnorm=i=-20" 
 
 -ss 00:8:30.0 -to 0:10:30.0
