@@ -46,9 +46,9 @@ set tt=
 echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn -an 
-set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -deadline realtime  -cpu-used 4    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
+
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03%  %output%
 
 
 
@@ -65,6 +65,8 @@ start ""  %output%
 
 pause
 exit
+set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
+
 
  -tune-content screen
 

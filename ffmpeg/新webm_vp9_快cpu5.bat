@@ -2,9 +2,33 @@
 
 set /p input=檔案:
 
-
-
 echo %date%_%time% > 時間差.txt
+
+IF %time:~6,1% == 0 (
+set  time_ss=%time:~7,1%
+) ELSE (
+set  time_ss=%time:~6,2%
+) 
+
+IF %time:~3,1% == 0 (
+set time_ii=%time:~4,1%
+) ELSE (
+set time_ii=%time:~3,2%
+) 
+
+IF "%time:~0,1%" == " " (
+set time_hh=%time:~1,1%
+) ELSE (
+set time_hh=%time:~0,2%
+) 
+
+set /a time_hms1 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
+echo 時間1=%time_hms1%
+
+
+
+
+
 
 set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vcootime=%time:~0,2%
@@ -14,12 +38,10 @@ if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
 set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 
 
-
-
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn% 
 
-set /a time_hms1=%time:~0,2% *60 *60 + %time:~3,2% *60 + %time:~6,2%
+
 
 
 
@@ -44,17 +66,19 @@ set wh=1280
 
 set wh=480
 set wh=400
-set wh=800
-set wh=640
 
+set wh=640
+set wh=800
 
 
 
 
 set crf=-crf 30
-set crf=-crf 45
-set crf=-crf 35
+
 set crf=-crf 50
+set crf=-crf 45
+
+set crf=-crf 35
 set crf=-crf 40
 set crf=
 
@@ -64,7 +88,7 @@ set tt=
 echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen 
-set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
+set qqq04= %an% %aq% %crf% 
 
 ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
@@ -83,12 +107,47 @@ start ""  %output%
 
 echo %date%_%time% >> 時間差.txt
 
-set /a time_hms2=%time:~0,2% *60 *60 + %time:~3,2% *60 + %time:~6,2%
+
+IF %time:~6,1% == 0 (
+set  time_ss=%time:~7,1%
+) ELSE (
+set  time_ss=%time:~6,2%
+) 
+
+IF %time:~3,1% == 0 (
+set time_ii=%time:~4,1%
+) ELSE (
+set time_ii=%time:~3,2%
+) 
+
+IF "%time:~0,1%" == " " (
+set time_hh=%time:~1,1%
+) ELSE (
+set time_hh=%time:~0,2%
+) 
+
+set /a time_hms2 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
+echo 時間2=%time_hms2%
 set /a time_hms3=%time_hms2% - %time_hms1%
-echo %time_hms3%
+echo 耗時=%time_hms3%
+
+
+
+
 
 pause
 exit
+
+@echo off
+
+
+
+-af "volume=-5dB"
+ -tune-content screen 
+
+-metadata DATE_ENCODED="%nnn%" 
+
+
  -deadline realtime  -cpu-used 4
 預設=32秒
 cpu4=18秒

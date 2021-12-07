@@ -1,135 +1,115 @@
-set /p input=檔案:
+@echo off
 
-echo %date%_%time%
 
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
 
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
+echo %date%
+echo %time%
 
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_640p_%RANDOM%
 echo %nnn%
 
 
-set output=_output_vp9_原始大小.webm
-
-set an=-an
-set an=
-
-set crf=-crf 50
-set crf=-crf 30
-set crf=-crf 35
-set crf=-crf 40
-set crf=-crf 20
-set crf=
+set /p input=檔案:
+set output=_output_a_%nnn%_.mp4
+set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2 
 
 
-set tt=-ss 00:0:0.0 -to 00:0:35.0 
+set wh=640
+set wh=1280
+set wh=800
+set wh=480
+
+
+set tt=-ss 00:0:15.0 -to 0:1:15.0 
 set tt=
 echo %tt%
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -row-mt 1 -aq-mode 0  -sn -dn  %an%
 
-ffmpeg -y -i %input%   -c:v libvpx-vp9  -cpu-used 4   %crf%   %qqq03%  %output%
-
-ffmpeg -i %output% -af "volumedetect" -f null -y nul
-
-start "" %output%
+ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=1280:720,setsar=1/1" -c:v h264_nvenc -qp 30 "%output%"
 
 
 
+start "" "%output%" 
 
 pause
-exit 
--deadline realtime  -cpu-used 4 
-
--deadline realtime  -cpu-used 4 
-
+exit
+ -af "loudnorm=i=-30"
+-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"
 
 
+-qp 30 較小
+-cq 30 較大
 
--aq-mode 0
+-map 0:v:0 -map 0:a:1 -sn
 
+set output=_output_a_%nnn%_.mp4
 
--af "loudnorm=i=-22"
-
--deadline realtime -cpu-used 5
-
--b:v 3000K -maxrate 3000K -bufsize 500K
--deadline realtime -cpu-used 5
-
- -r 5
--af "loudnorm=i=-20"
-
--deadline realtime -cpu-used 5
--deadline realtime -cpu-used 8 
--c:v libvpx-vp9 
--c:v libvpx
-
-pause
--aq-mode 2  沒差別?
--crf 20
-
--movflags faststart
--c:v libvpx-vp9 -crf 25  -deadline realtime -cpu-used 8 
--c:v vp9_qsv
-
--b:a 32k 
--threads 4 -speed 4
--row-mt 1 -tile-rows 1 
--row-mt 1 -tile-rows 1 -tile-columns 1
--crf 10
--crf 20 -b:v 0k 
- -deadline realtime -cpu-used 8
- -b:v 1000k  -sharpness 1 -tune psnr -quality best -deadline best 
-
--row-mt 1
+-map 0:v:0 -map 0:a:1 -sn
+-map 0:v:0 序列0(第一個輸入檔案) 輸入v=影像 index=0(第一軌)
+-map 0:a:1 序列0(第一個輸入檔案) 輸入a=聲音 index=1(第二軌)
+-map 0:s:1 序列0(第一個輸入檔案) 輸入s=字幕 index=1(第二軌)
 
 
--aq-mode 0 
--crf 25 -b:v 0
- -c:a libopus
-ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
-ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
+ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:360:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
 
--ss 00:0:00.0 -t 00:0:30.0
+-ss 00:00:00.0 -to 00:10:0.0 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
+-qp 30 固定品質
+-cq 30 固定頻寬
+^
 -metadata title="標題" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
 -metadata description="description" ^
 -metadata copyright="%nnn%" 
 
-
--c:v copy -c:a copy
-
--c:v libvpx-vp9 -crf 30 -b:v 0
--c:v libvpx-vp9 -b:v 1M
--c:v libvpx-vp9 -pix_fmt yuv420p
-
--r 30
--g 30
--c:v libvpx -cpu-used 2  -speed 4
+-vf "scale=1280:720"
+-vf "scale=1280:720,setsar=1/1"
+-vf "scale=1280:720:force_original_aspect_ratio=decrease"
 
 
--c:v libvpx -deadline realtime -cpu-used 2
--c:v libvpx -deadline realtime
+-aspect 16:9 
 
-_output_aa.mp4
+-pix_fmt yuv420p 8位元
+-pix_fmt yuv420p10le 10位元(x265) 
+-pix_fmt yuv420p12le 12位元(x265) 
 
- -speed 4
--ss 00:20:00.0 -to 00:20:30.0
--threads 8 
--speed 4
--speed 1
+-qp 30
+-cq 30
 
--s 640x360
--s 400x300
--s 360x640
+pause
+-c:v libx264
+-c:v h264_nvenc
+-preset fast 
+-preset veryfast 
+-crf 20 -b:v 1000k
+-ss 00:00:00.0 -to 00:10:0.0 
+
+  -preset veryfast -tune fastdecode
+ -preset veryfast -tune fastdecode
+
+set ppp02= -ss 00:00:05.5 -t 00:00:8.5
+set ppp03= -map 0:0 -map 0:2
+
+
+ -vf "scale=640:640:force_original_aspect_ratio=decrease:flags=lanczos" 
+
+
+%ppp02%
+
+ -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
+
+-ss 00:00:00.0 -to 00:00:41.6
+
+-preset veryfast -tune fastdecode
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 

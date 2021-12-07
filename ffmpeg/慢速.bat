@@ -1,6 +1,6 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y -an -i "%input%" -filter:v "setpts=0.5*PTS" aaa.mp4
+ffmpeg -y -an -i "%input%" -filter:v "setpts=2.0*PTS" aaa.mp4
 
 pause
 exit

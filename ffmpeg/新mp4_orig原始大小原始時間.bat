@@ -15,7 +15,7 @@ echo %nnn%
 
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
-set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
+set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -af "loudnorm=i=-30"
 set tt=-ss 0:12:31.369 -to 0:12:34.798
 set tt=
 echo %tt%
