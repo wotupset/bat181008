@@ -1,3 +1,31 @@
+@echo off 
+echo %date%_%time% > ®É¶¡®t.txt
+
+
+IF %time:~6,1% == 0 (
+set  time_ss=%time:~7,1%
+) ELSE (
+set  time_ss=%time:~6,2%
+) 
+
+IF %time:~3,1% == 0 (
+set time_ii=%time:~4,1%
+) ELSE (
+set time_ii=%time:~3,2%
+) 
+
+IF "%time:~0,1%" == " " (
+set time_hh=%time:~1,1%
+) ELSE (
+set time_hh=%time:~0,2%
+) 
+
+set /a time_hms1 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
+echo ®É¶¡1=%time_hms1%
+
+
+
+
 ..\ffmpeg -y -loop 1 -i "01.webp" -t 10   -vf "setsar=1:1" -c:v h264_nvenc  -an  "01x.mp4"
 ..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
 ..\ffmpeg -y -stream_loop 9 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
@@ -6,16 +34,16 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 0:15:20.0 -to 0:19:30.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:17:12.0 -to 0:20:2.0 -i "01.mp3"  -f mp3  "01x.mp3"
+
+17.12
+20.2
 
 
-16.0
-18.0
+..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -map_chapters -1 -map_metadata -1   -c:v copy "FFF.mp4"
 
 
-
-..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120 -pix_fmt yuv420p -c:v h264_nvenc  "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -cq 35 -preset p1   "cover.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -pix_fmt yuv420p -c:v h264_nvenc -cq 35 -preset p1   "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
@@ -27,17 +55,55 @@ del "FFF.mp4"
 
 
 
+
+echo %date%_%time% >> ®É¶¡®t.txt
+
+IF %time:~6,1% == 0 (
+set  time_ss=%time:~7,1%
+) ELSE (
+set  time_ss=%time:~6,2%
+) 
+
+IF %time:~3,1% == 0 (
+set time_ii=%time:~4,1%
+) ELSE (
+set time_ii=%time:~3,2%
+) 
+
+IF "%time:~0,1%" == " " (
+set time_hh=%time:~1,1%
+) ELSE (
+set time_hh=%time:~0,2%
+) 
+
+set /a time_hms2 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
+echo ®É¶¡2=%time_hms2%
+set /a time_hms3=%time_hms2% - %time_hms1%
+echo ¯Ó®É=%time_hms3%
+
+
+
+
+
+
+
+
+
+
+
 pause
 exit
+
+..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120 -pix_fmt yuv420p -c:v h264_nvenc  "FFF.mp4"
 
 -qp 30 
 -qp 35
 
 -cq 30
 -cq 35
--preset p1 å°æ‡‰çš„æ˜¯fastest
+-preset p1 ¹ïÀ³ªº¬Ofastest
 
-åœ–ç‰‡ç¸®æ”¾
+¹Ï¤ùÁY©ñ
 ..\ffmpeg -y -i "01.webp" -vf "scale=800:-2" "01x.jpg" 
 ..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "setsar=1:1" -c:v h264_nvenc   -an  "01x.mp4"
 
@@ -46,7 +112,7 @@ exit
 
 -ss 00:8:30.0 -to 0:10:30.0
 -preset fast
--preset p2  æ¯”fastæ›´å¿«çš„faster
+-preset p2  ¤ñfast§ó§Öªºfaster
  -map_chapters -1 -map_metadata -1 
 
 -map 0:a
@@ -62,7 +128,7 @@ exit
 
 -ss 00:6:55.0 -to 0:8:55.0 c
 
-å¹€æ•¸ä¸å¤ é«˜ å°é¢å½±ç‰‡å¾Œé¢æœƒæœ‰ç©ºç™½æ™‚é–“
+´V¼Æ¤£°÷°ª «Ê­±¼v¤ù«á­±·|¦³ªÅ¥Õ®É¶¡
  -r 120
 
  -preset faster -tune stillimage
@@ -98,7 +164,7 @@ exit
 
 
 -filter:v "setpts=0.016667*PTS"
-è¿™æ˜¯èµ·åˆ°åŠ é€Ÿä½œç”¨çš„å…³é”®å‚æ•°ï¼Œ 1/60 = 0.0166667ï¼Œå› æ­¤è¿™é‡Œè¿™æ ·å†™
+?¬O°_¨ì¥[³t§@¥Îªº????¡A 1/60 = 0.0166667¡A¦]¦¹?¨½???
 
 
 -preset faster 
@@ -121,15 +187,15 @@ exit
 
 
 
-å†è½‰ä¸€æ¬¡ æ˜¯é¿å…æœ‰äº›appç„¡æ³•è®€å–åˆä½µå¾Œçš„mp4
+¦AÂà¤@¦¸ ¬OÁ×§K¦³¨ÇappµLªkÅª¨ú¦X¨Ö«áªºmp4
 
 -ss 00:4:32.0 -to 00:8:52.0
 
 -t 10
 -shortest
 
--map 0:a -map 1:v å–ç¬¬ä¸€å€‹æª”æ¡ˆçš„éŸ³è»Œ å–ç¬¬äºŒå€‹æª”æ¡ˆçš„å½±åƒ
--f lavfi -i anullsrc  è™›æ“¬ç©ºç™½éŸ³è»Œ
+-map 0:a -map 1:v ¨ú²Ä¤@­ÓÀÉ®×ªº­µ­y ¨ú²Ä¤G­ÓÀÉ®×ªº¼v¹³
+-f lavfi -i anullsrc  µêÀÀªÅ¥Õ­µ­y
 -vf scale=320:240
 
--vf scale=iw*2:ih   iw =è¼¸å…¥å¯¬åº¦ï¼Œih =è¼¸å…¥é«˜åº¦ 
+-vf scale=iw*2:ih   iw =¿é¤J¼e«×¡Aih =¿é¤J°ª«× 
