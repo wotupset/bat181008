@@ -1,0 +1,10 @@
+https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg
+輸出格式entscape
+輸出網域
+.youtube.com
+accounts.google.com
+.google.com
+.google.com.tw（如果有的話）
+
+curl -b cookie.txt --cookie-jar cookiejar.txt 'https://youtube.com'
+
