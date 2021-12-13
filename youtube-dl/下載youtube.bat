@@ -1,6 +1,7 @@
 @echo off
 
 
+
 :top
 
 
@@ -8,12 +9,14 @@ set /p poi=youtube網址:
 echo %poi%
 
 
+set qq01=-o yt-%%(title)s-%%(id)s.%%(ext)s
+echo %qq01%
 
 
 
 
 
-youtube-dl -f bestvideo[ext=mp4]+bestaudio[ext=m4a]   %poi%
+youtube-dl %qq01% --limit-rate 2M  -f bestvideo[ext=mp4]+bestaudio[ext=m4a]   %poi%
 
 
 
@@ -23,6 +26,7 @@ goto top
 
 pause
 exit
+--cookies=cookiejar.txt
 
 裁剪秒數 但依然要下載完整影片
 youtube-dl --postprocessor-args "-ss 0:9:0 -to 0:9:10" https://www.youtube.com/watch?v=OCmqTRHOLNw
