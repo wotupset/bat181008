@@ -1,10 +1,11 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y -ss 0:0:0.0 -to 0:0:19.5 -i "%input%"  -crf 10 -b:v 0k  -pix_fmt yuv420p   "h264_lossless.mp4"
+ffmpeg -y  -i "%input%"  -crf 10 -b:v 0   "h264_lossless.mp4"
 
 
 pause
 exit
+-ss 0:0:0.0 -to 0:0:19.5
 
 
 You can use -crf 0 to create a lossless video.

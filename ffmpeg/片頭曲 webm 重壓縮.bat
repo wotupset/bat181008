@@ -23,10 +23,10 @@ set crf=-crf 40
 set crf=-crf 55
 set crf=-crf 45
 set crf=-crf 40
+set crf=
 
 
-
-ffmpeg -y -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
@@ -44,7 +44,7 @@ pause
 
 exit 
 pause
-
+-b:a 50K -b:v 500K
  -deadline realtime  -cpu-used 5 
 
 -b:a 96K

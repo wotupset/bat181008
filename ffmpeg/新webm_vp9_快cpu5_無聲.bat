@@ -12,7 +12,7 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 
-set output=_output_vp9_快.webm
+set output=_output_vp9_快_無聲.webm
 
 
 set an=-an
@@ -27,10 +27,13 @@ set wh=1440
 set wh=1024
 set wh=1280
 
-set wh=480
-set wh=400
-set wh=640
+
 set wh=800
+
+set wh=400
+set wh=480
+set wh=640
+
 
 
 set crf=-crf 50
@@ -44,6 +47,7 @@ set crf=
 set tt=-ss 0:0:0.0 -to 0:0:0.0
 set tt=
 echo %tt%
+
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn -an 
 
@@ -65,6 +69,8 @@ start ""  %output%
 
 pause
 exit
+ -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,unsharp=5:5:1.0:5:5:0.0"
+
 set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 
 
 

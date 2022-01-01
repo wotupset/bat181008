@@ -1,27 +1,29 @@
-..\ffmpeg -y -i "01.jpg" -vf "scale=800:600" "01x.jpg" 
 
 
-..\ffmpeg -y -loop 1 -i "01x.jpg" -t 10   -vf "scale=480x360,setsar=1:1" -pix_fmt yuv420p -preset faster -tune stillimage  -an  "01x.mp4"
-..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
-..\ffmpeg -y -stream_loop 5 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
-del "01x.jpg"
+
+.\ffmpeg -y -loop 1 -i "01.jpg" -t 10   -an  "01x.mp4"
+.\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
+.\ffmpeg -y -stream_loop 5 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
 del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y -ss 00:8:45.0 -to 00:11:0.0  -i "01.mp3"  -f mp3  "01x.mp3"
 
 
-..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120   -preset faster -tune stillimage "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -c:v h264_nvenc -cq 35 "cover.mp4"
 
-del "01x.mp3"
+.\ffmpeg -y -i "01.mp4" -i "01x_loop5.mp4" -shortest -r 120  -map 0:a -map 1:v  "FFF.mp4"
+.\ffmpeg -y -i "FFF.mp4"   -c:v h264_nvenc  -r 5  -pix_fmt yuv420p   "cover.mp4"
+
 del "01x_loop5.mp4"
 del "FFF.mp4"
 
 
 pause
 exit
+-cq 35
+
+..\ffmpeg -y -i "01.jpg" -vf "scale=800:600" "01x.jpg" 
+..\ffmpeg -y -ss 00:8:45.0 -to 00:11:0.0  -i "01.mp3"  -f mp3  "01x.mp3"
 
 
 
