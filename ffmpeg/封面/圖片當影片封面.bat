@@ -34,13 +34,16 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 0:17:12.0 -to 0:20:2.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:11:30.0 -to 0:14:30.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
-17.12
-20.2
+
+12.30
+14.30
+
 
 
 ..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -map_chapters -1 -map_metadata -1   -c:v copy "FFF.mp4"
+
 
 
 ..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -pix_fmt yuv420p -c:v h264_nvenc -cq 35 -preset p1   "cover.mp4"
