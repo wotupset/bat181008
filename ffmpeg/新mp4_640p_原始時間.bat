@@ -11,7 +11,7 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_640p_%RANDOM%
+set nnn=%vardate%_%vartime%_%RANDOM%_640p
 echo %nnn%
 
 
@@ -21,7 +21,8 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 
 
 
-
+set wh=1280
+set wh0=
 
 set tt=-ss 00:0:0.0 -to 0:1:30.0 
 set tt=
@@ -29,7 +30,7 @@ echo %tt%
 
 
 
-ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=1280:960,setsar=1/1" -c:v h264_nvenc -cq  30 "%output%"
+ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1" -c:v h264_nvenc  "%output%"
 
 
 
@@ -37,6 +38,9 @@ start "" "%output%"
 
 pause
 exit
+-vf "scale=1280:720,setsar=1/1"
+-vf "scale=720:1280,setsar=1/1"
+
  -af "loudnorm=i=-30"
 -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"
 

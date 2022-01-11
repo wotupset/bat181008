@@ -16,16 +16,18 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
-set tt=-ss 00:5:53.0 -to 00:6:15.0 
+set tt=-ss 0:8:16.0 -to 0:10:16.0
 set tt0=
 echo %tt%
-ffmpeg -y %tt% -i %input%   %qqq03% -c:v h264_nvenc  -qp 30    "%output%"
+ffmpeg -y %tt% -i %input%   %qqq03% -c:v h264_nvenc  -qp 30   "%output%"
 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 
 start "" "%output%" 
+
+
 
 
 

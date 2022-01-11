@@ -12,12 +12,12 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_oped.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -tune-content screen
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn 
 
 set wh=800
 set wh=640
-set wh=400
 set wh=480
+set wh=400
 
 set crf=-crf 40
 set crf=-crf 55
@@ -26,7 +26,7 @@ set crf=-crf 40
 set crf=
 
 
-ffmpeg -y -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
+ffmpeg -y -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 150K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F
@@ -44,6 +44,8 @@ pause
 
 exit 
 pause
+
+-tune-content screen
 -b:a 50K -b:v 500K
  -deadline realtime  -cpu-used 5 
 

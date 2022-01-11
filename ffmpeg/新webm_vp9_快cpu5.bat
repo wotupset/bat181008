@@ -58,6 +58,9 @@ set an=
 set aq=-aq-mode 0
 set aq=
 
+set af=-af "loudnorm=i=-22" 
+set af=-af "volume=+10dB"
+set af=
 
 
 set wh=1440
@@ -65,11 +68,11 @@ set wh=1024
 set wh=1280
 
 set wh=480
-
 set wh=800
-set wh=400
-set wh=640
 
+set wh=400
+
+set wh=640
 
 
 set crf=-crf 30
@@ -79,9 +82,8 @@ set crf=-crf 50
 
 set crf=-crf 25
 set crf=-crf 35
-
-set crf=-crf 45
 set crf=-crf 40
+set crf=-crf 45
 set crf=
 
 
@@ -90,7 +92,7 @@ set tt=
 echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen  
-set qqq04= %an% %aq% %crf% 
+set qqq04= %an% %af% %aq% %crf% 
 
 ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
