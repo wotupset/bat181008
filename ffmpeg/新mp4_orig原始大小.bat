@@ -16,10 +16,10 @@ echo %nnn%
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
-set tt=-ss 0:8:16.0 -to 0:10:16.0
+set tt=-ss 00:6:5.0 -to 0:6:45.0 
 set tt0=
 echo %tt%
-ffmpeg -y %tt% -i %input%   %qqq03% -c:v h264_nvenc  -qp 30   "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%    -c:v h264_nvenc -rc constqp -qp 25    -y "%output%"
 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
@@ -34,6 +34,16 @@ start "" "%output%"
 
 pause
 exit
+
+-vf "setsar=1/1,setdar=16/9" 
+-c:v h264_nvenc -rc vbr -cq 25   檔案較大 
+-c:v h264_nvenc -rc constqp -qp 25  檔案較小 
+-b:v 0K 
+
+-map 0:v:0 -map 0:a:0
+-map 0:v:0 -map 0:a:0 -vf "setsar=1/1"
+
+-c:v h264_nvenc 
  -vf "unsharp=5:5:1.0:5:5:0.0"
  -vf "unsharp=5:5:1.0:5:5:0.0"
 

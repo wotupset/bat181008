@@ -26,13 +26,13 @@ set crf=
 
 
 set tt=-ss 00:5:53.0 -to 00:6:15.0 
-set tt0=
+set tt=
 echo %tt%
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -row-mt 1   -sn -dn  %an%
 
-ffmpeg -y -i %input%   -c:v libvpx-vp9  -cpu-used 4   %crf%   %qqq03%  -vf "smartblur=0.5:0.5:0"  %output%
+ffmpeg -y -i %input%   -c:v libvpx-vp9  -cpu-used 4   %crf%   %qqq03%    %output%
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
@@ -43,6 +43,8 @@ start "" %output%
 
 pause
 exit 
+-vf "smartblur=0.5:0.5:0"
+
 -vf "smartblur=1:-1:0" ¾U§Q?
 -vf "smartblur=1:1:0" ¼Ò½k
 

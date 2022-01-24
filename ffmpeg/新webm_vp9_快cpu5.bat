@@ -46,9 +46,6 @@ echo %nnn%
 
 
 
-
-
-
 set output=_output_vp9_§Ö.webm
 
 
@@ -67,34 +64,34 @@ set wh=1440
 set wh=1024
 set wh=1280
 
-set wh=480
+
 set wh=800
 
 set wh=400
+set wh=480
+set wh=540
 
+set wh=480
 set wh=640
 
 
 set crf=-crf 30
-
 set crf=-crf 50
-
-
 set crf=-crf 25
 set crf=-crf 35
-set crf=-crf 40
 set crf=-crf 45
+set crf=-crf 40
 set crf=
 
 
-set tt=-ss 0:0:0.0 -to 0:7:0.0
+set tt=-ss 0:0:0.0 -to 0:0:10.0
 set tt=
 echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -row-mt 1  -sn -dn  -tune-content screen  
 set qqq04= %an% %af% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -cpu-used 4   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
+ffmpeg -y %tt% -i %input%  -c:v libvpx-vp9  -c:a libopus   -cpu-used 4   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03% %qqq04%  %output%
 
 
 
@@ -141,6 +138,8 @@ echo ¯Ó®É=%time_hms3%
 
 pause
 exit
+-map 0:v:0 -map 0:a:0
+
 -af "loudnorm=i=-25" 
 
 ,unsharp=5:5:1.0:5:5:0.0

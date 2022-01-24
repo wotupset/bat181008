@@ -22,13 +22,13 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 set wh=1280
 set wh0=
 
-set tt=-ss 0:0:25.0 -to 0:4:25.0
+set tt=-ss 00:1:40.0 -to 0:2:15.0 
 set tt0=
 echo %tt%
 
 
 
-ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc  "%output%"
+ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"    -c:v h264_nvenc -rc constqp -qp 25   "%output%"
 
 
 
@@ -36,6 +36,12 @@ start "" "%output%"
 
 pause
 exit
+-vf "setsar=1/1,setdar=16/9" 
+-c:v h264_nvenc -rc vbr -cq 25   檔案較大 
+-c:v h264_nvenc -rc constqp -qp 25  檔案較小 
+-b:v 0K 
+
+
 -vf "scale=1280:720,setsar=1/1"
 -vf "scale=720:1280,setsar=1/1"
 

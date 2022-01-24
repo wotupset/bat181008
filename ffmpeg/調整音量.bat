@@ -1,13 +1,26 @@
+@echo off
 
-ffmpeg -i 111.mp4 -af "volumedetect" -f null -y nul
+set /p input=ÀÉ®×:
 
-ffmpeg -i 111.mp4 -af "loudnorm=i=-5" -c:v copy -y 1234.mp4
+echo %date%_%time%
 
-ffmpeg -i 1234.mp4 -af "volumedetect" -f null -y nul
+
+
+ffmpeg -i %input% -af "volume=-10dB" -c:v copy -y FFF.mp4
+
+ffmpeg -i FFF.mp4 -af "volumedetect" -f null -y nul
+
+
+
+
+
 
 pause
 exit
 pause
+
+ffmpeg -i 111.mp4 -af "loudnorm=i=-20" -c:v copy -y 1234.mp4
+
 
 ffmpeg -i CPyvnOICe7AlyUrR.mp4 -af "volume=30dB" -c:v copy -y 1234.mp4
 

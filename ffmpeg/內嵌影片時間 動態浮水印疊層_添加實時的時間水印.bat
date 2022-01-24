@@ -1,5 +1,5 @@
 
-ffmpeg -y -i "_output_a_210804_134441_3034_.mp4" -vf "drawtext= fontfile=111.ttf:  text='%ddd%': x=10:y=10: fontsize=50: fontcolor=white: box=1:boxcolor=black@1:  timecode='00\:00\:00\:000': rate=30: " output.mp4
+ffmpeg -y -i "01.mp4" -vf "drawtext= fontfile=111.ttf:  text='%ddd%': x=10:y=10: fontsize=100: fontcolor=white: box=1:boxcolor=black:  timecode='00\:00\:00\:000': rate=25: " -r 25 output.mp4
 
 exit
 

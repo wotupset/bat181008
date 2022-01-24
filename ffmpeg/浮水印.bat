@@ -1,26 +1,23 @@
-echo %date%_%time%
 
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-
-
-
-ffmpeg -i 01.mp4 -i 01.png -filter_complex "overlay=500:500" -y FFF.mp4
-ffmpeg -i FFF.mp4 -vf delogo=x=500:y=500:w=400:h=100 -y 123.mp4
-
-
-
+ffmpeg -i 01.mp4 -vf "drawtext=fontsize=100:fontfile=111.ttf:text='hello world ':x=500:y=20:fontcolor=white" -y waterfont.mp4
 
 
 
 pause
 exit
+
+文字浮水印
+ffmpeg -i 01.mp4 -vf "drawtext=fontsize=100:fontfile=111.ttf:text='hello world ':x=20:y=20:fontcolor=white" -y waterfont.mp4
+
+
+
+加上圖片logo
+ffmpeg -i 01.mp4 -i 01.png -filter_complex "overlay=500:500" -y FFF.mp4
+去除logo
+ffmpeg -i FFF.mp4 -vf delogo=x=500:y=500:w=400:h=100 -y 123.mp4
+
+
+
 左上 x300 y100
 ffmpeg -i 01.mp4 -i 01.png -filter_complex "overlay=300:100" -c:a copy output.mp4
 

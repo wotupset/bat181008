@@ -12,12 +12,13 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_oped.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -tune-content screen
 
 set wh=800
 set wh=640
-set wh=480
+set wh=360
 set wh=400
+set wh=480
 
 set crf=-crf 40
 set crf=-crf 55
@@ -33,7 +34,6 @@ for %%F in ( %output% ) do @echo %%~zF %%F
 
 
 start ""  %output%
-
 
 
 
