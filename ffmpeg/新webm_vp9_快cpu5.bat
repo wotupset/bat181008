@@ -75,13 +75,15 @@ set wh=480
 set wh=640
 
 
-set crf=-crf 30
-set crf=-crf 50
+
+
 set crf=-crf 25
 set crf=-crf 35
-set crf=-crf 45
 set crf=-crf 40
-set crf=
+set crf=-crf 45
+set crf=-crf 50
+set crf=-crf 30
+set crf0=
 
 
 set tt=-ss 0:0:0.0 -to 0:0:10.0
@@ -138,6 +140,8 @@ echo ¯Ó®É=%time_hms3%
 
 pause
 exit
+
+
 -map 0:v:0 -map 0:a:0
 
 -af "loudnorm=i=-25" 

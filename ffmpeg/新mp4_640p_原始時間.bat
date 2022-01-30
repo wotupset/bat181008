@@ -17,7 +17,7 @@ echo %nnn%
 
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  -vf "scale=800:600,setsar=1/1" 
+set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  -vf "scale=1280:720,setsar=1/1" 
 
 
 

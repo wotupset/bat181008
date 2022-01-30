@@ -16,7 +16,7 @@ echo %nnn%
 set /p input=ÀÉ®×:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
-set tt=-ss 00:6:5.0 -to 0:6:45.0 
+set tt=-ss 0:0:0.0 -to 0:0:45.0 
 set tt0=
 echo %tt%
 ffmpeg  %tt% -i %input%   %qqq03%    -c:v h264_nvenc -rc constqp -qp 25    -y "%output%"

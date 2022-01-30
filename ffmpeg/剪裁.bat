@@ -1,11 +1,6 @@
 set /p input=檔案:
 
-
-
-
-
-ffmpeg -y  -i "%input%"  -c:v h264_nvenc -preset lossless   "h264_lossless.mp4"
-
+ffmpeg -y  -i "%input%"   -c:v h264_nvenc   -filter:v "crop=800:450:0:75"   "crop.mp4"
 
 
 
@@ -13,7 +8,29 @@ ffmpeg -y  -i "%input%"  -c:v h264_nvenc -preset lossless   "h264_lossless.mp4"
 pause
 exit
 
--crf 0 -b:v 0 
+
+
+800x600 = > 800x450
+-filter:v "crop=800:450:0:75" 
+
+
+Crop area with size 100x100 at position (12,34).
+crop=100:100:12:34
+Using named options, the example above becomes:
+crop=w=100:h=100:x=12:y=34
+
+
+
+
+使用filter實現寬高減半顯示：
+ffplay.exe sample.rmvb -vf scale=iw/2:ih/2
+實現視頻的水平鏡像效果。
+ffplay.exe sample.rmvb -vf hflip
+縮小到960x540輸出:
+./ffmpeg -i input.mp4 -vf scale=960:540 output.mp4 
+
+
+
 -ss 0:0:0.0 -to 0:0:19.5
 
 

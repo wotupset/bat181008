@@ -6,7 +6,7 @@ echo %date%_%time%
 
 
 
-ffmpeg -i %input% -af "volume=-10dB" -c:v copy -y FFF.mp4
+ffmpeg -i %input% -af "volume=-5dB" -c:v copy -y FFF.mp4
 
 ffmpeg -i FFF.mp4 -af "volumedetect" -f null -y nul
 
