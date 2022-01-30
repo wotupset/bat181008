@@ -1,3 +1,8 @@
+@echo off
+
+
+:top
+
 set /p poi=youtubeºô§}:
 echo %poi%
 
@@ -8,11 +13,17 @@ set vtime=%time:~0,2%
 if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
 set vtime=%vtime%%time:~3,2%%time:~6,2%
 
-youtube-dl -f best -o %%(title)s-%%(id)s_%vdate%_%vtime%.%%(ext)s  %poi%
+start "" yt-dlp -f best -o yt-live-%%(title)s-%%(id)s_%vdate%_%vtime%.%%(ext)s  %poi%
 
 
 pause
+pause
+goto top
+
+
 exit
+
+youtube-dl -f best -o %%(title)s-%%(id)s_%vdate%_%vtime%.%%(ext)s  %poi%
 
 -f 301
 

@@ -8,10 +8,9 @@ set /p poi=youtubeºô§}:
 echo %poi%
 
 
-set qq01=-o yt-%%(title)s-%%(id)s.%%(ext)s
+set qq01=-o yt-720p60fps-%%(title)s-%%(id)s.%%(ext)s
 
-youtube-dl %qq01% -f "[height<=720]"  %poi%
-
+yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
 
 
 goto top
@@ -20,7 +19,7 @@ goto top
 
 pause
 exit
-youtube-dl %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
+youtube-dl %qq01% -f bestvideo[ext=mp4][height=720][fps=60]+bestaudio[ext=m4a]   %poi%
 
 
 youtube-dl -f bestvideo[ext=mp4],bestaudio[ext=m4a]   %poi%
