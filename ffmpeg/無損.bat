@@ -1,19 +1,10 @@
 set /p input=ÀÉ®×:
 
-
-
-
-
-ffmpeg -y  -i "%input%"  -c:v h264_nvenc -preset lossless   "h264_lossless.mp4"
-
-
-
+ffmpeg -y  -i "%input%"  -crf 10 -b:v 0   "h264_lossless.mp4"
 
 
 pause
 exit
-
--crf 0 -b:v 0 
 -ss 0:0:0.0 -to 0:0:19.5
 
 

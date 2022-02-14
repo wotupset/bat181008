@@ -1,6 +1,6 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y  -i "%input%"   -c:v h264_nvenc   -filter:v "crop=800:450:0:75"   "crop.mp4"
+ffmpeg   -i "%input%"   -c:v h264_nvenc   -filter:v "crop=800:450:0:75"  -y "crop.mp4"
 
 
 

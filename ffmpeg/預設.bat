@@ -18,7 +18,7 @@ set qqq02=_output_vp9_¹w³]%nnn%.webm
 
 
 
-ffmpeg  -y -i %qqq01% -c:v libvpx-vp9 -pix_fmt yuv420p -cpu-used 8   "%qqq02%"
+ffmpeg  -y -i %qqq01% -c:v libvpx-vp9 -pix_fmt yuv420p -cpu-used 4  -row-mt 1   "%qqq02%"
 
 start "" "%qqq02%" 
 

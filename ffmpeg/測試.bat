@@ -1,14 +1,25 @@
-
-
-
-ffmpeg -ss 0:0:0.0 -to 0:0:10.0  -i "01.mp4" -vf "setsar=sar=16/9,setdar=dar=200/200" -y "test.mp4"
-
+ffmpeg -i "02.mp4"  -c:v libvpx-vp9  -cpu-used 4  -row-mt 1 -pix_fmt yuv420p    -y "test.webm"
 
 
 
 
 pause
 exit
+-c:v libaom-av1
+
+
+
+ffmpeg -i "02.mp4" -c:v h264_nvenc -cq  30  -pix_fmt yuv420p   -y "FFF.mp4"
+
+ffmpeg -i "FFF.mp4"  -c:v libvpx  -cpu-used 4 -r 25 -ac 2   -row-mt 1 -pix_fmt yuv420p    -y "test.webm"
+
+
+ffprobe -i 01.mkv -show_chapters
+
+ffmpeg -ss 0:0:0.0 -to 0:0:10.0  -i "01.mp4" -vf "setsar=sar=16/9,setdar=dar=200/200" -y "test.mp4"
+
+
+
 
 ffmpeg -i aa.mp3 -i bb.mp3 -filter_complex "amix=inputs=2"   -shortest output.mp3 
 
