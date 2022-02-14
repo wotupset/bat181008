@@ -8,7 +8,7 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_640p_%RANDOM%
+set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
 
