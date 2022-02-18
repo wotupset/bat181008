@@ -1,23 +1,22 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y  -i "%input%"  -crf 10 -b:v 0   "h264_lossless.mp4"
+ffmpeg -y -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0  "vp9_lossless.webm"
 
 
 pause
 exit
 -ss 0:0:0.0 -to 0:0:19.5
-
-
 You can use -crf 0 to create a lossless video.
 
 
+//28MB
+ffmpeg -y -i %input% -c:v ffv1 "ffv1_lossless.mkv"  
+//18MB
+ffmpeg -y -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0  "vp9_lossless.webm"
+//16MB
+ffmpeg -y -i %input% -c:v libx264  -crf 0 -b:v 0  "h264_lossless.mp4"
 
-ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0   "vp9_lossless.webm"
-
-ffmpeg -y -i "%input%"  -crf 10 -b:v 0k  -pix_fmt yuv420p   "h264_lossless.mp4"
-
-ffmpeg -y  -i "%input%"    -c:v libvpx-vp9  -crf 10 -b:v 0  -an  "vp9_lossless.webm"
-
+-pix_fmt yuv420p
 
 out%Y-%m-%d_%H-%M-%S.mp4
 

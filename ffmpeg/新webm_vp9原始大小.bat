@@ -22,6 +22,7 @@ set crf=-crf 30
 set crf=-crf 35
 set crf=-crf 40
 set crf=-crf 20
+set crf=-crf 30 -b:v 0k 
 set crf=
 
 
@@ -30,7 +31,7 @@ set tt=
 echo %tt%
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv440p  -ac 2  -cpu-used 4  -row-mt 1   -sn -dn  %an%
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -cpu-used 4  -row-mt 1   -sn -dn  %an%
 
 ffmpeg -y -i %input%   -c:v libvpx-vp9    %crf%   %qqq03%    %output%
 

@@ -3,7 +3,7 @@ set output=vp8.webm
 
 
 
-ffmpeg    -i %input%  -c:v libvpx -c:a libopus  -vf "scale=640:640:force_original_aspect_ratio=decrease" -pix_fmt yuv420p  -cpu-used 4 -y  "%output%" 
+ffmpeg    -i %input%  -c:v libvpx -c:a libopus  -vf "scale=480:480:force_original_aspect_ratio=decrease" -pix_fmt yuv420p  -cpu-used 4 -y  "%output%" 
 
 
 
