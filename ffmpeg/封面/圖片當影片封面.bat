@@ -1,27 +1,7 @@
 @echo off 
-echo %date%_%time% > 時間差.txt
 
-
-IF %time:~6,1% == 0 (
-set  time_ss=%time:~7,1%
-) ELSE (
-set  time_ss=%time:~6,2%
-) 
-
-IF %time:~3,1% == 0 (
-set time_ii=%time:~4,1%
-) ELSE (
-set time_ii=%time:~3,2%
-) 
-
-IF "%time:~0,1%" == " " (
-set time_hh=%time:~1,1%
-) ELSE (
-set time_hh=%time:~0,2%
-) 
-
-set /a time_hms1 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
-echo 時間1=%time_hms1%
+echo 時間差 > 時間差.txt
+echo %date%_%time% >> 時間差.txt
 
 
 
@@ -29,62 +9,33 @@ echo 時間1=%time_hms1%
 ..\ffmpeg -y -loop 1 -i "01.webp" -t 10   -vf "setsar=1:1" -c:v h264_nvenc  -an  "01x.mp4"
 ..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
 ..\ffmpeg -y -stream_loop 9 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
-del "01x.jpg"
+del "01x1.jpg"
 del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 0:11:30.0 -to 0:14:30.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:21:0.0 -to 0:24:35.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
 
-12.30
-14.30
+
 
 
 
 ..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -map_chapters -1 -map_metadata -1   -c:v copy "FFF.mp4"
-
-
-
-..\ffmpeg -y -i "FFF.mp4"  %qqq03%  -r 5 -pix_fmt yuv420p -c:v h264_nvenc -cq 35 -preset p1   "cover.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03% -map_metadata -1   -r 5 -s 320x320  -af "volume=+2dB,volumedetect"   -pix_fmt yuv420p -c:v h264_nvenc -qp 40   "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
 del "FFF.mp4"
 
 
-..\ffmpeg -i "cover.mp4" -af "volumedetect" -f null -y nul
+
 
 
 
 
 
 echo %date%_%time% >> 時間差.txt
-
-IF %time:~6,1% == 0 (
-set  time_ss=%time:~7,1%
-) ELSE (
-set  time_ss=%time:~6,2%
-) 
-
-IF %time:~3,1% == 0 (
-set time_ii=%time:~4,1%
-) ELSE (
-set time_ii=%time:~3,2%
-) 
-
-IF "%time:~0,1%" == " " (
-set time_hh=%time:~1,1%
-) ELSE (
-set time_hh=%time:~0,2%
-) 
-
-set /a time_hms2 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
-echo 時間2=%time_hms2%
-set /a time_hms3=%time_hms2% - %time_hms1%
-echo 耗時=%time_hms3%
-
-
 
 
 
@@ -96,6 +47,10 @@ echo 耗時=%time_hms3%
 
 pause
 exit
+..\ffmpeg -i "cover.mp4" -af "volumedetect" -f null -y nul
+-ac 1 音質很差?
+
+
 
 ..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v   -r 120 -pix_fmt yuv420p -c:v h264_nvenc  "FFF.mp4"
 
