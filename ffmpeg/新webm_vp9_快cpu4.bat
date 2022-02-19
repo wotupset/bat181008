@@ -44,7 +44,6 @@ set wh=1024
 set wh=1280
 
 set wh=480
-
 set wh=800
 set wh=400
 set wh=640
@@ -61,6 +60,7 @@ set crf=-crf 35
 
 set crf=-crf 45
 set crf=-crf 40
+set crf=-crf 35
 set crf=
 
 
@@ -71,12 +71,12 @@ echo %tt%
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 -cpu-used 4  -row-mt 1  -sn -dn  -tune-content screen  
 set qqq04= %an% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %qqq03% %qqq04%  %output%
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -af "volume=-10dB,volumedetect"  %qqq03% %qqq04%  %output%
 
 
 
 
-ffmpeg -i %output% -af "volumedetect" -f null -y nul
+
 
 
 
@@ -95,6 +95,10 @@ echo %date%_%time% >> ®É¶¡®t.txt
 
 pause
 exit
+
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
+
+
  -vf "scale=800:800,setdar=9/16"
 -vf "scale=1280:720,setdar=16/9"
 

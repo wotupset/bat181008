@@ -14,7 +14,8 @@ ffmpeg -h >help.txt
 ffmpeg -encoders >encoders.txt
 ffmpeg -decoders >decoders.txt
 
-
+xcopy *.txt .\_txt\*.txt
+del *.txt
 
 
 echo file '_output_.mp4' >mylist.txt

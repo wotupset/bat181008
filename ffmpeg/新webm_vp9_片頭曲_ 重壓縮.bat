@@ -14,6 +14,10 @@ echo %nnn%
 set output=_output_vp9_oped.webm
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -tune-content screen
 
+set tt=-ss 0:16:0.0 -to 0:18:0.0 
+set tt=
+echo %tt%
+
 set wh=800
 set wh=640
 set wh=400
@@ -26,7 +30,8 @@ set crf=-crf 40
 set crf=
 
 
-ffmpeg -y -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  %output%
+
+ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -y %output%
 
 
 for %%F in ( %output% ) do @echo %%~zF %%F

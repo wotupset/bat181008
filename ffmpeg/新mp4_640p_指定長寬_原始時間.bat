@@ -17,12 +17,9 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
-set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  -vf "scale=1280:720,setsar=1/1" 
+set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2  -vf "scale=800:450,setsar=1/1" 
 
 
-
-set wh=1280
-set wh0=
 
 set tt=-ss 00:4:0.0 -to 0:5:50.0 
 set tt=
@@ -38,6 +35,10 @@ start "" "%output%"
 
 pause
 exit
+
+-vf "scale=1280:720,setsar=1/1" 
+
+
 -vf "setsar=1/1,setdar=16/9" 
 -c:v h264_nvenc -rc vbr -cq 25   檔案較大 
 -c:v h264_nvenc -rc constqp -qp 25  檔案較小 

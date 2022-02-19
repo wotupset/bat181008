@@ -1,9 +1,15 @@
 set /p input=ÀÉ®×:
-set output=vp8.webm
+set output=_vp8.webm
 
 
+set tt=-ss 0:16:0.0 -to 0:18:0.0 
+set tt=
+echo %tt%
 
-ffmpeg    -i %input%  -c:v libvpx -c:a libopus  -vf "scale=480:480:force_original_aspect_ratio=decrease" -pix_fmt yuv420p  -cpu-used 4 -y  "%output%" 
+set wh=480
+echo %wh%
+
+ffmpeg  %tt%  -i %input%  -c:v libvpx -c:a libopus  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -pix_fmt yuv420p  -cpu-used 4 -y  "%output%" 
 
 
 
