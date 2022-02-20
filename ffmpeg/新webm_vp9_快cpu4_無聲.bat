@@ -43,7 +43,7 @@ set crf=-crf 40
 set crf=-crf 35
 
 set crf=-crf 40
-set crf0=
+set crf=
 
 
 set tt=-ss 0:0:0.0 -to 0:0:0.0

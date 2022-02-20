@@ -37,7 +37,8 @@ set an=
 set aq=-aq-mode 0
 set aq=
 
-
+set af=-af "volume=-10dB,volumedetect"
+set af=-af "volumedetect"
 
 set wh=1440
 set wh=1024
@@ -61,7 +62,7 @@ set crf=-crf 35
 set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 35
-set crf=
+set crf0=
 
 
 set tt=-ss 0:0:0.0 -to 0:7:0.0
@@ -69,9 +70,9 @@ set tt=
 echo %tt%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 -cpu-used 4  -row-mt 1  -sn -dn  -tune-content screen  
-set qqq04= %an% %aq% %crf% 
+set qqq04= %an% %af% %aq% %crf% 
 
-ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -af "volume=-10dB,volumedetect"  %qqq03% %qqq04%  %output%
+ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"   %qqq03% %qqq04%  %output%
 
 
 

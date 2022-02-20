@@ -11,6 +11,9 @@ ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 pause
 exit
 
+ffmpeg -i %input% -af "volumedetect" -f null -y NUL
+
+ffmpeg -i %input% -af "ebur128" -f null -y NUL
 
 
 pause
