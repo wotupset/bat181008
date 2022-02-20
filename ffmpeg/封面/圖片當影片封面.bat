@@ -14,7 +14,7 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 0:21:0.0 -to 0:24:35.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:14:10.0 -to 0:16:10.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
 
 
@@ -22,7 +22,7 @@ del "01x_loop.mp4"
 
 
 ..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -map_chapters -1 -map_metadata -1   -c:v copy "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03% -map_metadata -1   -r 5 -s 320x320  -af "volume=+2dB,volumedetect"   -pix_fmt yuv420p -c:v h264_nvenc -qp 40   "cover.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03% -map_metadata -1   -r 5 -s 320x320  -af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"   -pix_fmt yuv420p -c:v h264_nvenc -qp 40   "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
@@ -47,6 +47,9 @@ echo %date%_%time% >> 時間差.txt
 
 pause
 exit
+-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect" 
+-af "volume=+2dB,volumedetect" 
+
 ..\ffmpeg -i "cover.mp4" -af "volumedetect" -f null -y nul
 -ac 1 音質很差?
 
