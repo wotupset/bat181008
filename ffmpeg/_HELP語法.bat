@@ -11,10 +11,12 @@ ffmpeg -h encoder=ffv1 >ffv1.txt
 ffmpeg -h >help.txt
 
 
+
+
 ffmpeg -encoders >encoders.txt
 ffmpeg -decoders >decoders.txt
 
-xcopy *.txt .\_txt\*.txt
+xcopy *.txt .\_help\*.txt
 del *.txt
 
 
@@ -23,8 +25,16 @@ ffmpeg -version
 
 cmd
 
+
+
+
+
 pause
 exit
+
+ffmpeg -h encoder=libtheora 
+
+
 ffmpeg -h encoder=h263 >h263.txt
 
 

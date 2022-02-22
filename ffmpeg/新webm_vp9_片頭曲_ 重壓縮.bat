@@ -12,7 +12,14 @@ set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
 set output=_output_vp9_oped.webm
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -tune-content screen
+
+
+
+set af=-af "volume=-10dB,volumedetect"
+set af=-af "loudnorm=I=-20:TP=-1:LRA=6,volumedetect"
+set af=-af "volumedetect"
+
+
 
 set tt=-ss 0:16:0.0 -to 0:18:0.0 
 set tt=
@@ -31,10 +38,19 @@ set crf=
 
 
 
-ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  %crf%   -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" -y %output%
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -dn -tune-content screen
+set qqq04= %af% %crf% 
 
 
-for %%F in ( %output% ) do @echo %%~zF %%F
+echo 時間差 > 時間差.txt
+echo %date%_%time% >> 時間差.txt
+
+ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  -b:v 150K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+
+echo %date%_%time% >> 時間差.txt
+
+
+for %%I in ( %output% ) do @echo %%~zF %%F
 
 
 start ""  %output%
@@ -49,6 +65,11 @@ pause
 
 exit 
 pause
+
+
+for %%F in ( %output% ) do @echo %%~zF %%F 檔案大小
+ 
+
 -b:a 50K -b:v 500K
  -deadline realtime  -cpu-used 5 
 

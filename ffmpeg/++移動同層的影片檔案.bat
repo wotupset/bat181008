@@ -13,8 +13,6 @@ echo %nnn%
 
 
 
-
-
 xcopy *.mp4 .\%nnn%\*.mp4
 del *.mp4
 xcopy *.webm .\%nnn%\*.webm

@@ -1,10 +1,26 @@
-ffmpeg -i "02.mp4"  -c:v libvpx-vp9  -cpu-used 4  -row-mt 1 -pix_fmt yuv420p    -y "test.webm"
+
+
+
+set tt=-ss 0:0:0.0 -to 0:0:5.0
+set tt0=
+echo %tt%
+
+
+ffmpeg %tt% -i 01.mp4 -vf "scale=iw/8:ih/8,scale=8*iw:8*ih:flags=neighbor" -y "FFF.mp4"
+
 
 
 
 
 pause
 exit
+
+ffmpeg -i "01.mp4"   -c:v libtheora -c:a libopus   -y "01.mkv"
+
+
+ffmpeg -i "02.mp4"  -c:v libvpx-vp9  -cpu-used 4  -row-mt 1 -pix_fmt yuv420p    -y "test.webm"
+
+
 -c:v libaom-av1
 
 
