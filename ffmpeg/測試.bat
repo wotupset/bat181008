@@ -6,14 +6,17 @@ set tt0=
 echo %tt%
 
 
-ffmpeg %tt% -i 01.mp4 -vf "scale=iw/8:ih/8,scale=8*iw:8*ih:flags=neighbor" -y "FFF.mp4"
 
+ffmpeg -i "01.mkv"  -map 0:v -map 0:a  -c:v copy -c:a copy  -y "01v2.mkv"
 
 
 
 
 pause
 exit
+
+ffmpeg %tt% -i 01.mp4 -vf "scale=iw/8:ih/8,scale=8*iw:8*ih:flags=neighbor" -y "FFF.mp4"
+
 
 ffmpeg -i "01.mp4"   -c:v libtheora -c:a libopus   -y "01.mkv"
 

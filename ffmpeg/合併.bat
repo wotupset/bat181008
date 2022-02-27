@@ -11,13 +11,9 @@ echo %nnn%
 
 
 
-set fff01=_output_a_210729_171737_23047_
-set fff02=_output_a_210729_171828_23213_
-set fff03=
 
 
-
-ffmpeg -i 01.jpg -i 01.mp4  -filter_complex "[0:v] [1:v] concat=n=2:v=1 [v] " -map "[v]"  output.mp4
+ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30  -s 1280x720  -y  %nnn%_merge.mp4
 
 
 
@@ -29,6 +25,29 @@ ffmpeg -i 01.jpg -i 01.mp4  -filter_complex "[0:v] [1:v] concat=n=2:v=1 [v] " -m
 
 pause
 exit
+ffmpeg -i 01.mp4 -i 02.mp4 -i 03.mp4 -i 04.mp4 -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30   -y  %nnn%_merge.mp4
+
+
+-af "volume=+15dB,volumedetect"
+
+
+ffmpeg -f concat -i mylist.txt  -c:v h264_nvenc -cq 30  -y output.mp4
+
+mpeg1格式 支援快速合併
+ffmpeg -i "concat:input1|input2" -codec copy output.mkv
+
+-c:v copy
+
+ -c:v h264_nvenc -cq 30 
+set fff01=01
+set fff02=02
+set fff03=
+
+ffmpeg -i %fff01%.mp4 -i %fff02%.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]"  -y  %nnn%_merge.mp4
+
+
+ffmpeg -i 01.jpg -i 01.mp4  -filter_complex "[0:v] [1:v] concat=n=2:v=1 [v] " -map "[v]"  output.mp4
+
 
 ffmpeg -i %fff01%.mp4 -i %fff02%.mp4  -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" %nnn%_merge.mp4
 

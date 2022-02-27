@@ -41,8 +41,6 @@ set crf=-crf 30
 set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 35
-
-set crf=-crf 40
 set crf=
 
 
@@ -51,7 +49,7 @@ set tt=
 echo %tt%
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -cpu-used 4  -row-mt 1  -sn -dn -an 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -cpu-used 4  -row-mt 1  -sn -dn -an   -tune-content screen -static-thresh 200
 
 
 ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus     -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03%  %output%

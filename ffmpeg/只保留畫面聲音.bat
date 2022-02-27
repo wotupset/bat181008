@@ -1,16 +1,23 @@
 set /p input=ÀÉ®×:
 
 
-ffmpeg  -i %input% -c:v ffv1 -s 1280x720 -y "ffv1_lossless.mkv"  
+ffmpeg -i %input%  -dn -sn -c:v copy -c:a copy  -y "skip_data.mkv"
 
 
 pause
 exit
 
+-map 0:v -map 0:a
+
+The -vn / -an / -sn / -dn options can be used to skip inclusion of video, audio, subtitle and data
+-map_chapters -1
+
+
+
 -ss 0:1:18.0 -to 0:4:0.0 
 
 
-ffmpeg -y -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0  "vp9_lossless.webm"
+ffmpeg  -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0 -y  "vp9_lossless.webm"
 
 
 -ss 0:0:0.0 -to 0:0:19.5

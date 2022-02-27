@@ -36,19 +36,19 @@ set an=-an
 set an=
 
 
-set af=-af "volume=-10dB,volumedetect"
-set af=-af "loudnorm=I=-20:TP=-1:LRA=6,volumedetect"
+set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+set af=-af "volume=+1dB,volumedetect"
 set af=-af "volumedetect"
 
 set wh=1440
 set wh=1024
 set wh=1280
 
-set wh=480
+
 set wh=800
 set wh=400
+set wh=480
 set wh=640
-
 
 
 set crf=-crf 30
@@ -58,11 +58,9 @@ set crf=-crf 50
 
 set crf=-crf 25
 set crf=-crf 35
-
 set crf=-crf 40
 set crf=-crf 45
 set crf=-crf 35
-
 set crf=
 
 
@@ -70,7 +68,7 @@ set tt=-ss 0:0:0.0 -to 0:7:0.0
 set tt=
 echo %tt%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 -cpu-used 4  -row-mt 1  -sn -dn  -tune-content screen 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 -cpu-used 4  -row-mt 1  -sn -dn  -tune-content screen -static-thresh 200
 set qqq04= %an% %af% %crf% 
 
 

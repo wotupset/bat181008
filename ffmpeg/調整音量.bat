@@ -6,7 +6,13 @@ echo %date%_%time%
 
 
 
-ffmpeg -i %input% -c:v copy -af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"  -y FFF.mp4
+set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+set af=-af "volume=2.0,volumedetect"
+set af=-af "volume=+15dB,volumedetect"
+set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+echo %af%
+
+ffmpeg -i %input% -c:v copy  %af% -y FFF.mp4
 
 
 

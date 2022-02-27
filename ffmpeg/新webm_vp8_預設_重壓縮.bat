@@ -6,10 +6,8 @@ set tt=-ss 0:16:0.0 -to 0:18:0.0
 set tt=
 echo %tt%
 
-set wh=480
-echo %wh%
 
-set oo4= -c:v libvpx -c:a libopus  -pix_fmt yuv420p  -cpu-used 4 -static-thresh 200
+set oo4= -c:v libvpx -c:a libopus  -pix_fmt yuv420p  -cpu-used 4 -static-thresh 200 
 echo %oo4%
 
 
@@ -17,7 +15,7 @@ echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg  %tt%  -i %input% %oo4%   -s 480x270 -af "volumedetect" -y  "%output%" 
+ffmpeg  %tt%  -i %input% %oo4%   -s 480x480 -af "volumedetect" -y  "%output%" 
 
 
 echo %date%_%time% >> 時間差.txt

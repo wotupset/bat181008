@@ -4,7 +4,8 @@ set /p input=ÀÉ®×:
 
 echo %date%_%time%
 
-ffmpeg -i %input% -af "volumedetect" -f null -y NUL
+ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
+
 
 
 
