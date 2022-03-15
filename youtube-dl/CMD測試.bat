@@ -1,8 +1,28 @@
+
+
+yt-dlp.exe -f  137  https://www.youtube.com/watch?v=wL9TaTUz03M
+
+cmd
+
+youtube-dl -f worst URL
+
+best: Select the best quality format represented by a single file with video and audio.
+worst: Select the worst quality format represented by a single file with video and audio.
+bestvideo: Select the best quality video-only format (e.g. DASH video). May not be available.
+worstvideo: Select the worst quality video-only format. May not be available.
+bestaudio: Select the best quality audio only-format. May not be available.
+worstaudio: Select the worst quality audio only-format. May not be available.
+
+
+
+yt-dlp.exe https://www.youtube.com/watch?v=i1Frk4XbzzI
+--proxy "140.227.198.33"
+
+
+
 yt-dlp -f best https://streamable.com/27851m
 
 
-
-cmd
 -f "best[fps>30]"
 
 

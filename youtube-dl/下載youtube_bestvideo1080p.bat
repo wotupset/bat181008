@@ -1,4 +1,4 @@
-@echo off
+
 
 
 
@@ -9,10 +9,10 @@ set /p poi=youtubeºô§}:
 echo %poi%
 
 
+set qq01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 
-yt-dlp -r 3000k   %poi%
 
-
+yt-dlp.exe %qq01%  -r 3000k -f bestvideo[height=1080]+bestaudio   %poi%
 
 
 
@@ -23,14 +23,10 @@ goto top
 pause
 exit
 
--c, --continue 
-Force resume of partially downloaded files. By default, youtube-dl will resume downloads if possible.
--r, --rate-limit 
-LIMIT Maximum download rate in bytes per second (e.g. 50K or 4.2M)
 
 
-youtube-dl  %poi%
 
+@echo off
 
 --limit-rate 2M
 
