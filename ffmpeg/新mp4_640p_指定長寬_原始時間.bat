@@ -21,7 +21,7 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 
 
 
-set tt=-ss 00:4:0.0 -to 0:5:50.0 
+set tt=-ss 00:0:57.0 -to 0:5:57.0 
 set tt=
 echo %tt%
 
@@ -31,7 +31,8 @@ echo %vf%
 
 set af=-af "volume=2,volumedetect"
 set af=-af "volume=+20dB,volumedetect"
-set af0=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+set af=
 echo %af%
 
 

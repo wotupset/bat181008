@@ -28,11 +28,14 @@ set wh=1024
 set wh=1280
 
 
-set wh=800
+
 
 set wh=400
 set wh=480
 set wh=640
+set wh=800
+
+
 
 
 
@@ -49,7 +52,7 @@ set tt=
 echo %tt%
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -cpu-used 4  -row-mt 1  -sn -dn -an   -tune-content screen -static-thresh 200
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -cpu-used 4  -row-mt 1  -sn -dn -an   -tune-content screen 
 
 
 ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus     -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease" %qqq03%  %output%
@@ -57,7 +60,7 @@ ffmpeg -y %tt% -i %input% -c:v libvpx-vp9  -c:a libopus     -vf "scale=%wh%:%wh%
 
 
 
-ffmpeg -i %output% -af "volumedetect" -f null -y nul
+
 
 
 
@@ -69,8 +72,10 @@ start ""  %output%
 
 pause
 exit
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
-
+ -static-thresh 1000
+-static-thresh 200
  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,unsharp=5:5:1.0:5:5:0.0"
 
 set qqq04=-metadata DATE_ENCODED="%nnn%"  %an% %aq% %crf% 

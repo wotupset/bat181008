@@ -1,19 +1,63 @@
+ffmpeg -i 01.mp4 -itsoffset -0.6 -i 01.mp4 -map 0:v -map 1:a -c:v copy -c:a copy -y  out.mp4
 
+start ""  out.mp4
+
+
+
+
+
+
+exit
+pause
+
+
+set tt=-ss 0:0:0.0 -to 0:0:13.0
+ffmpeg %tt% -i "01.mp4"  -c:v h264_nvenc -cq 30  -y "FFFx1.mp4"
+
+set tt=-ss 0:0:19.0 -to 0:0:37.0
+ffmpeg %tt% -i "01.mp4"  -c:v h264_nvenc -cq 30  -y "FFFx2.mp4"
+
+
+type nul > mylist.txt
+echo file 'FFFx1.mp4' >> mylist.txt
+echo file 'FFFx2.mp4' >> mylist.txt
+
+
+
+
+ffmpeg -f concat -i mylist.txt -c:v h264_nvenc -cq 30 -y output.mp4
+
+
+del "FFFx1.mp4"
+del "FFFx2.mp4"
+
+
+
+
+
+
+
+
+q=0-100 q¶V¤p¶V¼Ò½k
+ffmpeg  -i %input%  -r 15 -s 800x450 -an -loop 5 -q:v 5 -y "FFFx1.webp"
+
+
+-safe 0 
+above is not required if the paths are relative.
+
+ffmpeg -f concat -safe 0 -i mylist.txt -c copy output.mp4
+
+ffmpeg -i concat:"FFFx1.mpg|FFFx2.mpg" -c copy -y "FFFx99.mpg"
+ffmpeg -i "FFFx99.mpg" -y "FFF.mp4"
+
+ffmpeg -i "01.mp4" -c:v copy -b:a 56K -y "01v2.mp4"
 
 
 set tt=-ss 0:0:0.0 -to 0:0:5.0
 set tt0=
 echo %tt%
-
-
-
 ffmpeg -i "01.mkv"  -map 0:v -map 0:a  -c:v copy -c:a copy  -y "01v2.mkv"
 
-
-
-
-pause
-exit
 
 ffmpeg %tt% -i 01.mp4 -vf "scale=iw/8:ih/8,scale=8*iw:8*ih:flags=neighbor" -y "FFF.mp4"
 

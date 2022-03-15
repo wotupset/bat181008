@@ -30,22 +30,24 @@ set wh=640
 set wh=400
 set wh=480
 
+
+
 set crf=-crf 40
 set crf=-crf 55
 set crf=-crf 45
 set crf=-crf 40
-set crf=
+set crf0=
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2   -row-mt 1  -sn -dn -tune-content screen
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 1   -row-mt 1  -sn -dn -tune-content screen 
 set qqq04= %af% %crf% 
 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  -b:v 150K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
@@ -66,7 +68,7 @@ pause
 exit 
 pause
 
-
+-static-thresh 1000
 for %%F in ( %output% ) do @echo %%~zF %%F 檔案大小
  
 

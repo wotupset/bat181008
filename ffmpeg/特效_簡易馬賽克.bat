@@ -6,7 +6,7 @@ set /p input=檔案:
 
 
 
-ffmpeg  -i %input%  -c:v h264_nvenc  -vf "scale=iw/8:ih/8,scale=8*iw:8*ih:flags=neighbor" -y "FFF.mp4"
+ffmpeg  -i %input%   -vf "scale=iw/4:ih/4,scale=4*iw:4*ih:flags=neighbor" -c:v h264_nvenc -cq 30 -y "FFF.mp4"
 
 
 pause
