@@ -16,9 +16,11 @@ echo %nnn%
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
+
 set tt=-ss 0:0:1.0 -to 0:0:25.0
 set tt=
 echo %tt%
+
 ffmpeg -y %tt% -i %input%   %qqq03%  "%output%"
 
 
@@ -33,6 +35,8 @@ start "" "%output%"
 
 pause
 exit
+
+
  -c:v h264_nvenc  -qp 30  -r 25 
 -vf "setsar=1/1,setdar=16/9" 
 -c:v h264_nvenc -rc vbr -cq 30   檔案較大 
