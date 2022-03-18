@@ -10,7 +10,7 @@ echo %poi%
 
 set qq01=-o yt-720p60fps-%%(title)s-%%(id)s.%%(ext)s
 
-yt-dlp %qq01% -r 1000k -f best   %poi%
+yt-dlp %qq01% -r 3M -f best   %poi%
 
 
 goto top
