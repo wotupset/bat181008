@@ -25,6 +25,15 @@ ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a
 
 pause
 exit
+
+type nul > mylist.txt
+echo file 'FFFx1.mp4' >> mylist.txt
+echo file 'FFFx2.mp4' >> mylist.txt
+
+ffmpeg -f concat -i mylist.txt -c:v h264_nvenc -cq 30 -y output.mp4
+
+
+
 ffmpeg -i 01.mp4 -i 02.mp4 -i 03.mp4 -i 04.mp4 -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30   -y  %nnn%_merge.mp4
 
 

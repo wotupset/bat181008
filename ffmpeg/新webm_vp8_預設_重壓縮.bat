@@ -7,7 +7,7 @@ set tt=
 echo %tt%
 
 
-set oo4= -c:v libvpx -c:a libopus  -pix_fmt yuv420p  -cpu-used 4 -static-thresh 200 
+set oo4=   -pix_fmt yuv420p  -deadline good -speed 4 
 echo %oo4%
 
 
@@ -15,19 +15,24 @@ echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg  %tt%  -i %input% %oo4%   -s 450x450 -af "volumedetect" -y  "%output%" 
+ffmpeg  %tt%  -i %input% -c:v libvpx -c:a libopus  %oo4%   -s 450x450  -y  "%output%" 
 
 
 echo %date%_%time% >> 時間差.txt
 
 
 
-for %%F in ( %output% ) do echo %%~zF %%F
 
 
 pause
 exit
+ -cpu-used 4
+ -deadline good -speed 4 
 
+ -cpu-used 4 -static-thresh 200 
+-af "volumedetect"
+
+for %%F in ( %output% ) do echo %%~zF %%F
 
 -af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
 -s 480x270

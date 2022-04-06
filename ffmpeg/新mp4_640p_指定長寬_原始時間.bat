@@ -21,26 +21,23 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 
 
 
-set tt=-ss 00:0:57.0 -to 0:5:57.0 
-set tt=
-echo %tt%
+
 
 set vf=-vf "scale=720:1280,setsar=1/1" 
 set vf=-vf "scale=1280:720,setsar=1/1" 
+set vf0=-vf "scale=640:480,setsar=1/1" 
 echo %vf%
 
-set af=-af "volume=2,volumedetect"
-set af=-af "volume=+20dB,volumedetect"
-set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
-set af=
-echo %af%
 
 
-ffmpeg  %tt% -i %input%  %qqq03% %vf% %af%  -c:v h264_nvenc -cq 30 -y "%output%"
+ffmpeg  -i %input%  %qqq03% %vf%  -map 0:v:0 -map 0:a:0  -c:v h264_nvenc -cq 30 -y "%output%"
 
 
 
 start "" "%output%" 
+
+
+
 
 pause
 exit

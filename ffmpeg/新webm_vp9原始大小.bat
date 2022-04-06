@@ -20,24 +20,24 @@ set output=_output_vp9_原始大小.webm
 set an=-an
 set an=
 
-set af=-af "volume=-10dB,volumedetect"
-set af=-af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"
+
 set af=-af "volumedetect"
+set af=-af "volume=-10dB,volumedetect"
+set af=-af "loudnorm=I=-20:TP=-2:LRA=6,volumedetect"
+set af=
 
 
 
 
 set crf=-crf 50
 set crf=-crf 30
-set crf=-crf 35
 set crf=-crf 40
 set crf=-crf 20
-set crf=
+set crf=-crf 35
+set crf0=
 
 
-set tt=-ss 00:18:27.5 -to 00:19:27.0 
-set tt=
-echo %tt%
+
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -cpu-used 4    -sn -dn
@@ -47,7 +47,7 @@ echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg %tt% -i %input%  -c:v libvpx-vp9    %qqq03% %qqq04%   -y %output%
+ffmpeg  -i %input%  -c:v libvpx-vp9    %qqq03% %qqq04%   -y %output%
 
 echo %date%_%time% >> 時間差.txt
 

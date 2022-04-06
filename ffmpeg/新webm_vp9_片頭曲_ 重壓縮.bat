@@ -15,39 +15,33 @@ set output=_output_vp9_oped.webm
 
 
 
-set af=-af "volume=-10dB,volumedetect"
-set af=-af "loudnorm=I=-20:TP=-1:LRA=6,volumedetect"
-set af=-af "volumedetect"
 
-
-
-set tt=-ss 0:16:0.0 -to 0:18:0.0 
-set tt=
-echo %tt%
 
 set wh=800
-set wh=640
+set wh=512
+
 set wh=400
+set wh=640
 set wh=480
 
 
-
-set crf=-crf 40
-set crf=-crf 55
-set crf=-crf 45
-set crf=-crf 40
+set crf=-b:v 300K  -minrate 300k -maxrate 300k
+set crf0=-b:v 250K  -minrate 250k -maxrate 250k
+set crf0=-b:v 200K  -minrate 200k -maxrate 200k
+set crf0=-crf 35
 set crf0=
 
 
-
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 1   -row-mt 1  -sn -dn -tune-content screen 
-set qqq04= %af% %crf% 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2    -sn -dn -tune-content screen -cpu-used 4
+set qqq04=%crf%
+set qqq05z=-cpu-used 4 -row-mt 1 -aq-mode 0 -tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1 
+set qqq99z=
 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg %tt% -i %input% %qqq03%    -c:v libvpx-vp9 -c:a libopus  -b:v 200K  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+ffmpeg -i %input% %qqq03% %qqq04% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
@@ -68,12 +62,24 @@ pause
 exit 
 pause
 
+-deadline good -speed 4
+
+
+-quality等於-deadline??
+-deadline realtime -speed 2
+-deadline good -speed 1 
+
+-deadline realtime -speed 5
+-deadline good -speed 3
+
+-deadline good
 -static-thresh 1000
 for %%F in ( %output% ) do @echo %%~zF %%F 檔案大小
  
 
 -b:a 50K -b:v 500K
- -deadline realtime  -cpu-used 5 
+-deadline good -cpu-used 4
+-deadline realtime  -cpu-used 5 
 
 -b:a 96K
 

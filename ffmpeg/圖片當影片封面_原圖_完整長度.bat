@@ -1,5 +1,5 @@
-.\ffmpeg -y -i "01.mp4" -loop 1 -i "01.jpg" -shortest -map 0:a -map 1:v  -r 120    -preset faster -tune stillimage -vf "scale=800:600" "FFF.mp4"
-.\ffmpeg -y -i "FFF.mp4"    -r 5   -af "volumedetect" "output.mp4"
+.\ffmpeg -ss 0:0:10.0 -to 0:0:50.0 -i "01.mp3" -loop 1 -i "01.jpg" -shortest -map 0:a -map 1:v  -r 120    -preset faster -tune stillimage -vf "scale=800:450" -y "FFF.mp4"
+.\ffmpeg -i "FFF.mp4"    -r 5   -af "volumedetect" -y "output.mp4"
 
 del "FFF.mp4"
 

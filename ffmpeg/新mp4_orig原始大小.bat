@@ -18,14 +18,14 @@ set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:0:15.0 -to 0:0:45.0
+set tt=-ss 0:0:0.0 -to 0:0:15.0
 set tt0=
 echo %tt%
 
 
 
 
-ffmpeg  %tt% -i %input%   %qqq03%    -c:v h264_nvenc  -qp 30    -y "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%    -c:v h264_nvenc  -cq 30    -y "%output%"
 
 
 
@@ -41,7 +41,7 @@ start "" "%output%"
 pause
 exit
 -cq 25   檔案較大 
--qp 25  檔案較小 
+-qp 25  檔案較小 但模糊
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 

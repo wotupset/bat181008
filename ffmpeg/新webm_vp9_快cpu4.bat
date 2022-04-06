@@ -33,49 +33,45 @@ set output=_output_vp9_快.webm
 
 
 
-set af=-af "volume=+1dB,volumedetect"
-set af=-af "volumedetect"
-set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
-set af=
 
 set wh=1440
 set wh=1024
 set wh=1280
 
-set wh=400
 
 set wh=480
+set wh=400
 
-set wh=800
+
+set wh=512
 set wh=640
+set wh=800
+
 
 set crf=-crf 30
 
 set crf=-crf 50
-
-
 set crf=-crf 25
 
 set crf=-crf 45
 
 set crf=-crf 40
-set crf=-crf 35 -b:v 0
+set crf=-crf 35 
+
+set crf0=-b:v 200K  -minrate 200k -maxrate 200k 
 set crf0=
 
 
-set tt=-ss 0:0:0.0 -to 0:7:0.0
-set tt=
-echo %tt%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2    -sn -dn  -tune-content screen -static-thresh 100 -drop-threshold 100
-set qqq04=%af% %crf% 
-set qqq05=-cpu-used 4 -row-mt 1 -aq-mode 0 -deadline good -tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20
 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2    -sn -dn  -tune-content screen 
+set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-row-mt 1 -aq-mode 0 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"   %qqq03% %qqq04% %qqq05% -y %output%
+ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus      %qqq03% %qqq04% %qqq05% -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
@@ -99,7 +95,35 @@ start ""  %output%
 
 pause
 exit
+set tt=-ss 0:0:0.0 -to 0:7:0.0
+set tt=
+echo %tt%
 
+
+-deadline good -speed 4
+
+
+-deadline good -speed 4 
+-deadline realtime -speed 4 
+
+set crf=-b:v 200K  -minrate 200k -maxrate 200k 
+
+set af=-af "volume=+1dB,volumedetect"
+set af=-af "volumedetect"
+set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
+set af=
+
+-tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1
+
+-deadline good -speed 4
+-static-thresh 100 -drop-threshold 100
+
+-cpu-used 4
+--auto-alt-ref=<arg>             (0= disabled, 1=enabled <default 0>)
+--lag-in-frames=<arg>            (0-25 : recommended value 16)
+
+
+-b:v 0
 -hide_banner 可以隐藏不必要的多余讯息
 
 

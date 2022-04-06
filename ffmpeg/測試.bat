@@ -22,9 +22,6 @@ type nul > mylist.txt
 echo file 'FFFx1.mp4' >> mylist.txt
 echo file 'FFFx2.mp4' >> mylist.txt
 
-
-
-
 ffmpeg -f concat -i mylist.txt -c:v h264_nvenc -cq 30 -y output.mp4
 
 
