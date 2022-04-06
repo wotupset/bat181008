@@ -6,7 +6,7 @@ echo %date%_%time% >> 時間差.txt
 
 
 
-..\ffmpeg -y -loop 1 -i "01.webp" -t 10   -vf "setsar=1:1" -c:v h264_nvenc  -an  "01x.mp4"
+..\ffmpeg -y -loop 1 -i "01.webp" -t 10    -vf "setsar=1:1" -c:v h264_nvenc -preset fast -an  "01x.mp4"
 ..\ffmpeg -y -stream_loop 5 -i "01x.mp4" -c copy "01x_loop.mp4"
 ..\ffmpeg -y -stream_loop 9 -i "01x_loop.mp4" -c copy "01x_loop5.mp4"
 del "01x1.jpg"
@@ -14,15 +14,16 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -y  -ss 0:14:10.0 -to 0:16:10.0 -i "01.mp3"  -f mp3  "01x.mp3"
+..\ffmpeg -y  -ss 0:4:15.0 -to 0:7:15.0 -i "01.mp3"  -f mp3  "01x.mp3"
 
 
 
+36
 
 
 
-..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -map_chapters -1 -map_metadata -1   -c:v copy "FFF.mp4"
-..\ffmpeg -y -i "FFF.mp4"  %qqq03% -map_metadata -1   -r 5 -s 320x320  -af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect"   -pix_fmt yuv420p -c:v h264_nvenc -qp 40   "cover.mp4"
+..\ffmpeg -y -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v    -pix_fmt yuv420p -c:v h264_nvenc -qp 45 -preset fast -r 120  "FFF.mp4"
+..\ffmpeg -y -i "FFF.mp4"  %qqq03% -s 400x400   -r 5   -map_chapters -1 -map_metadata -1   -c:v h264_nvenc -qp 45 -preset fast  "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
@@ -47,6 +48,10 @@ echo %date%_%time% >> 時間差.txt
 
 pause
 exit
+-s 320x320
+ -af "loudnorm=I=-20:TP=-2:LRA=5,volumedetect" 
+
+
 -af "loudnorm=I=-23:TP=-1:LRA=6,volumedetect" 
 -af "volume=+2dB,volumedetect" 
 
