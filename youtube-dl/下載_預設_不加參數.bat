@@ -1,11 +1,11 @@
-@echo off
-
+echo off
+chcp 65001
 
 
 :top
 
 
-set /p poi=youtubeºô§}:
+set /p poi=youtubeç¶²å€:
 echo %poi%
 
 
@@ -36,7 +36,7 @@ youtube-dl  %poi%
 
 --cookies=cookiejar.txt
 
-µô°Å¬í¼Æ ¦ı¨ÌµM­n¤U¸ü§¹¾ã¼v¤ù
+è£å‰ªç§’æ•¸ ä½†ä¾ç„¶è¦ä¸‹è¼‰å®Œæ•´å½±ç‰‡
 youtube-dl --postprocessor-args "-ss 0:9:0 -to 0:9:10" https://www.youtube.com/watch?v=OCmqTRHOLNw
 
 

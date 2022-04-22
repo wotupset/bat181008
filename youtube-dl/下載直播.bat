@@ -1,9 +1,10 @@
-@echo off
+chcp 65001
+echo off
 
 
 :top
 
-set /p poi=youtube∫Ùß}:
+set /p poi=youtubeÁ∂≤ÂùÄ:
 echo %poi%
 
 
@@ -22,6 +23,10 @@ goto top
 
 
 exit
+
+start "" yt-dlp -f best -o yt-live-%%(title)s-%%(id)s_%vdate%_%vtime%.%%(ext)s  %poi%
+
+
 
 youtube-dl -f best -o %%(title)s-%%(id)s_%vdate%_%vtime%.%%(ext)s  %poi%
 
