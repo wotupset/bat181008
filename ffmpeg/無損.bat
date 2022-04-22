@@ -1,11 +1,14 @@
 set /p input=ÀÉ®×:
 
 
-ffmpeg  -i %input% -c:v ffv1 -s 1280x720 -y "ffv1_lossless.mkv"  
+ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
 
 
 pause
 exit
+
+-s 1280x720
+
 
 -ss 0:1:18.0 -to 0:4:0.0 
 

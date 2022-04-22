@@ -7,16 +7,14 @@ set tt=
 echo %tt%
 
 
-set oo4=   -pix_fmt yuv420p  -deadline good -speed 4 
+set oo4=-pix_fmt yuv420p -ac 2 -cpu-used 4
 echo %oo4%
 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-
 ffmpeg  %tt%  -i %input% -c:v libvpx -c:a libopus  %oo4%   -s 450x450  -y  "%output%" 
-
 
 echo %date%_%time% >> 時間差.txt
 
@@ -26,6 +24,10 @@ echo %date%_%time% >> 時間差.txt
 
 pause
 exit
+-cpu-used 4
+ -b:v 300K  -minrate 300k -maxrate 300k
+ -deadline good -speed 4
+-b:v 300K  -minrate 300k -maxrate 300k
  -cpu-used 4
  -deadline good -speed 4 
 

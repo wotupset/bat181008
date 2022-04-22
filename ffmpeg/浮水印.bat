@@ -1,5 +1,7 @@
 
-ffmpeg -i 01.mp4 -vf "drawtext=fontsize=100:fontfile=111.ttf:text='hello world ':x=500:y=20:fontcolor=white" -y waterfont.mp4
+
+
+ffmpeg -i 01.mp4 -i 01.jpg -filter_complex "overlay=0:0" -y FFF.mp4
 
 
 
@@ -8,6 +10,7 @@ exit
 
 文字浮水印
 ffmpeg -i 01.mp4 -vf "drawtext=fontsize=100:fontfile=111.ttf:text='hello world ':x=20:y=20:fontcolor=white" -y waterfont.mp4
+ffmpeg -i 01.mp4 -vf "drawtext=fontsize=100:fontfile=111.ttf:text='hello world ':x=500:y=20:fontcolor=white" -y waterfont.mp4
 
 
 

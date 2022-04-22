@@ -11,13 +11,9 @@ echo %nnn%
 
 
 
-
-
-ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30  -s 1280x720  -y  %nnn%_merge.mp4
-
-
-
-
+ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
+ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
+ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 03x.mp4
 
 
 
@@ -26,11 +22,16 @@ ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a
 pause
 exit
 
+ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30  -s 1280x720  -y  %nnn%_merge.mp4
+
+
 type nul > mylist.txt
 echo file 'FFFx1.mp4' >> mylist.txt
 echo file 'FFFx2.mp4' >> mylist.txt
 
 ffmpeg -f concat -i mylist.txt -c:v h264_nvenc -cq 30 -y output.mp4
+
+
 
 
 

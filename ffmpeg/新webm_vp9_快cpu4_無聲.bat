@@ -15,14 +15,6 @@ echo %nnn%
 set output=_output_vp9_§Ö_µLÁn.webm
 
 
-set an=-an
-set an=
-
-set aq=-aq-mode 0
-set aq=
-
-
-
 set wh=1440
 set wh=1024
 set wh=1280
@@ -50,16 +42,13 @@ set crf=-b:v 2000K  -minrate 2000k -maxrate 2000k
 set crf=
 
 
-set tt=-ss 0:0:0.0 -to 0:0:0.0
-set tt=
-echo %tt%
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2     -row-mt 1  -sn -dn -an   -tune-content screen 
 set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1 -aq-mode 0 -deadline good -speed 4 
+set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4
 
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9  -c:a libopus   %qqq03% %qqq04% %qqq05% -y %output%
+ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus   %qqq03% %qqq04% %qqq05% -y %output%
 
 
 
@@ -76,6 +65,10 @@ start ""  %output%
 
 pause
 exit
+-cpu-used 4
+-deadline good -speed 4 
+
+
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
  -static-thresh 1000

@@ -28,7 +28,6 @@ echo %nnn%
 
 
 
-
 set output=_output_vp9_快.webm
 
 
@@ -39,26 +38,22 @@ set wh=1024
 set wh=1280
 
 
-set wh=480
+
 set wh=400
+set wh=480
 
 
 set wh=512
 set wh=640
 set wh=800
 
-
+set crf=-crf 25
 set crf=-crf 30
 
 set crf=-crf 50
-set crf=-crf 25
-
 set crf=-crf 45
-
 set crf=-crf 40
 set crf=-crf 35 
-
-set crf0=-b:v 200K  -minrate 200k -maxrate 200k 
 set crf0=
 
 
@@ -66,7 +61,7 @@ set crf0=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2    -sn -dn  -tune-content screen 
 set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1 -aq-mode 0 
+set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
@@ -95,11 +90,13 @@ start ""  %output%
 
 pause
 exit
+set crf=-b:v 200K  -minrate 200k -maxrate 200k 
+
 set tt=-ss 0:0:0.0 -to 0:7:0.0
 set tt=
 echo %tt%
 
-
+-cpu-used 4
 -deadline good -speed 4
 
 

@@ -17,14 +17,7 @@ echo %nnn%
 
 set output=_output_vp9_原始大小.webm
 
-set an=-an
-set an=
 
-
-set af=-af "volumedetect"
-set af=-af "volume=-10dB,volumedetect"
-set af=-af "loudnorm=I=-20:TP=-2:LRA=6,volumedetect"
-set af=
 
 
 
@@ -34,14 +27,14 @@ set crf=-crf 30
 set crf=-crf 40
 set crf=-crf 20
 set crf=-crf 35
-set crf0=
+set crf=
 
 
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -cpu-used 4    -sn -dn
-set qqq04= %an% %af% %crf% 
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -cpu-used 4    -sn -dn -an
+set qqq04=%crf% 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
@@ -61,6 +54,7 @@ start "" %output%
 
 pause
 exit 
+ -an
 -c:a libopus 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul

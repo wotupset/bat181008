@@ -24,6 +24,12 @@ del *.jpg
 xcopy *.png .\%nnn%\*.png
 del *.png
 
+xcopy *.ts .\%nnn%\*.ts
+del *.ts
+xcopy *.srt .\%nnn%\*.srt
+del *.srt
+xcopy *.ass .\%nnn%\*.ass
+del *.ass
 
 exit
 pause

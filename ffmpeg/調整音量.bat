@@ -7,8 +7,8 @@ echo %date%_%time%
 
 
 set af=-af "volume=2.0,volumedetect"
-set af=-af "volume=-5dB,volumedetect"
-set af=-af "loudnorm=I=-22:TP=-2:LRA=7,volumedetect"
+set af=-af "volume=-15dB,volumedetect"
+set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
 echo %af%
 
 ffmpeg -i %input% -c:v copy  %af% -y FFF.mp4

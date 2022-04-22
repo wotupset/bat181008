@@ -1,4 +1,5 @@
-@echo off
+chcp 65001
+echo off
 
 echo %date%_%time%
 
@@ -13,19 +14,19 @@ echo %nnn%
 
 
 
-set /p input=ÀÉ®×:
+set /p input=æª”æ¡ˆ:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:0:0.0 -to 0:0:15.0
+set tt=-ss 0:4:30.0 -to 0:6:40.0
 set tt0=
 echo %tt%
 
 
 
 
-ffmpeg  %tt% -i %input%   %qqq03%    -c:v h264_nvenc  -cq 30    -y "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc     -y "%output%"
 
 
 
@@ -40,14 +41,17 @@ start "" "%output%"
 
 pause
 exit
--cq 25   ÀÉ®×¸û¤j 
--qp 25  ÀÉ®×¸û¤p ¦ı¼Ò½k
+ -cq 20
+ 
+ 
+-cq 25   æª”æ¡ˆè¼ƒå¤§ 
+-qp 25  æª”æ¡ˆè¼ƒå° ä½†æ¨¡ç³Š
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 -vf "setsar=1/1,setdar=16/9" 
--c:v h264_nvenc -rc vbr -cq 25   ÀÉ®×¸û¤j 
--c:v h264_nvenc -rc constqp -qp 25  ÀÉ®×¸û¤p 
+-c:v h264_nvenc -rc vbr -cq 25   æª”æ¡ˆè¼ƒå¤§ 
+-c:v h264_nvenc -rc constqp -qp 25  æª”æ¡ˆè¼ƒå° 
 -b:v 0K 
 
 -map 0:v:0 -map 0:a:0
@@ -63,8 +67,8 @@ ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 -af "volume=10dB" 
 
--qp 30 ¸û¤p
--cq 30 ¸û¤j
+-qp 30 è¼ƒå°
+-cq 30 è¼ƒå¤§
  -crf 35
 
  -c:v h264_nvenc 
@@ -84,9 +88,9 @@ ffmpeg -y %tt%  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%"
 
 
 -map 0:v:0 -map 0:a:1 -sn
--map 0:v:0 §Ç¦C0(²Ä¤@­Ó¿é¤JÀÉ®×) ¿é¤Jv=¼v¹³ index=0(²Ä¤@­y)
--map 0:a:1 §Ç¦C0(²Ä¤@­Ó¿é¤JÀÉ®×) ¿é¤Ja=Án­µ index=1(²Ä¤G­y)
--map 0:s:1 §Ç¦C0(²Ä¤@­Ó¿é¤JÀÉ®×) ¿é¤Js=¦r¹õ index=1(²Ä¤G­y)
+-map 0:v:0 åºåˆ—0(ç¬¬ä¸€å€‹è¼¸å…¥æª”æ¡ˆ) è¼¸å…¥v=å½±åƒ index=0(ç¬¬ä¸€è»Œ)
+-map 0:a:1 åºåˆ—0(ç¬¬ä¸€å€‹è¼¸å…¥æª”æ¡ˆ) è¼¸å…¥a=è²éŸ³ index=1(ç¬¬äºŒè»Œ)
+-map 0:s:1 åºåˆ—0(ç¬¬ä¸€å€‹è¼¸å…¥æª”æ¡ˆ) è¼¸å…¥s=å­—å¹• index=1(ç¬¬äºŒè»Œ)
 
 
 
@@ -117,7 +121,7 @@ ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc
 -qp 30
 
 
--vf reverse ¼v¤ù­Ë©ñ
+-vf reverse å½±ç‰‡å€’æ”¾
 
   -c:v libx264  -crf 15 -b:v 0k -preset fast  "%output%"
 
@@ -131,7 +135,7 @@ ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc
  -c:v libx264 -crf 15 -b:v 0k -preset fast
 -c:v h264_nvenc
 -c:v libx264
--c:v libx264rgb ÀÉ®×ÅÜ«Ü¤j
+-c:v libx264rgb æª”æ¡ˆè®Šå¾ˆå¤§
 -noaccurate_seek
 -accurate_seek
 
@@ -139,10 +143,10 @@ ffmpeg -y -ss 00:18:35.656 -to 00:18:41.943 -i %input% %qqq03%   -c:v h264_nvenc
 -hwaccel qsv -c:v h264_qsv
 
 
-set /p input=ÀÉ®×:
+set /p input=æª”æ¡ˆ:
 set output=_output_a_%nnn%_.mp4
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
--metadata title="¼ĞÃD" ^
+-metadata title="æ¨™é¡Œ" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
 -metadata description="description" ^
@@ -152,17 +156,17 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 ^
 
 
 -movflags faststart
--movflags faststart Ãä¤U¸üÃä¼·©ñ
--qp ¬Û·íµ¥©ó -crf ¦ıÀÉ®×«Ü¤j
+-movflags faststart é‚Šä¸‹è¼‰é‚Šæ’¥æ”¾
+-qp ç›¸ç•¶ç­‰æ–¼ -crf ä½†æª”æ¡ˆå¾ˆå¤§
 -cq 20 
--ac 2 ÂùÁn¹D
--profile:v baseline µL¥æ¿ù
+-ac 2 é›™è²é“
+-profile:v baseline ç„¡äº¤éŒ¯
 -profile:v main
 
 -c:v h264_nvenc -profile:v baseline -preset fast 
 -crf 20 -b:v 0k -preset fast
 
--sn Ãö±¼¦r¹õ
+-sn é—œæ‰å­—å¹•
 -r 24
 -c:v libx265
 -c:v h264_nvenc
