@@ -7,6 +7,12 @@ echo %date%_%time%
 ..\ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
+set /p input2=¿é¤J:
+set af=-af "volume=%input2%dB,volumedetect"
+echo %af%
+
+..\ffmpeg -i %input%   %af% -y FFF.mp4
+
 
 
 

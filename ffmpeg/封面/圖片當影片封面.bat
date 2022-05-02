@@ -14,15 +14,11 @@ del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -ss 0:10:20.0 -to 0:13:20.0 -i "01.mp3"  -f mp3 -y "01x.mp3"
+..\ffmpeg -ss 0::0.0 -to 0:19:30.0 -i "01.mp3"  -map_chapters -1 -map_metadata -1  -f mp3 -y "01x.mp3"
 
 
-
-
-
-
-..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4"  -shortest -map 0:a -map 1:v  -r 120  -pix_fmt yuv420p -c:v h264_nvenc -cq 45 -preset fast  -y "FFF.mp4"
-..\ffmpeg -i "FFF.mp4"      -r 5   -map_chapters -1 -map_metadata -1   -c:v h264_nvenc -cq 45 -preset fast -y "cover.mp4"
+..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4"  -shortest -map 0:a -map 1:v   -r 120  -pix_fmt yuv420p -c:v h264_nvenc -cq 40  -y "FFF.mp4"
+..\ffmpeg -i "FFF.mp4"      -r 5 -ac 2      -c:v h264_nvenc -cq 40    -y "cover.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
@@ -38,15 +34,25 @@ del "FFF.mp4"
 echo %date%_%time% >> 時間差.txt
 
 
+..\ffmpeg -i "cover.mp4" -af "volumedetect" -vn -sn -dn  -f null -y NUL
+
+set /p input2=音量調整:
+set af=-af "volume=%input2%dB,volumedetect"
+echo %af%
+
+..\ffmpeg -i "cover.mp4" -c:v copy %af% -y "coverFFF.mp4"
 
 
-
-
-
+del "cover.mp4"
 
 
 pause
 exit
+
+
+ -bsf:v h264_mp4toannexb -f mpegts
+ 
+ 
 -qp 45
 -cq 45
 -s 320x320
