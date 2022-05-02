@@ -7,7 +7,7 @@ echo %date%_%time%
 
 
 set af=-af "volume=2.0,volumedetect"
-set af=-af "volume=-15dB,volumedetect"
+set af=-af "volume=+15dB,volumedetect"
 set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
 echo %af%
 

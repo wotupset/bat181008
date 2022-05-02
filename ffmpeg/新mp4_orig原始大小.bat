@@ -19,14 +19,14 @@ set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:4:30.0 -to 0:6:40.0
+set tt=-ss 0:0:23.0 -to 0:2:33.0
 set tt0=
 echo %tt%
 
 
 
 
-ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc     -y "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc   -cq 30   -y "%output%"
 
 
 

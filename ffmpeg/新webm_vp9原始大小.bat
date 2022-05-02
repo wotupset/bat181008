@@ -33,14 +33,15 @@ set crf=
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -cpu-used 4    -sn -dn -an
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -sn -dn 
 set qqq04=%crf% 
+set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg  -i %input%  -c:v libvpx-vp9    %qqq03% %qqq04%   -y %output%
+ffmpeg  -i %input%  -c:v libvpx-vp9    %qqq03% %qqq04% %qqq05%  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 

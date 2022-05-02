@@ -1,9 +1,14 @@
 set /p input=檔案:
 
-ffmpeg  -i "%input%" -filter:v "setpts=0.5*PTS"  -c:v h264_nvenc  -cq 30 -pix_fmt yuv420p -y 加速慢速.mp4
+ffmpeg  -i "%input%" -filter:v "setpts=0.5*PTS" -af "atempo=2.0" -c:v h264_nvenc  -cq 30 -pix_fmt yuv420p -y 加速慢速.mp4
 
 pause
 exit
+asetpts
+-af "atempo=2.0"
+-vf "setpts=0.5*PTS"
+-filter:v "setpts=0.5*PTS"
+ -an
  -an
 
 -filter:v "setpts=5.0*PTS" 慢速.webm

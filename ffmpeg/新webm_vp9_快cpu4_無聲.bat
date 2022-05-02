@@ -38,8 +38,7 @@ set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 42
 set crf=-crf 35
-set crf=-b:v 2000K  -minrate 2000k -maxrate 2000k 
-set crf=
+set crf0=
 
 
 
@@ -65,6 +64,7 @@ start ""  %output%
 
 pause
 exit
+set crf=-b:v 2000K  -minrate 2000k -maxrate 2000k 
 -cpu-used 4
 -deadline good -speed 4 
 

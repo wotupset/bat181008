@@ -8,9 +8,6 @@ ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
 
-
-
-
 pause
 exit
 

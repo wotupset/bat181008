@@ -1,6 +1,6 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y -i %input% -f lavfi -i anullsrc -crf 10 -b:v 0  -t 5 "h264_anullsrc_pic.mp4"
+ffmpeg -y -i %input% -f lavfi -i anullsrc -pix_fmt yuv420p  -t 5 "h264_anullsrc_pic.mp4"
 
 
 pause

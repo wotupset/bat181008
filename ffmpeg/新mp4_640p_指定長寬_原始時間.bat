@@ -25,13 +25,18 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 
 set vf=-vf "scale=720:1280,setsar=1/1" 
 set vf=-vf "scale=1280:720,setsar=1/1" 
+
 set vf0=-vf "scale=800:450,setsar=1/1" 
+set vf0=-vf "scale=450:800,setsar=1/1" 
+
+set vf=-vf "scale=800:600,setsar=1/1" 
+
 set vf0=-vf "scale=640:480,setsar=1/1" 
 echo %vf%
 
 
 
-ffmpeg  -i %input%  %qqq03% %vf%  -map 0:v:0 -map 0:a:0  -c:v h264_nvenc  -y "%output%"
+ffmpeg  -i %input%  %qqq03% %vf%  -map 0:v:0 -map 0:a:0  -c:v h264_nvenc -cq 30 -y %output%
 
 
 
