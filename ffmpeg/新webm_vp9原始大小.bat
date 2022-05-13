@@ -32,7 +32,6 @@ set crf=
 
 
 
-
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -sn -dn 
 set qqq04=%crf% 
 set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4

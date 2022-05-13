@@ -1,5 +1,6 @@
-chcp 65001
 echo off
+chcp 65001
+
 
 set /p input=檔案:
 
@@ -52,8 +53,9 @@ set crf=-crf 30
 
 set crf=-crf 50
 set crf=-crf 45
-set crf0=-crf 40
-set crf0=-crf 35 
+set crf=-crf 40
+set crf=-crf 35 
+set crf0=-crf 30
 set crf0=-crf 32 -b:v 0 
 set crf0=
 
@@ -62,7 +64,7 @@ set crf0=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2    -sn -dn  -tune-content screen 
 set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4
+set qqq05=-row-mt 1 -aq-mode 0 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
@@ -91,6 +93,9 @@ start ""  %output%
 
 pause
 exit
+
+-cpu-used 4
+
 到指定大小後 就停止轉檔
 -fs 5M
 set crf=-b:v 200K  -minrate 200k -maxrate 200k 

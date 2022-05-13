@@ -1,9 +1,10 @@
 chcp 65001
 echo off
 
-echo %date%_%time%
+echo %date%
+echo %time%
 
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
 
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
@@ -12,14 +13,12 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-
-
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:0:23.0 -to 0:2:33.0
+set tt=-ss 0:6:44.0 -to 0:8:44.0
 set tt0=
 echo %tt%
 
@@ -41,6 +40,13 @@ start "" "%output%"
 
 pause
 exit
+
+UTF8的格式
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+非UTF8的格式
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+
+
  -cq 20
  
  
