@@ -1,4 +1,4 @@
-echo
+echo off
 chcp 65001
 
 

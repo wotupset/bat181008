@@ -1,23 +1,27 @@
-@echo off
+echo off
+chcp 65001
 
-set /p input=ÀÉ®×:
+set /p input=æª”æ¡ˆ:
 
 echo %date%_%time%
 
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
-set /p input2=¿é¤J:
+set /p input2=è¼¸å…¥:
 set af=-af "volume=%input2%dB,volumedetect"
 echo %af%
 
-ffmpeg -i %input% -c:v copy  %af% -y FFF.mp4
+ffmpeg -i %input% -c:v copy  %af% -y èª¿æ•´éŸ³é‡.mp4
 
 
 
 
 pause
 exit
+
+ffmpeg -i %input% -c:v copy  %af% -y FFF.webm
+
 
 ..\ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 ,,\ffmpeg -i %input% -af "ebur128" -f null -y NUL
@@ -43,7 +47,7 @@ pause
  -c:v libx264 -crf 15 -b:v 0k -preset fast
 -c:v h264_nvenc
 -c:v libx264
--c:v libx264rgb ÀÉ®×ÅÜ«Ü¤j
+-c:v libx264rgb æª”æ¡ˆè®Šå¾ˆå¤§
 -noaccurate_seek
 -accurate_seek
 
@@ -51,17 +55,17 @@ pause
 -hwaccel qsv -c:v h264_qsv
 
 -movflags faststart
--movflags faststart Ãä¤U¸üÃä¼·©ñ
--qp ¬Û·íµ¥©ó -crf ¦ıÀÉ®×«Ü¤j
+-movflags faststart é‚Šä¸‹è¼‰é‚Šæ’¥æ”¾
+-qp ç›¸ç•¶ç­‰æ–¼ -crf ä½†æª”æ¡ˆå¾ˆå¤§
 -cq 20 
--ac 2 ÂùÁn¹D
--profile:v baseline µL¥æ¿ù
+-ac 2 é›™è²é“
+-profile:v baseline ç„¡äº¤éŒ¯
 -profile:v main
 
 -c:v h264_nvenc -profile:v baseline -preset fast 
 -crf 20 -b:v 0k -preset fast
 
--sn Ãö±¼¦r¹õ
+-sn é—œæ‰å­—å¹•
 -r 24
 -c:v libx265
 -c:v h264_nvenc

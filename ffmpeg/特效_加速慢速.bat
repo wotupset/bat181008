@@ -1,6 +1,9 @@
-set /p input=ÀÉ®×:
+echo off
+chcp 65001
 
-ffmpeg  -i "%input%" -filter:v "setpts=0.5*PTS" -af "atempo=2.0" -c:v h264_nvenc  -cq 30 -pix_fmt yuv420p -y ¥[³tºC³t.mp4
+set /p input=æª”æ¡ˆ:
+
+ffmpeg  -i "%input%" -filter:v "setpts=0.1*PTS" -af "atempo=2.0" -c:v h264_nvenc  -cq 30 -pix_fmt yuv420p -y åŠ é€Ÿæ…¢é€Ÿ.mp4
 
 pause
 exit
@@ -11,8 +14,8 @@ asetpts
  -an
  -an
 
--filter:v "setpts=5.0*PTS" ºC³t.webm
--filter:v "setpts=0.5*PTS" ¥[³t.webm
+-filter:v "setpts=5.0*PTS" æ…¢é€Ÿ.webm
+-filter:v "setpts=0.5*PTS" åŠ é€Ÿ.webm
 
 
 

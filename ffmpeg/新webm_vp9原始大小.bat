@@ -20,21 +20,20 @@ set output=_output_vp9_原始大小.webm
 
 
 
-
+set crf=-crf 20
 
 set crf=-crf 50
 set crf=-crf 30
-set crf=-crf 40
-set crf=-crf 20
-set crf=-crf 35
-set crf=
+set crf=-crf 40 -fs 5M
+set crf0=-crf 35
+set crf0=
 
 
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -sn -dn 
 set qqq04=%crf% 
-set qqq05=-row-mt 1 -aq-mode 0 -cpu-used 4
+set qqq05=-row-mt 1 -aq-mode 0 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt

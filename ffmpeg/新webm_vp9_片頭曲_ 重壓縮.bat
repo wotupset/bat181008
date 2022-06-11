@@ -32,11 +32,10 @@ set crf0=-crf 35
 set crf0=
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2    -sn -dn -tune-content screen -cpu-used 4
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2    -sn -dn -tune-content screen 
 set qqq04=%crf%
-set qqq05z= -row-mt 1 -aq-mode 0 -tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1 
+set qqq05z= -row-mt 1 -aq-mode 0 
 set qqq99z=
-
 
 
 echo 時間差 > 時間差.txt
@@ -62,6 +61,10 @@ pause
 
 exit 
 pause
+-tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1 
+
+
+
 -cpu-used 4
 -deadline good -speed 4
 

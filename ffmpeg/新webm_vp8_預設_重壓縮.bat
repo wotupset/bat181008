@@ -2,19 +2,16 @@ set /p input=檔案:
 set output=_vp8.webm
 
 
-set tt=-ss 0:16:0.0 -to 0:18:0.0 
-set tt=
-echo %tt%
 
 
-set oo4=-pix_fmt yuv420p -ac 2 -cpu-used 4
+set oo4=-pix_fmt yuv420p -ac 2 
 echo %oo4%
 
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg  %tt%  -i %input% -c:v libvpx -c:a libopus  %oo4%   -s 450x450  -y  "%output%" 
+ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%   -s 450x450  -y  "%output%" 
 
 echo %date%_%time% >> 時間差.txt
 

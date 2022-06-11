@@ -1,5 +1,5 @@
-chcp 65001
 echo off
+chcp 65001
 
 echo %date%
 echo %time%
@@ -18,14 +18,13 @@ set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:6:44.0 -to 0:8:44.0
+set tt=-ss 0:0:1.0 -to 0:0:20.0
 set tt0=
 echo %tt%
 
 
 
-
-ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc   -cq 30   -y "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc  -cq 30  -y "%output%"
 
 
 
@@ -45,8 +44,8 @@ UTF8的格式
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 非UTF8的格式
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
-
+ -qp 35 
+-cq 30
  -cq 20
  
  

@@ -6,6 +6,8 @@ ffmpeg -h encoder=libx264 >libx264.txt
 
 ffmpeg -h encoder=libaom-av1 >libaom-av1.txt
 ffmpeg -h encoder=librav1e >librav1e.txt
+ffmpeg -h encoder=libsvtav1 >libsvtav1.txt
+
 
 ffmpeg -h encoder=libwebp >libwebp.txt
 ffmpeg -h encoder=ffv1 >ffv1.txt

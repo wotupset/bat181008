@@ -1,14 +1,22 @@
-ffmpeg -i 01.mp4 -itsoffset -0.6 -i 01.mp4 -map 0:v -map 1:a -c:v copy -c:a copy -y  out.mp4
+echo off
+chcp 65001
 
+
+set /p input=æª”æ¡ˆ:
+
+
+ffmpeg -i %input% -c:v vp9_qsv -y "vp9_qsv.mp4"
+
+
+
+
+
+
+pause
+exit
+ffmpeg -i 01.mp4 -itsoffset -0.6 -i 01.mp4 -map 0:v -map 1:a -c:v copy -c:a copy -y  out.mp4
 start ""  out.mp4
 
-
-
-
-
-
-exit
-pause
 
 
 set tt=-ss 0:0:0.0 -to 0:0:13.0
@@ -35,7 +43,7 @@ del "FFFx2.mp4"
 
 
 
-q=0-100 q¶V¤p¶V¼Ò½k
+q=0-100 qè¶Šå°è¶Šæ¨¡ç³Š
 ffmpeg  -i %input%  -r 15 -s 800x450 -an -loop 5 -q:v 5 -y "FFFx1.webp"
 
 
@@ -85,7 +93,7 @@ ffmpeg -i aa.mp3 -i bb.mp3 -filter_complex "amix=inputs=2"   -shortest output.mp
 
 
 
-set /p input=ÀÉ®×:
+set /p input=æª”æ¡ˆ:
 
 
 ffmpeg -y -ss 0:0:0.0 -to 0:0:1.0  -i "%input%" -r 30 -preset picture  -s 800:450 output.webp
@@ -97,7 +105,7 @@ exit
 
 
 ffmpeg -i "01.wav"  -map 0:a  -y "01.mp3"
-mp3ÂàÀÉ ¥h°£¤º«Øªº«Ê­±¹Ï¤ù(ªş¥[¸ê·½)
+mp3è½‰æª” å»é™¤å…§å»ºçš„å°é¢åœ–ç‰‡(é™„åŠ è³‡æº)
 
 
 -map_chapters -1 -map_metadata -1
@@ -105,7 +113,7 @@ mp3ÂàÀÉ ¥h°£¤º«Øªº«Ê­±¹Ï¤ù(ªş¥[¸ê·½)
 ffmpeg -i "1626561639803.png" -f rawvideo -y mmm.mkv
 
 ffmpeg -i "1626544532020.png" -f rawvideo  - | ffplay -i -
-ÂàÀÉ«áª½±µ¼·©ñ
+è½‰æª”å¾Œç›´æ¥æ’¥æ”¾
 
 
 ffplay -i "1626544532020.png" -f rawvideo
@@ -121,7 +129,7 @@ ffmpeg -i 01.mp4 -c:v libaom-av1 -crf 35 -b:v 1000k -usage realtime -cpu-used 8 
 
 
 ffmpeg -hwaccel cuvid -c:v h264_cuvid -i input.mp4 -c:v h264_qsv -c:v h264_qsv -y output.mp4
-¨Ï¥Î¿W¥ßÅã¥Ü¥dªº±¡ªp¤U ¤£¯à¨Ï¥Îqsv (¨Ì¿àCPU¤º«ØÅã¥Ü¥d)
+ä½¿ç”¨ç¨ç«‹é¡¯ç¤ºå¡çš„æƒ…æ³ä¸‹ ä¸èƒ½ä½¿ç”¨qsv (ä¾è³´CPUå…§å»ºé¡¯ç¤ºå¡)
 
 
 
@@ -193,7 +201,7 @@ pause
 exit
 
 
-enable='between(t,5,10)': ¥X²{®É¶¡
+enable='between(t,5,10)': å‡ºç¾æ™‚é–“
 
 pause
 text='%ddd%_'
@@ -238,7 +246,7 @@ ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
  -c:v libx264 -crf 15 -b:v 0k -preset fast
 -c:v h264_nvenc
 -c:v libx264
--c:v libx264rgb ÀÉ®×ÅÜ«Ü¤j
+-c:v libx264rgb æª”æ¡ˆè®Šå¾ˆå¤§
 -noaccurate_seek
 -accurate_seek
 
@@ -246,17 +254,17 @@ ffmpeg -i _output_a_201128_105112_2037_.mp4 -r 20 out%%03d.jpg
 -hwaccel qsv -c:v h264_qsv
 
 -movflags faststart
--movflags faststart Ãä¤U¸üÃä¼·©ñ
--qp ¬Û·íµ¥©ó -crf ¦ıÀÉ®×«Ü¤j
+-movflags faststart é‚Šä¸‹è¼‰é‚Šæ’¥æ”¾
+-qp ç›¸ç•¶ç­‰æ–¼ -crf ä½†æª”æ¡ˆå¾ˆå¤§
 -cq 20 
--ac 2 ÂùÁn¹D
--profile:v baseline µL¥æ¿ù
+-ac 2 é›™è²é“
+-profile:v baseline ç„¡äº¤éŒ¯
 -profile:v main
 
 -c:v h264_nvenc -profile:v baseline -preset fast 
 -crf 20 -b:v 0k -preset fast
 
--sn Ãö±¼¦r¹õ
+-sn é—œæ‰å­—å¹•
 -r 24
 -c:v libx265
 -c:v h264_nvenc
