@@ -1,10 +1,10 @@
-@echo off
-
+echo off
+chcp 65001
 
 :top
 
 
-set /p poi=∫Ùß}:
+set /p poi=Á∂≤ÂùÄ:
 echo %poi%
 
 
