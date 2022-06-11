@@ -1,11 +1,14 @@
 -.txt
 list.bat
 
+合併.bat
 圖片當影片封面.bat
 時間差.txt
 時間差計算.bat
 測試.bat
+調整音量.bat
 轉mp3.bat
+轉mp4.bat
 降混單聲道.bat
 音訊波形.bat
-音量.bat
+音量_檢查+調整.bat
