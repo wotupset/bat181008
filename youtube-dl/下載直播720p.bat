@@ -8,27 +8,22 @@ set /p poi=youtube網址:
 echo %poi%
 
 
-start "" yt-dlp    %poi%
 
-pause
-pause
-cls
-goto top
-
-
-exit
-
-start "" yt-dlp    %poi%
 set vdate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vtime=%time:~0,2%
 if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
 set vtime=%vtime%%time:~3,2%%time:~6,2%
 
+start "" yt-dlp -f 300   %poi%
 
 
-yt-dlp    %poi%
-start "" yt-dlp    %poi%
--f best
+pause
+pause
+goto top
+
+
+exit
+
 start "" yt-dlp --hls-use-mpegts --no-part %poi%
 
 
