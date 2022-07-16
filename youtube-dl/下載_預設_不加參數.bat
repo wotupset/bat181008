@@ -9,10 +9,7 @@ set /p poi=youtube網址:
 echo %poi%
 
 
-
-yt-dlp -r 3000k   %poi%
-
-
+yt-dlp -r 2M    %poi%
 
 
 
@@ -22,6 +19,10 @@ goto top
 
 pause
 exit
+yt-dlp -r 1M -f best   %poi%
+
+yt-dlp -r 3000k   %poi%
+
 
 -c, --continue 
 Force resume of partially downloaded files. By default, youtube-dl will resume downloads if possible.

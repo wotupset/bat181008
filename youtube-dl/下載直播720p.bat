@@ -14,7 +14,7 @@ set vtime=%time:~0,2%
 if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
 set vtime=%vtime%%time:~3,2%%time:~6,2%
 
-start "" yt-dlp -f 300   %poi%
+start "" yt-dlp -f best[height=720]   %poi%
 
 
 pause

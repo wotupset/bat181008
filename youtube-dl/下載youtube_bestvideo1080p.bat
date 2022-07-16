@@ -12,7 +12,7 @@ echo %poi%
 set qq01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 
 
-yt-dlp.exe %qq01%  -r 3M -f bestvideo[height=1080]+bestaudio   %poi%
+yt-dlp.exe %qq01%  -r 3M -f bestvideo[ext=mp4]+bestaudio   %poi%
 
 
 

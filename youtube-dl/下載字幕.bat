@@ -1,5 +1,14 @@
+echo off
+chcp 65001
 
-youtube-dl --write-sub   --skip-download https://www.youtube.com/watch?v=67aHslwqZXw
+
+set /p poi=youtube網址:
+echo %poi%
+
+
+youtube-dl --write-sub   --skip-download %poi%
+
+
 
 pause
 exit
