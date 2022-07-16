@@ -68,11 +68,20 @@ echo %date%_%time% >> 時間差.txt
 
 
 
+ffmpeg -i %output% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
+set /p input2=音量調整:
+set af=-af "volume=%input2%dB,volumedetect"
+echo %af%
+
+rename %output% FFF.webm
+
+ffmpeg -i FFF.webm -c:v copy %af% -y %output%
+
+del FFF.webm
 
 
-start ""  %output%
 
 
 
@@ -86,6 +95,8 @@ start ""  %output%
 
 pause
 exit
+
+start ""  %output%
  -b:a 50K
 -cpu-used 4
 

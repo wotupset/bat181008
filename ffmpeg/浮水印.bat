@@ -1,7 +1,6 @@
 
 
-
-ffmpeg -i 01.mp4 -i 01.jpg -filter_complex "overlay=0:0" -y FFF.mp4
+ffmpeg -i 01.webm -i 01.png -filter_complex "overlay=320:270"  -c:v h264_nvenc  -cq 10 -y 浮水印.mp4
 
 
 

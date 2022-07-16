@@ -18,13 +18,13 @@ set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:0:1.0 -to 0:0:20.0
+set tt=-ss 0:0:0.0 -to 0:1:50.0
 set tt0=
 echo %tt%
 
 
 
-ffmpeg  %tt% -i %input%   %qqq03%   -map 0:v:0 -map 0:a:0  -c:v h264_nvenc  -cq 30  -y "%output%"
+ffmpeg  %tt% -i %input%   %qqq03%     -c:v h264_nvenc  -cq 30  -y "%output%"
 
 
 
@@ -39,6 +39,8 @@ start "" "%output%"
 
 pause
 exit
+-map 0:v:0 -map 0:a:0
+
 
 UTF8的格式
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%

@@ -1,4 +1,5 @@
-@echo off
+echo off
+chcp 65001
 
 echo %date%_%time%
 
@@ -11,14 +12,14 @@ set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
-set /p input=ÀÉ®×:
+set /p input=æª”æ¡ˆ:
 set output=_cut_a_%nnn%_
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
 
-ffmpeg -y -ss 00:0:3.4 -to 00:0:12.4  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%1.mp4"
-ffmpeg -y -ss 00:0:25.0 -to 00:0:37.5  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%2.mp4"
-ffmpeg -y -ss 00:1:13.4 -to 00:1:30.7  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%3.mp4"
-ffmpeg -y -ss 00:4:9.5 -to 00:5:15.8  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30  "%output%4.mp4"
+ffmpeg -ss 0:14:11.80 -to 0:14:44.8  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30 -y "01.mp4"
+
+ffmpeg -ss 0:8:44.0 -to 0:8:55.0  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30 -y "02.mp4"
+
 
 pause
 exit

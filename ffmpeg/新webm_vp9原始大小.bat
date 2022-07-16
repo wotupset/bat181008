@@ -3,18 +3,6 @@ chcp 65001
 
 set /p input=檔案:
 
-echo %date%_%time%
-
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
-
-
 set output=_output_vp9_原始大小.webm
 
 
@@ -24,9 +12,9 @@ set crf=-crf 20
 
 set crf=-crf 50
 set crf=-crf 30
-set crf=-crf 40 -fs 5M
-set crf0=-crf 35
-set crf0=
+set crf=-crf 40 
+set crf=-crf 35
+set crf=
 
 
 
