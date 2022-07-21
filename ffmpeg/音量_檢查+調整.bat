@@ -15,8 +15,6 @@ echo %af%
 ffmpeg -i %input% -c:v copy  %af% -y 調整音量.mp4
 
 
-
-
 pause
 exit
 

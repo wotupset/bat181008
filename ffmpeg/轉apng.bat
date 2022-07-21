@@ -3,12 +3,12 @@ set /p input=ÀÉ®×:
 echo %date%_%time%
 
 
-ffmpeg -y -i "%input%"  -r 25 -s 800:450  -f apng "_output.png"
+ffmpeg -y -i "%input%"  -r 24  -f apng "_output.png"
 
 
 pause
 exit
-
+-s 800:450 
 set input=_output_a_201003_181723_17922_.mp4
 
 

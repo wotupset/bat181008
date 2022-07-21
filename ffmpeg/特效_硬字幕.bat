@@ -1,4 +1,27 @@
+echo off
 chcp 65001
+
+ffmpeg  -c:v hevc_cuvid  -i 01.mkv -ss 0:16:45.0 -to 0:17:15.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1:force_style='FontSize=30'" -y 字幕.mkv
+
+
+pause
+
+exit
+pause
+
+//Nvidia CUVID HEVC decoder (codec hevc)
+-c:v hevc_cuvid
+
+ffmpeg   -i 01.mkv -ss 0:3:40.0 -to 0:3:50.0 -c:v h264_nvenc -filter_complex "[0:v][0:s]overlay[v]" -map "[v]" -map 0:a -sn -y 字幕.mkv 
+
+ffmpeg   -i 01.mkv -ss 0:3:40.0 -to 0:3:50.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1:force_style='FontSize=30'" -y 字幕.mkv
+
+ffmpeg   -i 01.mkv -ss 0:3:40.0 -to 0:3:50.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1" -y 字幕.mkv
+
+
+
+ffmpeg   -i 01.mkv -ss 0:0:40.0 -to 0:0:50.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv" -y 字幕.mkv
+
 
 
 set aaa=-vf "subtitles='sub.srt'"
@@ -7,12 +30,6 @@ set aaa=-vf "subtitles='sub.srt':force_style='FontName=Microsoft JhengHei,FontSi
 
 ffmpeg  -i 01.mp4   %aaa% -c:v h264_nvenc -y  "out.mp4"
 
-
-
-pause
-
-exit
-pause
 
 注意時間軸的時間
 

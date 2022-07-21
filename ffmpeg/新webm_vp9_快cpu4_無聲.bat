@@ -27,20 +27,18 @@ set wh=1280
 
 
 set wh=400
-
 set wh=480
-
+set wh=512
 set wh=640
 set wh=800
 
 set crf=-crf 20
 set crf=-crf 50
-set crf0=-crf 25
 set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 30
 set crf=-crf 35
-set crf= 
+set crf0= 
 
 
 

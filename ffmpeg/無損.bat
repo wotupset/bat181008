@@ -1,12 +1,19 @@
 set /p input=ÀÉ®×:
 
 
-ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+
+
+ffmpeg  -i %input%  -ss 0:0:0.0 -to 0:0:15.0 -c:v copy -c:a copy -sn -y "lossless.webm"  
 
 
 pause
 exit
 
+ffmpeg  -i %input% -c:v ffv1 -sn -an -y "ffv1_lossless.mkv"  
+
+
+set tt=-ss 0:1:26.0 -to 0:1:57.0
+%tt%
 -s 1280x720
 
 

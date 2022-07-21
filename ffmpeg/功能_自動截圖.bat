@@ -4,7 +4,7 @@ echo off
 
 
 
-ffmpeg -ss 0:0:0.0 -to 0:0:1.0    -i 01.mp4   -vframes 3  %%03d.jpg
+ffmpeg   -i 01.mp4   -vframes 30  -vsync 0  %%03d.jpg
 
 
 

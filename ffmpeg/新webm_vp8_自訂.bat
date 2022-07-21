@@ -1,6 +1,5 @@
 echo off
 chcp 65001
-
 set /p input=檔案:
 
 
@@ -12,7 +11,7 @@ echo %oo4%
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%     -s 450x450  -y  "_vp8_預設.webm" 
+ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%  -an  -crf 10 -s 270x480  -y  "_vp8_自訂.webm" 
 
 echo %date%_%time% >> 時間差.txt
 
