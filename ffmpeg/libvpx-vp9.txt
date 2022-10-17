@@ -48,6 +48,7 @@ libvpx-vp9 encoder AVOptions:
      film            2            E..V....... Film content; improves grain retention
   -corpus-complexity <int>        E..V....... corpus vbr complexity midpoint (from -1 to 10000) (default -1)
   -enable-tpl        <boolean>    E..V....... Enable temporal dependency model (default auto)
+  -min-gf-interval   <int>        E..V....... Minimum golden/alternate reference frame interval (from -1 to INT_MAX) (default -1)
   -speed             <int>        E..V.......  (from -16 to 16) (default 1)
   -quality           <int>        E..V.......  (from INT_MIN to INT_MAX) (default good)
      best            0            E..V.......
