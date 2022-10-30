@@ -7,27 +7,25 @@ set output=_output_vp9_原始大小.webm
 
 
 
-
+set crf=-crf 30
 set crf=-crf 20
 
 set crf=-crf 50
-set crf=-crf 30
+set crf=-crf 45
 set crf=-crf 40 
 set crf=-crf 35
-set crf0=
+set crf=
 
 
 
-
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -sn -dn 
-set qqq04=%crf% 
-set qqq05=-row-mt 1 -aq-mode 0 
+set qqq04=-ac 2 -pix_fmt yuv420p -static-thresh 1000
+set qqq05=-row-mt 1  -tile-columns 2 -threads 6
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg  -i %input%  -c:v libvpx-vp9    %qqq03% %qqq04% %qqq05%  -y %output%
+ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus   %crf% %qqq04% %qqq05%  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
@@ -41,6 +39,9 @@ start "" %output%
 
 pause
 exit 
+
+ -b:v 2500K  -minrate 500k -maxrate 3000k  
+ 
  -an
 -c:a libopus 
 

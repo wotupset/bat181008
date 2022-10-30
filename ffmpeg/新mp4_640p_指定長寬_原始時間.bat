@@ -28,17 +28,21 @@ set qqq03=-map_chapters -1 -map_metadata -1  -pix_fmt yuv420p  -ac 2
 set vf=-vf "scale=720:1280,setsar=1/1" 
 set vf=-vf "scale=1280:720,setsar=1/1" 
 
-set vf0=-vf "scale=800:450,setsar=1/1" 
-set vf0=-vf "scale=450:800,setsar=1/1" 
+set vf=-vf "scale=800:450,setsar=1/1" 
+set vf=-vf "scale=450:800,setsar=1/1" 
 
-set vf0=-vf "scale=800:600,setsar=1/1" 
-set vf0=-vf "scale=640:480,setsar=1/1" 
+set vf=-vf "scale=800:600,setsar=1/1" 
+set vf=-vf "scale=640:480,setsar=1/1" 
+
+set vf=-vf "scale=540:720,setsar=1/1" 
+set vf0=-vf "scale=1920:1080,setsar=1/1" 
 echo %vf%
 
+set qqq02=-cq 30
+set qqq02=-qp 30
+set qqq02=
 
-
-
-ffmpeg  -i %input%  %qqq03% %vf%    -c:v h264_nvenc -cq 20 -y %output%
+ffmpeg  -i %input%  %qqq03% %vf%    -c:v h264_nvenc %qqq02% -y %output%
 
 
 
@@ -49,6 +53,10 @@ start "" "%output%"
 
 pause
 exit
+-qp 30
+
+-c:v hevc_cuvid
+
 
 UTF8的格式
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%

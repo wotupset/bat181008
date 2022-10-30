@@ -34,11 +34,13 @@ set wh=1280
 
 set wh=400
 set wh=480
-
-
 set wh=512
 set wh=640
+set wh=720
 set wh=800
+set wh0=960
+set wh0=1280
+
 
 
 set crf=-crf 50
@@ -49,52 +51,87 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35 -b:v 2500K  -minrate 500k -maxrate 3000k 
-set crf0=
+set crf=-crf 35
+set crf=
+
+
+set crf2=-b:v 0
+set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
+set crf2=-cpu-used 4
+set crf2=-b:v 400K -r 25
+set crf2=-r 25
+set crf2=
 
 
 
-
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2   -sn -dn  -tune-content screen 
-set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1 -aq-mode 0 
+set qqq03=-map_chapters -1 -map_metadata -1  -ac 2   -sn -dn  -tune-content screen 
+set qqq04=%crf% %crf2%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-row-mt 1  -tile-columns 2 -threads 6 -static-thresh 1000 -pix_fmt yuv420p
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus      %qqq03% %qqq04% %qqq05% -y %output%
+ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus     %qqq03% %qqq04% %qqq05% -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
+
+
+
+
+
+
+set af=-af "volume=%input2%dB,volumedetect"
+set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
+set af=-af "loudnorm=I=-20.0:LRA=10.0:TP=-0.0:print_format=json"
+echo %af%
+
+
+
+ffmpeg -i %output% -c:v copy %af% -y _調整音量_%output%
+
+
+
+pause
+exit
+Adaptive Quantization mode 自適應量化模式
+-aq-mode 0
+
+
+https://developers.google.com/media/vp9/settings/vod/
+圖塊數量 執行緒數量
+-tile-columns 2 -threads 4
+-tile-columns 2 -threads 8 1280x720
 
 
 ffmpeg -i %output% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
 set /p input2=音量調整:
-set af=-af "volume=%input2%dB,volumedetect"
-echo %af%
+
+
+
+set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
+set af=-af "loudnorm=I=-20.0:LRA=16.0:TP=-0.0:print_format=summary"
+
+
+'I, i'
+Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
+
+'LRA, lra'
+Set loudness range target. Range is 1.0 - 20.0. Default value is 7.0.
+
+'TP, tp'
+Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
+
+./ffmpeg -i /path/to/input.wav -af loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=-27.2:measured_TP=-14.4:measured_LRA=0.1:measured_thresh=-37.7:offset=-0.7:linear=true:print_format=summary output.wav
+
+
 
 rename %output% FFF.webm
-
-ffmpeg -i FFF.webm -c:v copy %af% -y %output%
-
 del FFF.webm
 
 
-
-
-
-
-
-
-
-
-
-
-
-pause
-exit
 
 start ""  %output%
  -b:a 50K

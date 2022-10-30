@@ -1,4 +1,7 @@
-set /p input=ÀÉ®×:
+echo off
+chcp 65001
+
+set /p input=æª”æ¡ˆ:
 
 echo %date%_%time%
 
@@ -16,17 +19,17 @@ set output=_output_vp9_oped.webm
 
 
 
-
 set wh=800
 set wh=512
 
 set wh=400
-set wh=640
 set wh=480
-
+set wh=640
 
 set crf=-b:v 300K  -minrate 300k -maxrate 300k
-set crf0=-b:v 250K  -minrate 250k -maxrate 250k
+set crf=-b:v 250K  -minrate 250k -maxrate 250k
+set crf=-b:v 200K
+set crf0=-b:v 400K
 set crf0=-b:v 200K  -minrate 200k -maxrate 200k
 set crf0=-crf 35
 set crf0=
@@ -38,12 +41,12 @@ set qqq05z= -row-mt 1 -aq-mode 0
 set qqq99z=
 
 
-echo ®É¶¡®t > ®É¶¡®t.txt
-echo %date%_%time% >> ®É¶¡®t.txt
+echo æ™‚é–“å·® > æ™‚é–“å·®.txt
+echo %date%_%time% >> æ™‚é–“å·®.txt
 
-ffmpeg -i %input% %qqq03% %qqq04% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus    -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+ffmpeg -i %input% %qqq03% %qqq04% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus   -static-thresh 1000   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
 
-echo %date%_%time% >> ®É¶¡®t.txt
+echo %date%_%time% >> æ™‚é–“å·®.txt
 
 
 for %%I in ( %output% ) do @echo %%~zF %%F
@@ -69,7 +72,7 @@ pause
 -deadline good -speed 4
 
 
--qualityµ¥©ó-deadline??
+-qualityç­‰æ–¼-deadline??
 -deadline realtime -speed 2
 -deadline good -speed 1 
 
@@ -78,7 +81,7 @@ pause
 
 -deadline good
 -static-thresh 1000
-for %%F in ( %output% ) do @echo %%~zF %%F ÀÉ®×¤j¤p
+for %%F in ( %output% ) do @echo %%~zF %%F æª”æ¡ˆå¤§å°
  
 
 -b:a 50K -b:v 500K

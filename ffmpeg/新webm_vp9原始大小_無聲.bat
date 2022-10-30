@@ -18,10 +18,9 @@ set crf=
 
 
 
-
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2  -sn -dn -an
+set qqq03=-map_chapters -1 -map_metadata -1    -sn -dn -an -ac 2 
 set qqq04=%crf% 
-set qqq05=-row-mt 1 -aq-mode 0 
+set qqq05=-row-mt 1  -tile-columns 2 -threads 6  -static-thresh 1000 -pix_fmt yuv420p
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt

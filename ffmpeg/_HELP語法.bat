@@ -27,14 +27,11 @@ del *.txt
 echo file '_output_.mp4' >mylist.txt
 ffmpeg -version
 
-cmd
-
-
-
-
-
 pause
 exit
+
+cmd
+
 
 ffmpeg -h encoder=libtheora 
 

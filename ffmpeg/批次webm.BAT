@@ -11,7 +11,7 @@ set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 set nnn=%vcoodate%_%vcootime%
 echo %nnn%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  -row-mt 1 -aq-mode 0 
+set qqq03=-row-mt 1  -tile-columns 2 -threads 6 
 
 
 
@@ -21,7 +21,7 @@ for %%a in (*.mp4) do (
 
 set /a cc=cc+1
 echo %%a
-ffmpeg -y -i "%%a" -c:v libvpx-vp9  -deadline realtime -cpu-used 4  -crf 40   -vf "scale=800:800:force_original_aspect_ratio=decrease" %qqq03% "_%nnn%_%RANDOM%_%%a.webm"
+ffmpeg  -i %%a -c:v libvpx-vp9  %qqq03% -y "_%nnn%_%RANDOM%_%%a.webm"
 
 )
 
@@ -30,7 +30,8 @@ echo %cc%
 CMD
 
 exit
-
+-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
+ -vf "scale=800:800:force_original_aspect_ratio=decrease" 
 
 -deadline realtime  -cpu-used 4 -vf "scale=800:800:force_original_aspect_ratio=decrease"
 
