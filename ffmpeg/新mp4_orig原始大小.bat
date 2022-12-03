@@ -10,6 +10,7 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
+
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
@@ -18,24 +19,24 @@ set output=_output_a_%nnn%_.mp4
 set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:2:0.0 -to 0:3:0.0
+set tt=-ss 0:2:8.0 -to 0:2:39.0
 set tt0=
 echo %tt%
 
 
 
-set qqq02=-cq 30
-set qqq02=-qp 30
-set qqq02=
+set qqq02=-cq 20
+set qqq02=-qp 20
+set qqq020=
 
 
-ffmpeg  %tt%  -i %input%   %qqq03%     -c:v h264_nvenc %qqq02%      -y "%output%"
+ffmpeg  %tt%  -i %input%   %qqq03%      %qqq02%     -y "%output%"
 
 
 
 
 
-start "" "%output%" 
+
 
 
 
@@ -44,6 +45,15 @@ start "" "%output%"
 
 pause
 exit
+start "" "%output%" 
+-c:v libx264
+-c:v h264_nvenc
+%tmp:x=y%
+%time::=%  輸出=163058.68
+
+
+
+
 -c:v h264_cuvid
 
 -cq 30

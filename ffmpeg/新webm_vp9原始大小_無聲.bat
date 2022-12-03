@@ -14,7 +14,7 @@ set crf=-crf 50
 set crf=-crf 30
 set crf=-crf 40 
 set crf=-crf 35
-set crf=
+set crf0=
 
 
 

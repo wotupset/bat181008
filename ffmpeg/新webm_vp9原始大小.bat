@@ -6,7 +6,6 @@ set /p input=檔案:
 set output=_output_vp9_原始大小.webm
 
 
-
 set crf=-crf 30
 set crf=-crf 20
 
@@ -14,7 +13,7 @@ set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40 
 set crf=-crf 35
-set crf=
+set crf0=
 
 
 
@@ -32,14 +31,14 @@ echo %date%_%time% >> 時間差.txt
 
 
 
-start "" %output%
-
-
 
 
 pause
 exit 
 
+vp9預設crf=32
+
+start "" %output%
  -b:v 2500K  -minrate 500k -maxrate 3000k  
  
  -an

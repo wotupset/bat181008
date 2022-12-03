@@ -1,75 +1,35 @@
 echo off
 chcp 65001
 
-
-
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn% 
-
-
 set /p input=檔案:
 
-
-
-set output=_output_vp9_快.webm
-
+set output=_output_vp9_原始大小.webm
 
 
 
-set wh=1440
-set wh=1024
-set wh=1280
-
-
-
-set wh=400
-set wh=480
-set wh=512
-set wh=640
-set wh=720
-set wh=800
-set wh0=960
-set wh0=1280
-
-
-
-set crf=-crf 50
-set crf=-crf 25
 set crf=-crf 30
-set crf=-crf 32 -b:v 0 
+set crf=-crf 20
 
 set crf=-crf 50
 set crf=-crf 45
-set crf=-crf 40
+set crf=-crf 40 
 set crf=-crf 35
-set crf0=
-
-
-set crf2=-b:v 0
-set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
-set crf2=-cpu-used 4
-set crf2=-b:v 400K -r 25
-set crf2=-r 25
-set crf2=
+set crf=
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1  -ac 2   -sn -dn  -tune-content screen 
-set qqq04=%crf% %crf2%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1  -tile-columns 2 -threads 6 -static-thresh 1000 -pix_fmt yuv420p
+set qqq04=-ac 2 -pix_fmt yuv420p -static-thresh 1000
+set qqq05=-row-mt 1  -tile-columns 2 -threads 6
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus     %qqq03% %qqq04% %qqq05% -y %output%
+set tt=-ss 0:0:0.0 -to 0:0:15.0
+set tt0=
+echo %tt%
+
+
+ffmpeg  %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus   %crf% %qqq04% %qqq05%  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
@@ -78,312 +38,84 @@ echo %date%_%time% >> 時間差.txt
 
 
 
-set af=-af "volume=%input2%dB,volumedetect"
-set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:LRA=10.0:TP=-0.0:print_format=json"
-echo %af%
-
-
-
-ffmpeg -i %output% -c:v copy %af% -y _調整音量_%output%
 
 
 
 pause
-exit
-Adaptive Quantization mode 自適應量化模式
--aq-mode 0
-
-
-https://developers.google.com/media/vp9/settings/vod/
-圖塊數量 執行緒數量
--tile-columns 2 -threads 4
--tile-columns 2 -threads 8 1280x720
-
-
-ffmpeg -i %output% -af "volumedetect" -vn -sn -dn  -f null -y NUL
-
-
-set /p input2=音量調整:
-
-
-
-set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:LRA=16.0:TP=-0.0:print_format=summary"
-
-
-'I, i'
-Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
-
-'LRA, lra'
-Set loudness range target. Range is 1.0 - 20.0. Default value is 7.0.
-
-'TP, tp'
-Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
-
-./ffmpeg -i /path/to/input.wav -af loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=-27.2:measured_TP=-14.4:measured_LRA=0.1:measured_thresh=-37.7:offset=-0.7:linear=true:print_format=summary output.wav
-
-
-
-rename %output% FFF.webm
-del FFF.webm
-
-
-
-start ""  %output%
- -b:a 50K
--cpu-used 4
-
-到指定大小後 就停止轉檔
--fs 5M
-set crf=-b:v 200K  -minrate 200k -maxrate 200k 
-
-set tt=-ss 0:0:0.0 -to 0:7:0.0
-set tt=
-echo %tt%
-
--cpu-used 4
--deadline good -speed 4
-
-
--deadline good -speed 4 
--deadline realtime -speed 4 
-
-set crf=-b:v 200K  -minrate 200k -maxrate 200k 
-
-set af=-af "volume=+1dB,volumedetect"
-set af=-af "volumedetect"
-set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
-set af=
-
--tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1
-
--deadline good -speed 4
--static-thresh 100 -drop-threshold 100
-
--cpu-used 4
---auto-alt-ref=<arg>             (0= disabled, 1=enabled <default 0>)
---lag-in-frames=<arg>            (0-25 : recommended value 16)
-
-
--b:v 0
--hide_banner 可以隐藏不必要的多余讯息
-
-
--static-thresh 1000
--static-thresh 2000
--static-thresh 200
-
+exit 
+start "" %output%
+ -b:v 2500K  -minrate 500k -maxrate 3000k  
+ 
+ -an
 -c:a libopus 
 
-:flags=neighbor
-
--static-thresh 100
-
--vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease:flags=fast_bilinear,setsar=1:1"
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
+-vf "smartblur=0.5:0.5:0"
 
- -vf "scale=800:800,setdar=9/16"
--vf "scale=1280:720,setdar=16/9"
+-pix_fmt yuv420p 
 
-,setsar=1/1
+-vf "smartblur=1:-1:0" 銳利?
+-vf "smartblur=1:1:0" 模糊
 
-
--s 800x800
-
--vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"
--cpu-used 4 
--pix_fmt yuv420p
-
--af "loudnorm=i=-25" 
-
-,unsharp=5:5:1.0:5:5:0.0
-
+  -vf "unsharp=5:5:1.0:5:5:0.0"
  -vf "unsharp=5:5:1.0:5:5:0.0"
--vf unsharp
 
 
- -af "loudnorm=i=-20" 
-
--b:a 0K
--b:v 0K
- -af "loudnorm=i=-20" 
-
-
-
-@echo off
-
-
-
--af "volume=-5dB"
  -tune-content screen 
 
--metadata DATE_ENCODED="%nnn%" 
+-deadline realtime  -cpu-used 4 
+
+-deadline realtime  -cpu-used 4 
 
 
- -deadline realtime  -cpu-used 4
-預設=32秒
-cpu4=18秒
-cpu4+rt=16秒
-rt=94秒
-
-set vcootime_hh=%time:~0,2%
-set vcootime_mm=%time:~3,2%
-set vcootime_ss=%time:~6,2%
-
-echo %vcootime_hh%
-echo %vcootime_mm%
-echo %vcootime_ss%
-
-set vcootime_hh2=%time:~0,2%
-set vcootime_mm2=%time:~3,2%
-set vcootime_ss2=%time:~6,2%
-
-echo %vcootime_hh2%
-echo %vcootime_mm2%
-echo %vcootime_ss2%
-
-set /a vcootime_hh3 = %vcootime_hh2% - %vcootime_hh%
-set /a vcootime_mm3 = %vcootime_mm2% - %vcootime_mm%
-set /a vcootime_ss3 = %vcootime_ss2% - %vcootime_ss%
-
-echo %vcootime_hh3%
-echo %vcootime_mm3%
-echo %vcootime_ss3%
-
-
-
--af "loudnorm=i=-20,volume=5dB" 
-
--af "volume=5dB"
- -af "loudnorm=i=-15"
--deadline realtime  -cpu-used 4
-
-
--af "loudnorm=i=-25"
- -af "loudnorm=i=-20" 音量正常化
-
- -b:v 120k -b:a 120k 
- -deadline realtime  -cpu-used 4
-
- -tune-content screen
--b:v 500k  -maxrate 500k -minrate 20k
-
--dn                 disable data
--sharpness 7 檔案變大了
--tile-rows 2 -tile-columns 2 無感?
--arnr_strength 6 無感?
-ffmpeg -i input.mp4 -c:v libvpx-vp9 -minrate 1M -maxrate 1M -b:v 1M output.webm
--b:v 1000k  -maxrate 1000k -minrate 100k
-
-
- -b:v 900K -maxrate 900K -r 30 
--deadline realtime   -cpu-used 4
--row-mt 1 
--f webm
-
- -deadline realtime  -cpu-used 4 -crf %crf% 
 
 
 -aq-mode 0
--b:a 50K
--b:v 500K -maxrate 500K -bufsize 100K 
--b:v 1000K -maxrate 1000K
--crf %crf%
 
- -deadline realtime  -cpu-used 5 
 
-set tt=-ss 0:0:0.0 -to 0:0:0.0 
--deadline realtime  -cpu-used 5  -crf 45
-
--b:a 96K
-
- -af "loudnorm=i=-25" 
 -af "loudnorm=i=-22"
 
+-deadline realtime -cpu-used 5
 
--deadline realtime  -cpu-used 5
+-b:v 3000K -maxrate 3000K -bufsize 500K
+-deadline realtime -cpu-used 5
 
+ -r 5
+-af "loudnorm=i=-20"
 
- -b:v 300K -maxrate 300K -bufsize 100K 
-
-
--crf 45 -b:v 0K
-
--af "loudnorm=i=-20" 
-
- -af "loudnorm=i=-24" 預設=-24  -20變大聲 -30變小聲
-
--c:a libopus
+-deadline realtime -cpu-used 5
+-deadline realtime -cpu-used 8 
+-c:v libvpx-vp9 
+-c:v libvpx
 
 pause
-
-
--crf 35
-set tt=-ss 00:0:00.0 -to 00:0:10.0 
-
--crf 30  -b:v 1500K -maxrate 1500K -bufsize 500K 
-
- -af "loudnorm=i=-20" 
- -af "loudnorm=i=-20" 
-
-
--b:v 640K -maxrate 640K -bufsize 64K
--crf 30 預設自帶 -b:v 0K
--b:v 3000K
--af "loudnorm=i=-20" 
--g 9999 以幀為單位設置關鍵幀間隔（默認為240）
--cpu-used = -speed (舊稱)
--deadline = -quality (舊稱)
- -row-mt 1 開啟多核心支援
-
--crf 30 -b:v 0  模式Q
--crf 30 -b:v 1000K -maxrate 1000K -bufsize 500K  模式CQ
-
-
-ffmpeg -y  -i %input% %qqq03% -c:v libvpx-vp9 -deadline realtime  -cpu-used 5   -crf 35 -vf "scale=800:800:force_original_aspect_ratio=decrease"  %output%
-
--vf "scale=640:360:force_original_aspect_ratio=decrease"
-
-音量
- -af "volume=5dB"
-
-
-檔案大小(位元)
-for %%F in ( %output% ) do @echo %%~zF %%F
-
-
-
--b:v 1M
--ss 00:0:00.0 -to 00:0:10.0 
-
-
--b:v 0M
-
-
--aq-mode 2 沒感覺有差
-
+-aq-mode 2  沒差別?
+-crf 20
 
 -movflags faststart
--itsoffset 5 -fs 5000k 
+-c:v libvpx-vp9 -crf 25  -deadline realtime -cpu-used 8 
+-c:v vp9_qsv
+
+-b:a 32k 
+-threads 4 -speed 4
+-row-mt 1 -tile-rows 1 
+-row-mt 1 -tile-rows 1 -tile-columns 1
+-crf 10
+-crf 20 -b:v 0k 
+ -deadline realtime -cpu-used 8
+ -b:v 1000k  -sharpness 1 -tune psnr -quality best -deadline best 
+
+-row-mt 1
 
 
--b:v 0k
--deadline realtime
-
--sharpness 1 -tune psnr
-
--sharpness 1 -tune ssim -deadline best  -quality best 
-
-
--speed 4 
--row-mt 1 
-
-:aaa
-GOTO aaa
-
+-aq-mode 0 
 -crf 25 -b:v 0
+ -c:a libopus
+ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
+ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
+
+-ss 00:0:00.0 -t 00:0:30.0
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
@@ -393,70 +125,6 @@ set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
 -metadata description="description" ^
 -metadata copyright="%nnn%" 
 
-
-
- -c:a libopus
-
--b:v 1000k -minrate 500k -maxrate 1000k
-  -crf 20 -b:v 0 
-
- -ss 00:0:00.0 -to 00:0:10.0 
-
-
-set qqq01=_output_a.mp4
--row-mt 1
-set /p qqq01=檔案:
- -ss 00:0:05.0 -to 00:0:20.0 
--c:v libvpx -b:v 2000k -minrate 1000k
--crf 23 -b:v 0
--vf "scale=640:640:force_original_aspect_ratio=decrease"
--vf "scale=480:480:force_original_aspect_ratio=decrease"
-
-vp8不支援
--tile-columns 4 
--frame-parallel 1 
--aq-mode 1
-
-
--ss 00:0:00.0 -to 00:0:30.0 
--crf 23 -b:v 1000k -minrate 1000k -maxrate 1000k -slices 4 -threads 4 
-
-
-
--b:v 2500k
--crf 10 -b:v 1M
--crf 10 -b:v 0
-ffmpeg -y -i "%qqq01%" -c:v libvpx -crf 10 -b:v 0 -g 150 -slices 4 -threads 4 -tile-columns 4    -vf scale=640:640:force_original_aspect_ratio=decrease  "%qqq02%" 
-
-ffmpeg -y -i "%qqq01%" -c:v libvpx -crf 10 -b:v 0 -g 150 -speed 4 -slices 4 -threads 4 -tile-columns 4 "%qqq02%" 
-set ppp01=_output_a.mp4
-
-
-ffmpeg -y -i "%qqq01%" -c:v libvpx   -crf 20 -b:v 0  -speed 4 "%qqq02%" 
-
--speed 4
--slices 4 
-
-
--crf 20 -b:v 0  -c:a libopus 
--f yuv4mpegpipe
--cpu-used 使用cpu核心數量
--g 150 關鍵幀之間最多有150幀
-
-
--deadline good  
-
--cpu-used 0
--threads 4 
--deadline realtime
-
--aq-mode 0 
--crf 25 -b:v 0
-
-ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
-ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
-
--ss 00:0:00.0 -t 00:0:30.0
 
 -c:v copy -c:a copy
 

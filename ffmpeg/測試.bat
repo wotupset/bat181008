@@ -3,10 +3,7 @@ chcp 65001
 
 
 set /p input=檔案:
-
-
-ffmpeg -i %input% -c:v vp9_qsv -y "vp9_qsv.mp4"
-
+ffmpeg -i %input% -c:v mpeg4 -y "123.mkv" 
 
 
 
@@ -14,6 +11,41 @@ ffmpeg -i %input% -c:v vp9_qsv -y "vp9_qsv.mp4"
 
 pause
 exit
+
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+
+
+
+
+
+set /p input=檔案:
+ffmpeg -loop 1 -i %input% -an -c:v libvpx -crf 16  -quality best -threads 4 -t 2 -r 1 -y "123.webm" 
+
+
+
+
+-qmin 16 -qmax 16
+
+
+set vf=-vf "scale=720:1280,setsar=1/1" 
+set vf=-vf "scale=1280:720,setsar=1/1" 
+
+
+ffmpeg -ss 0:0:0.0 -to 00:0:30.0  -i %input%   %vf%  -c:v h264_nvenc -qp 30  -y "720p30s.mp4"
+
+
+ffmpeg -i %input% -c:v mpeg2video -y "test.mkv"
+
 ffmpeg -i 01.mp4 -itsoffset -0.6 -i 01.mp4 -map 0:v -map 1:a -c:v copy -c:a copy -y  out.mp4
 start ""  out.mp4
 

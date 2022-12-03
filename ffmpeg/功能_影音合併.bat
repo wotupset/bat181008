@@ -4,9 +4,7 @@ chcp 65001
 
 
 
-ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
-ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
-ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
+ffmpeg -i 01.m4a -i 01.mp4  -c copy  -map 0:a -map 1:v  -y 影音合併.mkv
 
 
 
