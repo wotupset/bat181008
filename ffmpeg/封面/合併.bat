@@ -3,6 +3,8 @@ chcp 65001
 
 ..\ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
 ..\ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
+
+
 ..\ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
 
 del "01x.ts"
@@ -10,8 +12,17 @@ del "02x.ts"
 
 
 
+
 pause
 exit
+
+del "01.mp4"
+del "02.mp4"
+
+..\ffmpeg -i "concat:01x.ts|02x.ts|03x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
+
+..\ffmpeg -i "03.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 03x.ts
+del "03x.ts"
 
 ffmpeg -i 01.mkv -i 02.mkv -i 03.mkv -i 04.mkv -filter_complex "concat=n=4:v=1:a=1"  -c:v h264_nvenc -cq 30  -s 1280x720  -y  %nnn%_merge.mp4
 

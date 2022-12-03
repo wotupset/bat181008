@@ -7,48 +7,81 @@ echo %date%_%time% >> 時間差.txt
 
 
 
-..\ffmpeg -loop 1 -i "01.webp" -t 10 -s 400x300 -c:v h264_nvenc -cq 20 -pix_fmt yuv420p -preset fast -an -y "01x.mp4"
+..\ffmpeg -loop 1 -i "01.webp" -t 10 -s 400x300 -c:v h264_nvenc -pix_fmt yuv420p -preset fast -an -y "01x.mp4"
 ..\ffmpeg -stream_loop 5 -i "01x.mp4" -c copy -y "01x_loop.mp4"
 ..\ffmpeg -stream_loop 9 -i "01x_loop.mp4" -c copy -y "01x_loop5.mp4"
 del "01x.mp4"
 del "01x_loop.mp4"
 
 
-..\ffmpeg -ss 0:8:55.0 -to 0:10:55.0 -i "01.mp3"    -f mp3 -y "01x.mp3"
+..\ffmpeg -ss 0:27:0.0 -to 0:14:.0 -i "01.mp3"    -f mp3 -y "01x.mp3"
 
 
-..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4"  -shortest -map 0:a -map 1:v  -bufsize 1M  -r 120  -pix_fmt yuv420p  -c:v h264_nvenc -cq 20  -y "FFF.mp4"
-..\ffmpeg -i "FFF.mp4"      -r 5 -ac 2      -y "02cover.mp4"
+11.30
+
+
+
+
+
+
+..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4"  -shortest -map 0:a -map 1:v  -bufsize 1M  -r 120  -pix_fmt yuv420p -c:v h264_nvenc  -cq 35  -y "FFF.mp4"
+..\ffmpeg -i "FFF.mp4"   -map_chapters -1 -map_metadata -1    -r 5 -ac 2  -c:v h264_nvenc  -cq 35 -y "02cover_%RANDOM%.mp4"
 
 del "01x.mp3"
 del "01x_loop5.mp4"
 del "FFF.mp4"
 
 
-
-
-
-
-
-
 echo %date%_%time% >> 時間差.txt
+
+exit
+pause
+exit
+
+音量正常化 音質會變差
+set af=-af "loudnorm=I=-20.0:LRA=7.0:TP=-2.0:print_format=json"
+..\ffmpeg -i "02cover.mp4" -c:v copy %af% -y "02coverV2.mp4"
 
 
 ..\ffmpeg -i "02cover.mp4" -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
+
 set /p input2=音量調整:
 set af=-af "volume=%input2%dB,volumedetect"
-echo %af%
+set af=-af "loudnorm=I=-20:TP=-7.0:LRA=20.0,volumedetect"
+set af=-af "loudnorm,volumedetect"
+set af=-af "loudnorm"
 
-..\ffmpeg -i "02cover.mp4" -c:v copy %af% -y "02coverFFF.mp4"
+
+..\ffmpeg -i "02coverV2.mp4" -af "volumedetect" -vn -sn -dn  -f null -y NUL
+-map_chapters -1 -map_metadata -1 
+
+-af "loudnorm=print_format=json"
+
+
+'I, i'
+Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
+
+'LRA, lra'
+Set loudness range target. Range is 1.0 - 20.0. Default value is 7.0.
+
+'TP, tp'
+Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
+
+./ffmpeg -i /path/to/input.wav -af loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=-27.2:measured_TP=-14.4:measured_LRA=0.1:measured_thresh=-37.7:offset=-0.7:linear=true:print_format=summary output.wav
+
+
+
+
+..\ffmpeg -i "02cover.mp4" -af "volumedetect,loudnorm=print_format=json" -vn -sn -dn  -f null -y NUL
+-af "loudnorm=print_format=summary"
+
+
+..\ffmpeg -i "02cover.mp4" -af "volumedetect" -vn -sn -dn  -f null -y NUL
+..\ffmpeg -i "02cover.mp4" -af "loudnorm=print_format=json" -vn -sn -dn  -f null -y NUL
 
 
 del "02cover.mp4"
-
-
-pause
-exit
-
 -c:a copy
  -bsf:v h264_mp4toannexb -f mpegts
  
