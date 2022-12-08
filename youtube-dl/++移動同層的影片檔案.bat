@@ -1,4 +1,5 @@
 
+
 echo %date%
 echo %time%
 
@@ -13,6 +14,48 @@ echo %nnn%
 
 
 
+set FFF=webm
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+set FFF=mp4
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+set FFF=mkv
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+
+
+
+
+pause
+exit
+
+copy *.webm +,,
+mkdir %nnn%
+move *.webm ./%nnn%/
+
+
+copy *.mp4 +,,
+xcopy *.mp4 .\%nnn%\*.mp4
+del *.mp4
+
+copy *.webm +,,
+xcopy *.webm .\%nnn%\*.webm
+del *.webm
+
+copy *.mkv +,,
+xcopy *.mkv .\%nnn%\*.mkv
+del *.mkv
+
+
+
+
 
 
 xcopy *.mp4 .\%nnn%\*.mp4
@@ -21,12 +64,31 @@ xcopy *.webm .\%nnn%\*.webm
 del *.webm
 xcopy *.mkv .\%nnn%\*.mkv
 del *.mkv
+xcopy *.jpg .\%nnn%\*.jpg
+del *.jpg
+xcopy *.png .\%nnn%\*.png
+del *.png
+
 xcopy *.ts .\%nnn%\*.ts
 del *.ts
+xcopy *.srt .\%nnn%\*.srt
+del *.srt
+xcopy *.ass .\%nnn%\*.ass
+del *.ass
 
 
-exit
-pause
-exit
+
+
+
+
+copy .\%nnn%\*.mp4 +,,
+
+move *.mp4 .\%nnn%\*.mp4
+del *.mp4
+
+xcopy *.mp4 .\%nnn%\*.mp4
+del *.mp4
+
+
 
 11
