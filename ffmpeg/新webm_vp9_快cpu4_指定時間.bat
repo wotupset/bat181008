@@ -21,7 +21,7 @@ set /p input=檔案:
 
 
 
-set output=_output_vp9_快_指定時間.webm
+set output=_output_vp9_快_指定時間%RANDOM%.webm
 
 
 
@@ -36,8 +36,8 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh0=720
-set wh0=800
+set wh=720
+set wh=800
 set wh0=960
 set wh0=1280
 
@@ -51,8 +51,8 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35
-set crf=-crf 30
+set crf0=-crf 35
+set crf0=-crf 30
 set crf0=
 
 
@@ -70,7 +70,7 @@ set qqq04=%crf% %crf2%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decreas
 set qqq05=-row-mt 1  -tile-columns 2 -threads 6 -static-thresh 1000 -pix_fmt yuv420p
 
 
-set tt=-ss 0:0:45.0 -to 0:0:55.0
+set tt=-ss 0:0:3.0 -to 0:0:33.0
 set tt0=
 echo %tt%
 

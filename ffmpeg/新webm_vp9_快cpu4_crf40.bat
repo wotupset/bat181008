@@ -19,7 +19,7 @@ set /p input=檔案:
 
 
 
-set output=_output_vp9_快.webm
+set output=_output_vp9_快crf40_%RANDOM%.webm
 
 
 
@@ -49,8 +49,8 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35
-set crf=
+set crf0=-crf 35
+set crf0=
 
 
 set crf2=-b:v 0

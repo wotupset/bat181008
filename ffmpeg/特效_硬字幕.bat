@@ -1,16 +1,22 @@
 echo off
 chcp 65001
 
-ffmpeg  -c:v hevc_cuvid  -i 01.mkv -ss 0:16:45.0 -to 0:17:15.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1:force_style='FontSize=30'" -y 字幕.mkv
+set /p input=檔案:
+
+
+ffmpeg  -c:v h264_cuvid  -i %input% -ss 0:16:26.0 -to 0:17:57.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1:force_style='FontSize=25'" -y 字幕.mkv
 
 
 pause
 
 exit
 pause
+-c:v hevc_cuvid
 
 //Nvidia CUVID HEVC decoder (codec hevc)
 -c:v hevc_cuvid
+-c:v h264_cuvid
+
 
 ffmpeg   -i 01.mkv -ss 0:3:40.0 -to 0:3:50.0 -c:v h264_nvenc -filter_complex "[0:v][0:s]overlay[v]" -map "[v]" -map 0:a -sn -y 字幕.mkv 
 
