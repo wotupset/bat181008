@@ -12,6 +12,37 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
+set FFF=webm
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+set FFF=mp4
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+set FFF=mkv
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+
+exit
+pause
+exit
+
+copy *.webm +,,
+mkdir %nnn%
+move *.webm ./%nnn%/
+
+
+
+
+copy *.webm +,,
+xcopy *.webm .\%nnn%\*.webm
+del *.webm
+
 
 xcopy *.mp4 .\%nnn%\*.mp4
 del *.mp4
@@ -31,8 +62,19 @@ del *.srt
 xcopy *.ass .\%nnn%\*.ass
 del *.ass
 
-exit
-pause
-exit
+
+
+
+
+
+copy .\%nnn%\*.mp4 +,,
+
+move *.mp4 .\%nnn%\*.mp4
+del *.mp4
+
+xcopy *.mp4 .\%nnn%\*.mp4
+del *.mp4
+
+
 
 11
