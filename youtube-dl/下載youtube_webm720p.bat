@@ -1,17 +1,21 @@
-echo off
+
 chcp 65001
 
+
 :top
+
+%RANDOM%
+echo %RANDOM%
+
 
 
 set /p poi=youtube網址:
 echo %poi%
 
-set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
+set nn01=-o yt-webm-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
-
-yt-dlp  -f best -r 3M %nn01% %poi%
+yt-dlp  -f bestvideo[ext=webm][height=720]+bestaudio[ext=webm] %nn01%  %poi%
 
 
 goto top
@@ -20,6 +24,8 @@ goto top
 
 pause
 exit
+echo off
+
 
 yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
 

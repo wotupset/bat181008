@@ -1,8 +1,7 @@
-echo off
+
 chcp 65001
 
 :top
-
 
 set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vcootime=%time:~0,2%
@@ -15,11 +14,10 @@ echo %nnn%
 
 
 
-
 set /p poi=youtube網址:
 echo %poi%
 
-yt-dlp  -f bestvideo[ext=webm][height=360]+bestaudio[ext=webm] -o _360p_%nnn%_%%(id)s  %poi%
+yt-dlp  -f bestvideo[ext=webm][height=1280]+bestaudio[ext=webm] -o _webm_%%(id)s %poi%
 
 
 goto top
@@ -28,6 +26,9 @@ goto top
 
 pause
 exit
+
+yt-dlp  -f bestvideo[ext=webm][height=1280]+bestaudio[ext=webm] -o _720p_%nnn%_%%(id)s  %poi%
+
 yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
 
 youtube-dl %qq01% -f bestvideo[ext=mp4][height=720][fps=60]+bestaudio[ext=m4a]   %poi%

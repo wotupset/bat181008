@@ -1,10 +1,17 @@
-set /p poi=youtube∫Ùß}:
+echo off
+chcp 65001
+
+:top
+set /p poi=youtubeÁ∂≤ÂùÄ:
 echo %poi%
 
 
 
 youtube-dl -F %poi%
 
+goto top
+pause
+exit
 cmd
 
 youtube-dl -F https://www.youtube.com/watch?v=BtYnc-x0n0Y

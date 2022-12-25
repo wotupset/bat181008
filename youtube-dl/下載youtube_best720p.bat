@@ -1,16 +1,16 @@
-@echo off
-
+echo off
+chcp 65001
 
 :top
 
 
-set /p poi=youtube∫Ùß}:
+set /p poi=youtubeÁ∂≤ÂùÄ:
 echo %poi%
 
 
-set qq01=-o yt-720p60fps-%%(title)s-%%(id)s.%%(ext)s
+set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 
-yt-dlp %qq01% -r 3M -f best   %poi%
+yt-dlp %nn01% -r 3M -f best   %poi%
 
 
 goto top
