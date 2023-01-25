@@ -1,57 +1,27 @@
 echo off
 chcp 65001
 
-echo 時間差 > 時間差.txt
-echo %date%_%time% >> 時間差.txt
-
-
-echo %date%
-echo %time%
-
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-
-
-..\ffmpeg -loop 1 -i "01.webp" -t 10 -s 400x300 -c:v h264_nvenc -pix_fmt yuv420p -preset fast -an -y "01x.mp4"
-..\ffmpeg -stream_loop 5 -i "01x.mp4" -c copy -y "01x_loop.mp4"
-..\ffmpeg -stream_loop 9 -i "01x_loop.mp4" -c copy -y "01x_loop5.mp4"
-del "01x.mp4"
-del "01x_loop.mp4"
-
-set tt=-ss 0:7:15.0 -to 0:8:15.0
+set tt=-ss 0:12:0.0 -to 0:12:50.0
 echo %tt%
-..\ffmpeg %tt% -i "01.mp3"    -f mp3 -y "01x.mp3"
 
 
+..\ffmpeg -loop 1 -i "01.webp"   %tt%  -i "01.mp3"  -shortest -fflags +shortest  -c:v h264_nvenc   -y "FFF.mp4"
+..\ffmpeg -i "FFF.mp4"  -c:v h264_nvenc  -r 10  -pix_fmt yuv420p -qp 30 -y "test%RANDOM%.mp4"
 
-
-
-set p01=-pix_fmt yuv420p -c:v h264_nvenc -qp 30 -map_chapters -1 -map_metadata -1
-
-..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4" -shortest -fflags +shortest -map 0:a -map 1:v %p01% -y "FFF.mp4"
-..\ffmpeg -i "FFF.mp4" -r 10 -ac 2 %p01% -y "02cover_%nnn%.mp4"
-
-del "01x.mp3"
-del "01x_loop5.mp4"
 del "FFF.mp4"
-
-
-echo %date%_%time% >> 時間差.txt
 
 
 pause
 exit
- -bufsize 1M
--shortest -fflags +shortest
-..\ffmpeg -i "01x.mp3" -i "01x_loop5.mp4" -shortest -map 0:a -map 1:v -r 120  -bufsize 1M %p01% -y "FFF.mp4"
+-c:v h264_nvenc
+del "FFF.mp4"
+-shortest -fflags +shortest -max_interleave_delta 5M -r 10
+-map 0:a -map 1:v  
+ 
+..\ffmpeg  %tt%  -i "01.mp3" -loop 1 -i "01.webp"   -r 5 -shortest -map 0:a -map 1:v  -c:v h264_nvenc -y "test%RANDOM%.mp4"
 
--preset fast 
+
+
 -qp 35 -cq 35
 -tune stillimage 
 音量正常化 音質會變差
