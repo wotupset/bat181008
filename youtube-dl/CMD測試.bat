@@ -1,6 +1,6 @@
 
 
-yt-dlp.exe -f  137  https://www.youtube.com/watch?v=wL9TaTUz03M
+yt-dlp.exe -f  302+251  https://www.youtube.com/watch?v=u4f3jKqA4EQ
 
 cmd
 

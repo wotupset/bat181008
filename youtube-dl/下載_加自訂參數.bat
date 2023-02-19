@@ -9,7 +9,7 @@ set /p poi=youtube網址:
 echo %poi%
 
 
-yt-dlp -r 2M -f 302+251 %poi%
+yt-dlp -r 3M -f 247+251 %poi%
 
 
 
@@ -19,7 +19,8 @@ goto top
 
 pause
 exit
- -f 298+140 
+-f 302+251
+-f 298+140 
 -f 243+251
 
 

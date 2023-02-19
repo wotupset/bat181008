@@ -4,22 +4,17 @@ chcp 65001
 :top
 
 
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
-
 
 
 
 set /p poi=youtube網址:
 echo %poi%
 
-yt-dlp  -f bestvideo[ext=webm][height=360]+bestaudio[ext=webm] -o _360p_%nnn%_%%(id)s  %poi%
+set nn01=-o yt-webm-%%(title)s-%%(id)s.%%(ext)s
+echo %nn01%
+
+
+yt-dlp  -f bestvideo[ext=webm][height=360]+bestaudio[ext=webm] %nn01% %poi%
 
 
 goto top

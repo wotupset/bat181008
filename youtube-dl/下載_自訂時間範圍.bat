@@ -1,29 +1,16 @@
 echo off
 chcp 65001
 
-echo %date%
-echo %time%
-
 
 :top
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn% 
-
-
-
 
 set /p poi=youtube網址:
-echo "%poi%"
+echo %poi%
 
 
-start "" yt-dlp   -r 4M  %poi% -o "%nnn%.mkv"
+
+yt-dlp -r 3M --download-sections "*0:9:0-0:12:0"   %poi%
 
 
 
@@ -33,9 +20,12 @@ goto top
 
 pause
 exit
+--force-keyframes-at-cuts
 
 
---download-sections??
+-f 302+251
+-f 298+140 
+-f 243+251
 
 
 yt-dlp -r 1M -f best   %poi%
