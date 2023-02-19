@@ -1,13 +1,54 @@
-set /p input=ÀÉ®×:
+echo off
+chcp 65001
+
+set /p input=æª”æ¡ˆ:
+
+set tt=-ss 0:1:12.5 -to 0:1:20.0
+set tt0=
+echo %tt%
+set output=_lossless%RANDOM%.mkv
+
+ffmpeg %tt%   -i %input% -c:v libx264  -crf 5 -b:v 0 -y %output%
 
 
 
-
-ffmpeg  -i %input%  -ss 0:0:0.0 -to 0:0:15.0 -c:v copy -c:a copy -sn -y "lossless.webm"  
 
 
 pause
 exit
+
+ffmpeg %tt%  -seek_timestamp 1  -i %input% -c:v copy -c:a copy -sn -dn -y "_lossless.mkv" 
+
+-seek_timestamp 1 
+
+&& ffplay.exe "_lossless.mkv"
+&& ffprobe "_lossless.mkv"
+
+
+-copyts
+-seek_timestamp 1 
+-muxdelay 0
+
+
+ffmpeg -i %input%    -c:v libvpx-vp9 -crf 25 -b:v 0  -y  "ç„¡æ.webm"
+
+
+ffmpeg -y  -an -i %input%    -c:v libvpx-vp9 -crf 10 -b:v 0  "vp9_crf10.webm"
+ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
+
+ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+
+ffmpeg  -i %input%  -ss 0:0:25.0 -to 0:0:34.0   -c:v copy -an -sn -y "lossless.webm"  
+ffmpeg -i %input% -ss 0:1:54.0 -to 0:2:5.0 -c:v copy  -c:a aac  -y  "lossless.mkv"
+ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+
+
+ffmpeg  -i %input%  -ss 0:0:53.0 -to 0:1:27.0  -c:v copy -c:a copy -sn -y "lossless.webm"  
+
+
+-avoid_negative_ts make_zero
+
+
 
 ffmpeg  -i %input% -c:v ffv1 -sn -an -y "ffv1_lossless.mkv"  
 
@@ -40,7 +81,7 @@ ffmpeg -y -i %input% -c:v libx264  -crf 0 -b:v 0  "h264_lossless.mp4"
 
 out%Y-%m-%d_%H-%M-%S.mp4
 
-·|¥H¤T¦ì¼Æ¦r¡A¦Û°Ê½s¸¹ªºÀÉ¦W¡C
+æœƒä»¥ä¸‰ä½æ•¸å­—ï¼Œè‡ªå‹•ç·¨è™Ÿçš„æª”åã€‚
 ffmpeg -i input.mp4 -map 0 -c copy -f segment -segment_time 1800 -reset_timestamps 1 output_%03d.mp4
 
 -c copy -f segment -segment_time 1800 -reset_timestamps 1

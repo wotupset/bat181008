@@ -1,8 +1,8 @@
 chcp 65001
 echo off
-set /p input=檔案:
 
-ffmpeg -i %input%    -y "字幕.ass"
+
+ffmpeg -i "+111.m4a" -i "+f248.webm"   -c:v copy -c:a copy  -y "123.mkv"
 
 
 pause

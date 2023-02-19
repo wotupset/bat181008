@@ -1,36 +1,26 @@
 echo off
 chcp 65001
 
+echo %date%
+echo %time%
 
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
 
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
+set nnn=%vardate%_%vartime%_%RANDOM%_
 echo %nnn% 
-
 
 
 
 set /p input=檔案:
 
 
-
-set output=_output_vp9_快_指定時間%RANDOM%.webm
-
-
-
-
 set wh=1440
 set wh=1024
 set wh=1280
-
-
 
 set wh=400
 set wh=480
@@ -38,6 +28,7 @@ set wh=512
 set wh=640
 set wh=720
 set wh=800
+set wh0=1024
 set wh0=960
 set wh0=1280
 
@@ -47,7 +38,6 @@ set crf=-crf 50
 set crf=-crf 25
 set crf=-crf 30
 set crf=-crf 32 -b:v 0 
-
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
@@ -58,48 +48,60 @@ set crf0=
 
 set crf2=-b:v 0
 set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
-set crf2=-cpu-used 4
 set crf2=-b:v 400K -r 25
-set crf2=-r 25
+set crf2=-cpu-used 4
+set crf2=-r 15
 set crf2=
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1  -ac 2   -sn -dn  -tune-content screen 
-set qqq04=%crf% %crf2%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1  -tile-columns 2 -threads 6 -static-thresh 1000 -pix_fmt yuv420p
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -tune-content screen 
+set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-static-thresh 1000 -pix_fmt yuv420p
+set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
+set cpu02=-row-mt 0 -tile-columns 2 -threads 6
 
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% 
+set output=_output_vp9_快_指定時間%RANDOM%.webm
 
-set tt=-ss 0:0:3.0 -to 0:0:33.0
+set tt=-ss 0:4:24.5 -to 0:4:35.0
 set tt0=
 echo %tt%
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg %tt%  -i %input% -c:v libvpx-vp9  -c:a libopus     %qqq03% %qqq04% %qqq05% -y %output%
+ffmpeg %tt%  -i %input% -c:v libvpx-vp9  -c:a libopus %ppp01% -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
 
-
-
-
-
-
-set af=-af "volume=%input2%dB,volumedetect"
-set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:LRA=10.0:TP=-0.0:print_format=json"
-echo %af%
-
-
-
-ffmpeg -i %output% -c:v copy %af% -y _調整音量_%output%
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+ffmpeg -i "%output%" -c:v copy %af% -y _調整音量n_%output%
 
 
 
 pause
 exit
+set af=-af "dynaudnorm=p=0.8:m=25,volumedetect"
+
+set af=-af "volume=%input2%dB,volumedetect"
+set af=-af "loudnorm=I=-20.0:LRA=20.0:TP=-7.0:print_format=json"
+set af=-af "loudnorm=I=-20.0:LRA=10.0:TP=-0.0:print_format=json"
+set af=-af "volume=+10dB"
+set af=-af "loudnorm"
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+ffmpeg -i %output% -af "volumedetect" -vn -sn -dn  -f null -y NUL
+
+set af=-af "dynaudnorm"
+ffmpeg -i %output% -c:v copy %af% -y _調整音量d_%output%
+set af=-af "loudnorm"
+ffmpeg -i %output% -c:v copy %af% -y _調整音量d_%output%
+
+
+
+-seek_timestamp 1 
+
 Adaptive Quantization mode 自適應量化模式
 -aq-mode 0
 

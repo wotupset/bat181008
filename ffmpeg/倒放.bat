@@ -1,11 +1,13 @@
 set /p input=ÀÉ®×:
 
 
-ffmpeg.exe -y -i "%input%" -vf "reverse" -af "areverse" ­Ë©ñ.mp4
+ffmpeg.exe  -i %input% -vf "reverse" -an -y ­Ë©ñ.mp4
 
 
 pause
 exit
+
+-af "areverse" 
 -af areverse
 -vf reverse
 

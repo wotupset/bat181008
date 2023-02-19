@@ -1,31 +1,29 @@
 echo off
 chcp 65001
 
+
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_
+echo %nnn% 
+
 set /p input=檔案:
 
-echo %date%_%time%
 
-set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vcootime=%time:~0,2%
-
-if /i %vcootime% LSS 10 (set vcootime=0%time:~1,1%)
-set vcootime=%vcootime%%time:~3,2%%time:~6,2%
-
-set nnn=%vcoodate%_%vcootime%_%RANDOM%
-echo %nnn%
-
-
-set output=_output_vp9_快_無聲.webm
 
 
 set wh=1440
 set wh=1024
-
 set wh=1024
 set wh=1280
-
-
-
 set wh=400
 set wh=480
 set wh=512
@@ -33,21 +31,32 @@ set wh=640
 set wh=800
 
 set crf=-crf 20
+set crf=-crf 30
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 30
 set crf=-crf 35
-set crf0= 
+set crf=-cpu-used 4
+set crf=
 
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2     -row-mt 1  -sn -dn -an   -tune-content screen 
-set qqq04=%crf%   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-row-mt 1 -aq-mode 0 
+set qqq03=-map_chapters -1 -map_metadata -1 -an -sn -dn -tune-content screen 
+set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-static-thresh 1000 -pix_fmt yuv420p
+set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
+set cpu02=-row-mt 0 -tile-columns 2 -threads 6
 
-ffmpeg   -i %input% -c:v libvpx-vp9  -c:a libopus   %qqq03% %qqq04% %qqq05% -y %output%
+set tt=-ss 0:0:0.0 -to 0:0:10.0
+set tt0=
+echo %tt%
+
+
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% 
+set output=_output_vp9_快_無聲.webm
+
+ffmpeg %tt% -i %input% -c:v libvpx-vp9  -c:a libopus  %ppp01% -y %output%
 
 
 

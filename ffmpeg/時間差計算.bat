@@ -65,3 +65,20 @@ echo ¯Ó®É=%time_hms3%
 
 pause
 exit
+
+%tmp:x=y%
+%time::=%  ¿é¥X=163058.68
+
+echo %date%
+echo %time%
+
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_640p
+echo %nnn%
+

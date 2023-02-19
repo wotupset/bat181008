@@ -1,8 +1,11 @@
+
 ffmpeg -h encoder=libvpx-vp9 >libvpx-vp9.txt
 ffmpeg -h encoder=libvpx >libvpx.txt
 
 ffmpeg -h encoder=h264_nvenc >h264_nvenc.txt
 ffmpeg -h encoder=libx264 >libx264.txt
+ffmpeg -h encoder=h264_qsv >h264_qsv.txt
+
 
 ffmpeg -h encoder=libaom-av1 >libaom-av1.txt
 ffmpeg -h encoder=librav1e >librav1e.txt

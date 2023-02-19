@@ -1,5 +1,3 @@
-
-
 echo %date%
 echo %time%
 
@@ -35,6 +33,7 @@ exit
 copy *.webm +,,
 mkdir %nnn%
 move *.webm ./%nnn%/
+
 
 
 

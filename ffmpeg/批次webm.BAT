@@ -12,7 +12,7 @@ set nnn=%vcoodate%_%vcootime%
 echo %nnn%
 
 set qqq03=-row-mt 1  -tile-columns 2 -threads 6 
-
+echo  %qqq03%
 
 
 set /a cc=0
@@ -21,8 +21,7 @@ for %%a in (*.mp4) do (
 
 set /a cc=cc+1
 echo %%a
-ffmpeg  -i %%a -c:v libvpx-vp9  %qqq03% -y "_%nnn%_%RANDOM%_%%a.webm"
-
+ffmpeg  -i %%a -c:v libvpx-vp9  -y "_%nnn%_%RANDOM%_%%a.webm"
 )
 
 echo %cc%

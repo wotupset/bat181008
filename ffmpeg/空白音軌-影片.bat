@@ -1,6 +1,6 @@
 set /p input=ÀÉ®×:
 
-ffmpeg -y -i %input% -f lavfi -i anullsrc -c:v copy  -shortest "h264_anullsrc.mp4"
+ffmpeg  -i %input% -f lavfi -i anullsrc -c:v copy  -shortest -y "h264_anullsrc.mp4"
 
 
 

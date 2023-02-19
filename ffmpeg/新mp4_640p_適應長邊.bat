@@ -28,7 +28,8 @@ echo %tt%
 
 
 
-ffmpeg -y %tt% -i %input%  %qqq03%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"    -c:v h264_nvenc  -qp 28   "%output%"
+
+ffmpeg  %tt% -i %input%  %qqq03%  -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"    -c:v h264_nvenc  -cq 30  -y "%output%"
 
 
 

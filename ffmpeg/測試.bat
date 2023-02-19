@@ -1,16 +1,19 @@
 echo off
 chcp 65001
 
-
 set /p input=檔案:
-ffmpeg -i %input% -c:v mpeg4 -y "123.mkv" 
 
+ffmpeg  -i %input% -vf hwupload=extra_hw_frames=64,format=qsv -c:v h264_qsv -y "123.mkv" 
 
 
 
 
 pause
 exit
+
+ffmpeg -i "$0" -map 0 -c copy "${0%%.*}".mkv
+set /p input=檔案:
+ffmpeg -i %input% -c:v mpeg4 -y "123.mkv" 
 
 
 echo %date%

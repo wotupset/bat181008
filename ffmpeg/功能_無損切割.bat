@@ -1,13 +1,21 @@
 echo off
 chcp 65001
 
+set /p input=檔案:
 
-ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
-ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
-ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
 
+set tt=-ss 0:0:15.0 -to 0:0:30.0
+set tt0=
+echo %tt%
+
+ffmpeg -i %input% -c:v copy -c:a copy  -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
+ffmpeg %tt% -i 01x.ts -c:v copy -c:a copy -y 02.mp4
 del 01x.ts
-del 02x.ts
+
+
+
+
+
 
 
 pause

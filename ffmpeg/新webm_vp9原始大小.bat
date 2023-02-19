@@ -3,31 +3,40 @@ chcp 65001
 
 set /p input=檔案:
 
-set output=_output_vp9_原始大小.webm
-
 
 set crf=-crf 30
 set crf=-crf 20
-
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40 
 set crf=-crf 35
-set crf0=
+set crf=
 
+set crf2=-b:v 0
+set crf2=
 
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
+set qqq04=
+set qqq05=-tune-content screen -static-thresh 1000 -pix_fmt yuv420p
+set cpu01=-rc_lookahead 0 -aq-mode 2
+set cpu02=-row-mt 0 -tile-columns 2 -threads 6
 
-set qqq04=-ac 2 -pix_fmt yuv420p -static-thresh 1000
-set qqq05=-row-mt 1  -tile-columns 2 -threads 6
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+set output=_output_vp9_原始大小.webm
 
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
 
-ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus   %crf% %qqq04% %qqq05%  -y %output%
+ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus %ppp01%  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
+
+
+set af=-af "loudnorm=I=-20.0,volumedetect"
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
 
 
 

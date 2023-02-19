@@ -1,4 +1,5 @@
-@echo off
+echo off
+chcp 65001
 
 echo %date%_%time%
 
@@ -16,11 +17,12 @@ echo %nnn%
 
 set /a cc=0
 
-for %%a in (*.mov) do (
+for %%a in (*.mp4) do (
 
 set /a cc=cc+1
 echo %%a
-ffmpeg -y -i "%%a"   -c:v h264_nvenc -rc constqp -qp 25   "_%nnn%_%RANDOM%_%%a.mp4"
+
+ffmpeg   -i "%%a"   -c:v h264_nvenc  -cq 30  -y "_%nnn%_%RANDOM%_%%a.mp4"
 
 )
 
@@ -30,7 +32,7 @@ CMD
 
 exit
 
-
+-ss 0:0:0.0 -to 0:0:20.0
 -deadline realtime  -cpu-used 4 -vf "scale=800:800:force_original_aspect_ratio=decrease"
 
 -cpu-used 4

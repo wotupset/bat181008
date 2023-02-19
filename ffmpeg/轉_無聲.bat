@@ -2,7 +2,7 @@ chcp 65001
 echo off
 set /p input=檔案:
 
-ffmpeg -i %input%    -y "字幕.ass"
+ffmpeg -i %input%  -c:v copy -an   -y "無聲.mkv"
 
 
 pause

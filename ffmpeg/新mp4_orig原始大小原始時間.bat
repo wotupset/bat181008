@@ -1,39 +1,27 @@
 echo off
 chcp 65001
 
-echo %date%_%time%
-
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-
-
-
+echo %date%_%time%_%RANDOM%
 
 set /p input=檔案:
-set output=_output_a_%nnn%_.mp4
-set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
+set output=_output_原始大小原始時間%RANDOM%.mp4
+set qqq03= -pix_fmt yuv420p -ac 2  
 
+set qqq02=-cq 30
+set qqq02=-qp 30
+set qqq02=
 
-
-ffmpeg  -i %input%   %qqq03%   -c:v h264_nvenc -cq 35 -y  "%output%"
-
-
-
-start "" "%output%" 
-
-
+ffmpeg  -i %input%   %qqq03%   -c:v h264_nvenc %qqq02%  -y  "%output%"
 
 
 
 pause
 exit
 
+-map_chapters -1 -map_metadata -1 
+
+
+start "" "%output%" 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 

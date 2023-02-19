@@ -1,5 +1,7 @@
-.\ffmpeg -ss 0:0:10.0 -to 0:0:50.0 -i "01.mp3" -loop 1 -i "01.jpg" -shortest -map 0:a -map 1:v  -r 120    -preset faster -tune stillimage -vf "scale=800:450" -y "FFF.mp4"
-.\ffmpeg -i "FFF.mp4"    -r 5   -af "volumedetect" -y "output.mp4"
+.\ffmpeg  -i "01.mp3" -loop 1 -i "01.jpg" -shortest -map 0:a -map 1:v  -r 120  -c:v h264_nvenc -y "FFF.mp4"
+
+
+.\ffmpeg -i "FFF.mp4"    -r 5 -c:v h264_nvenc   -y "output.mp4"
 
 del "FFF.mp4"
 
@@ -9,6 +11,8 @@ del "FFF.mp4"
 
 pause
 exit
+
+-ss 0:0:10.0 -to 0:0:50.0
 
 .\ffmpeg -y -i "01.jpg" -vf "scale=800:450" "01x.jpg" 
 .\ffmpeg -y  -i "01.mp3"  -f mp3  "01x.mp3"

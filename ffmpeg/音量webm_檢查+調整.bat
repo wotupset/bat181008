@@ -8,31 +8,28 @@ echo %date%_%time%
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 
 
-set /p input2=輸入:
-set af=-af "volume=%input2%dB,volumedetect"
 set af=-af "volume=+10dB"
+
+set af=-af "loudnorm,volumedetect"
 set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
-set af=-af "loudnorm=I=-20.0:LRA=20.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:print_format=json"
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
-ffmpeg -i %input% -c:v copy  %af% -y 調整音量.mkv
+
+ffmpeg -i %input% -c:v copy  %af% -y 調整音量n.webm
+
+set af=-af "dynaudnorm"
+ffmpeg -i %input% -c:v copy  %af% -y 調整音量d.webm
+
+
+
+
 
 pause
 exit
-set af=-af "loudnorm" 預設-24db 還是太小聲 
 
-'I, i'
-Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
+set /p input2=輸入:
+set af=-af "volume=%input2%dB,volumedetect"
 
-'LRA, lra'
-Set loudness range target. Range is 1.0 - 20.0. Default value is 7.0.
-
-'TP, tp'
-Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
-
-./ffmpeg -i /path/to/input.wav -af loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=-27.2:measured_TP=-14.4:measured_LRA=0.1:measured_thresh=-37.7:offset=-0.7:linear=true:print_format=summary output.wav
-
-
+set af=-af "loudnorm=print_format=json,volumedetect"
 
 ffmpeg -i %input% -c:v copy  %af% -y FFF.webm
 

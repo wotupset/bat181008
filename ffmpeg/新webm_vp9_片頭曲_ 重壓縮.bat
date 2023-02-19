@@ -24,7 +24,7 @@ set wh=512
 
 set wh=400
 set wh=480
-set wh=640
+set wh0=640
 
 set crf=-b:v 300K  -minrate 300k -maxrate 300k
 set crf=-b:v 250K  -minrate 250k -maxrate 250k
@@ -36,7 +36,7 @@ set crf0=
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2    -sn -dn -tune-content screen 
-set qqq04=%crf%
+set qqq04= -static-thresh 1000
 set qqq05z= -row-mt 1 -aq-mode 0 
 set qqq99z=
 
@@ -44,7 +44,7 @@ set qqq99z=
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg -i %input% %qqq03% %qqq04% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus   -static-thresh 1000   -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+ffmpeg -i %input% %qqq03% %qqq04% %crf% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus      -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
 
 echo %date%_%time% >> 時間差.txt
 
