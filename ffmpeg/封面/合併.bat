@@ -1,20 +1,30 @@
 echo off
 chcp 65001
 
-..\ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
-..\ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
+..\ffmpeg -i "a1.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
+..\ffmpeg -i "a2.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
 
 
-..\ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
+set aa="concat:01x.ts|02x.ts"
+echo %aa%
+
+..\ffmpeg -i %aa% -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
 
 del "01x.ts"
 del "02x.ts"
+del "03x.ts"
 
 
 
 
 pause
 exit
+set aa="concat:01x.ts|02x.ts|03x.ts|04x.ts|05x.ts"
+..\ffmpeg -i "a3.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 03x.ts
+..\ffmpeg -i "a4.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 04x.ts
+..\ffmpeg -i "a5.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 05x.ts
+
+
 
 del "01.mp4"
 del "02.mp4"

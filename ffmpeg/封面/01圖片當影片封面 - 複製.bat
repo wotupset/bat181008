@@ -1,18 +1,20 @@
 echo off
 chcp 65001
 
-set tt=-ss 0:12:0.0 -to 0:12:50.0
+set tt=-ss 0:18:0.0 -to 0:22:0.0
 echo %tt%
 
 
-..\ffmpeg -loop 1 -i "01.webp"   %tt%  -i "01.mp3"  -shortest -fflags +shortest  -c:v h264_nvenc   -y "FFF.mp4"
-..\ffmpeg -i "FFF.mp4"  -c:v h264_nvenc  -r 10  -pix_fmt yuv420p -qp 30 -y "test%RANDOM%.mp4"
+..\ffmpeg -loop 1 -i "01.webp"  %tt%  -i "01.mp3"  -shortest -fflags +shortest -max_interleave_delta 100M -c:v h264_nvenc -s 400x300  -y "FFF.mp4"
+..\ffmpeg -i "FFF.mp4" -c:v h264_nvenc -r 10  -pix_fmt yuv420p -qp 30 -y "02+test%RANDOM%.mp4"
 
 del "FFF.mp4"
-
-
+exit
 pause
 exit
+..\ffmpeg -loop 1 -i "01.webp"   %tt%  -i "01.mp3"  -shortest -fflags +shortest -max_interleave_delta 100M -c:v h264_nvenc -s 400x300  -y "FFF.mp4"
+
+
 -c:v h264_nvenc
 del "FFF.mp4"
 -shortest -fflags +shortest -max_interleave_delta 5M -r 10
