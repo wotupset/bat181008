@@ -28,11 +28,9 @@ set wh=512
 set wh=640
 set wh=720
 set wh=800
-set wh0=1024
 set wh0=960
+set wh0=1024
 set wh0=1280
-
-
 
 set crf=-crf 50
 set crf=-crf 25
@@ -41,9 +39,9 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf0=-crf 35
-set crf0=-crf 30
-set crf0=
+set crf=-crf 35
+set crf=-crf 30
+set crf=
 
 
 set crf2=-b:v 0
@@ -61,10 +59,10 @@ set qqq05=-static-thresh 1000 -pix_fmt yuv420p
 set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
 set cpu02=-row-mt 0 -tile-columns 2 -threads 6
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% 
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01% %cpu02x%
 set output=_output_vp9_快_指定時間%RANDOM%.webm
 
-set tt=-ss 0:4:24.5 -to 0:4:35.0
+set tt=-ss 0:1:13.0 -to 0:1:27.0
 set tt0=
 echo %tt%
 
@@ -77,6 +75,7 @@ echo %date%_%time% >> 時間差.txt
 
 
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 ffmpeg -i "%output%" -c:v copy %af% -y _調整音量n_%output%
 
 

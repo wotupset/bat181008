@@ -6,19 +6,33 @@ set /p input=檔案:
 echo %date%_%time%
 
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
-
+echo +++++
+ffmpeg -i %input% -af "loudnorm=print_format=json" -vn -sn -dn  -f null -y NUL
+echo +++++
+ffmpeg -i %input% -af "ebur128" -vn -sn -dn  -f null -y NUL
+echo +++++
 
 set /p input2=輸入:
+
+
+
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
+ffmpeg -i %input% -c:v copy  %af% -y 調整音量.mkv
+
+pause
+exit
+print_format=summary
+print_format=json
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+
 set af=-af "volume=%input2%dB,volumedetect"
 set af=-af "volume=+10dB"
 set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
 set af=-af "loudnorm=I=-20.0:LRA=20.0:print_format=json"
 set af=-af "loudnorm=I=-20.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
-ffmpeg -i %input% -c:v copy  %af% -y 調整音量.mkv
 
-pause
-exit
+
+
 set af=-af "loudnorm" 預設-24db 還是太小聲 
 
 'I, i'

@@ -26,8 +26,8 @@ set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1280:720,setsar=1/1" 
 set vf0=-vf "scale=720:1280,setsar=1/1" 
 set vf0=-vf "scale=960:720,setsar=1/1" 
-set vf0=-vf "scale=800:450,setsar=1/1" 
-set vf=-vf "scale=450:800,setsar=1/1" 
+set vf=-vf "scale=800:450,setsar=1/1" 
+set vf0=-vf "scale=450:800,setsar=1/1" 
 set vf0=-vf "scale=800:600,setsar=1/1" 
 set vf0=-vf "scale=600:800,setsar=1/1" 
 set vf0=-vf "scale=640:480,setsar=1/1" 
@@ -40,9 +40,9 @@ echo %vf%
 set qqq02=-b:v 1000k
 set qqq02=-qp 10
 set qqq02=-cq 10
-set qqq020=
+set qqq02=
 
-set tt=-ss 0:0:11.0 -to 0:0:17.0
+set tt=-ss 0:5:25.4 -to 0:6:28.4
 set tt0=
 echo %tt%
 

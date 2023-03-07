@@ -30,12 +30,10 @@ set wh0=960
 set wh0=1280
 
 
-
 set crf=-crf 50
 set crf=-crf 25
 set crf=-crf 30
 set crf=-crf 32 -b:v 0 
-
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
@@ -51,14 +49,14 @@ set crf2=-cpu-used 4
 set crf2=
 
 
+
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set qqq05=-tune-content screen -static-thresh 1000 -pix_fmt yuv420p
 set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
-set cpu02=-row-mt 1 -tile-columns 2
-set cpu03=-threads 6
+set cpu02=-row-mt 1 -tile-columns 2 -threads 6
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01% %cpu02x%
 set output=_output_vp9_快%RANDOM%.webm
 
 echo 時間差 > 時間差.txt
@@ -71,6 +69,7 @@ echo %date%_%time% >> 時間差.txt
 
 
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
 
 

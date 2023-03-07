@@ -8,12 +8,12 @@ set /p input=檔案:
 
 set wh=800
 set wh=960
-set wh=1280
+set wh0=1280
 
 set aa01=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set aa02=-c:v h264_nvenc  -b:v 1000k
+set aa02=-c:v h264_nvenc  -b:v 1500k
 
-set tt=-ss 0:0:0.0 -to 00:0:10.0 
+set tt=-ss 0:0:0.0 -to 00:0:30.0 
 set tt0=
 echo %tt%
 
@@ -26,6 +26,7 @@ ffmpeg %tt% -i %input%  %aa01% %aa02% -y "720p30s.mp4"
 
 pause
 exit
+
 -qp 30
 set vf=-vf "scale=720:1280,setsar=1/1" 
 set vf0=-vf "scale=1280:720,setsar=1/1" 

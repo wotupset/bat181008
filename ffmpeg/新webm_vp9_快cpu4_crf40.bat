@@ -33,8 +33,8 @@ set wh=512
 set wh=640
 set wh=720
 set wh=800
+set wh=960
 set wh0=1024
-set wh0=960
 set wh0=1280
 
 
@@ -45,7 +45,7 @@ set crf=-crf 32 -b:v 0
 
 set crf=-crf 50
 set crf=-crf 45
-set crf0=-crf 40
+set crf=-crf 40
 set crf0=-crf 35
 set crf0=
 
@@ -62,12 +62,18 @@ set crf2=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-tune-content screen -static-thresh 1000 -pix_fmt yuv420p
-set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
-set cpu02=-row-mt 1 -tile-columns 2
-set cpu03=-threads 6
+set qqq05=-tune ssim -tune-content screen  -pix_fmt yuv420p
+set qqq06=-static-thresh 1000 -noise-sensitivity 0 -drop-threshold 0
+set qqq07=-arnr-maxframes 0 -arnr-strength 0 -max-intra-rate 1000 
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
+set cpu02=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 0 -threads 6
+set cpu03=-corpus-complexity 0 -lag-in-frames 25 
+
+
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03% 
+echo %ppp01%
+
 set output=_output_vp9_快crf40_%RANDOM%.webm
 
 
@@ -84,6 +90,7 @@ echo %date%_%time% >> 時間差.txt
 
 
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
 
 

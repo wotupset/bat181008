@@ -2,12 +2,12 @@ echo off
 chcp 65001
 
 
-set qqq02=-cq 30
-set qqq02=-qp 30
+set qqq02=-cq 20
+set qqq02=-qp 20
 set qqq02=
 
 
-set tt=-ss 0:0:4.0 -to 0:19:5.0
+set tt=-ss 0:3:0.0 -to 0:4:0.0
 set tt0=
 echo %tt%
 
@@ -17,3 +17,5 @@ ffmpeg %tt% -i %input%   -c:v h264_nvenc -y "h264_nvenc%RANDOM%.mp4"
 
 pause
 exit
+set qqq02=-qp 20 
+預設20

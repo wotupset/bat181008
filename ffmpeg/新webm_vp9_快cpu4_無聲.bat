@@ -27,8 +27,8 @@ set wh=1280
 set wh=400
 set wh=480
 set wh=512
-set wh=640
-set wh=800
+set wh0=640
+set wh0=800
 
 set crf=-crf 20
 set crf=-crf 30
@@ -49,24 +49,20 @@ set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0
 set cpu02=-row-mt 0 -tile-columns 2 -threads 6
 
 set tt=-ss 0:0:0.0 -to 0:0:10.0
-set tt0=
+set tt=
 echo %tt%
 
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01% %cpu02%
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% 
 set output=_output_vp9_快_無聲.webm
+
+
+echo 時間差 > 時間差.txt
+echo %date%_%time% >> 時間差.txt
 
 ffmpeg %tt% -i %input% -c:v libvpx-vp9  -c:a libopus  %ppp01% -y %output%
 
-
-
-
-
-
-
-
-
-start ""  %output%
+echo %date%_%time% >> 時間差.txt
 
 
 
