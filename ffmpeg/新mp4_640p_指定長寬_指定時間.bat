@@ -6,14 +6,6 @@ echo %date%
 echo %time%
 
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%_640p
-echo %nnn%
 
 
 
@@ -26,9 +18,9 @@ set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1280:720,setsar=1/1" 
 set vf0=-vf "scale=720:1280,setsar=1/1" 
 set vf0=-vf "scale=960:720,setsar=1/1" 
-set vf=-vf "scale=800:450,setsar=1/1" 
+set vf0=-vf "scale=800:450,setsar=1/1" 
 set vf0=-vf "scale=450:800,setsar=1/1" 
-set vf0=-vf "scale=800:600,setsar=1/1" 
+set vf=-vf "scale=800:600,setsar=1/1" 
 set vf0=-vf "scale=600:800,setsar=1/1" 
 set vf0=-vf "scale=640:480,setsar=1/1" 
 set vf0=-vf "scale=540:720,setsar=1/1" 
@@ -42,13 +34,13 @@ set qqq02=-qp 10
 set qqq02=-cq 10
 set qqq02=
 
-set tt=-ss 0:5:25.4 -to 0:6:28.4
+set tt=-ss 0:1:0.0 -to 0:2:0.0
 set tt0=
 echo %tt%
 
-set output=_output_a_%nnn%_.mp4
+set output=_output_a_%RANDOM%.mp4
 
-ffmpeg %tt% -i %input%  %qqq03% %vf%   -c:v h264_nvenc %qqq02% -y %output%
+ffmpeg %tt% -i %input%  %qqq03% %vf%    -map 0:0 -map 0:1 -map -0:2 -c:v h264_nvenc -pix_fmt yuv420p  %qqq02% -y %output%
 
 
 
@@ -59,6 +51,16 @@ ffmpeg %tt% -i %input%  %qqq03% %vf%   -c:v h264_nvenc %qqq02% -y %output%
 
 pause
 exit
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_640p
+echo %nnn%
+
 
 start "" "%output%" 
 

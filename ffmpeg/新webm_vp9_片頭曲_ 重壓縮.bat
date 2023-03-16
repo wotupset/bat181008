@@ -1,9 +1,10 @@
 echo off
 chcp 65001
 
+echo %date%_%time% 
+
 set /p input=檔案:
 
-echo %date%_%time%
 
 set vcoodate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vcootime=%time:~0,2%
@@ -14,56 +15,76 @@ set vcootime=%vcootime%%time:~3,2%%time:~6,2%
 set nnn=%vcoodate%_%vcootime%_%RANDOM%
 echo %nnn%
 
-set output=_output_vp9_oped.webm
 
 
 
 
-set wh=800
+
 set wh=512
-
 set wh=400
 set wh=480
 set wh0=640
+set wh0=800
+set wh0=960
+set wh0=1280
 
-set crf=-b:v 300K  -minrate 300k -maxrate 300k
-set crf=-b:v 250K  -minrate 250k -maxrate 250k
-set crf=-b:v 200K
-set crf0=-b:v 400K
-set crf0=-b:v 200K  -minrate 200k -maxrate 200k
-set crf0=-crf 35
-set crf0=
+set crf=-crf 35
+set crf=-crf 30
+set crf=-crf 60
+set crf=
+
+set crf2=-b:v 300K  -minrate 300k -maxrate 300k
+set crf2=-b:v 250K  -minrate 250k -maxrate 250k
+set crf2=-b:v 100K -minrate 100k -maxrate 100k
+set crf2=-b:v 300K -undershoot-pct 0 -overshoot-pct 0
+set crf20=
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2    -sn -dn -tune-content screen 
-set qqq04= -static-thresh 1000
-set qqq05z= -row-mt 1 -aq-mode 0 
-set qqq99z=
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
+set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-pix_fmt yuv420p
+set qqq06=-static-thresh 1 -noise-sensitivity 1 -drop-threshold 1
+set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
+set qqq08=-tune ssim -tune-content screen 
+
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 8
+set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
+set cpu03=-corpus-complexity 1
+
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %qqq08% %cpu01% %cpu02% %cpu03%
+echo %ppp01%
+
+set tt=-ss 0:2:56.0 -to 0:4:22.0
+set tt=
+echo %tt%
+
+set output=_output_vp9_oped%RANDOM%.webm
+
+set time0=%date%_%time%
+
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01%    -y %output%
+
+set time1=%date%_%time%
 
 
-echo 時間差 > 時間差.txt
-echo %date%_%time% >> 時間差.txt
 
-ffmpeg -i %input% %qqq03% %qqq04% %crf% -map 0:v:0 -map 0:a:0  -c:v libvpx-vp9 -c:a libopus      -vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease"  -y %output%
+echo %time0%
+echo %time1%
 
-echo %date%_%time% >> 時間差.txt
 
+
+
+
+pause
+exit 
+pause
+
+-map 0:v:0 -map 0:a:0 
 
 for %%I in ( %output% ) do @echo %%~zF %%F
 
 
-start ""  %output%
-
-
-
-
-
-pause
-
-
-
-exit 
-pause
 -tile-columns 1 -tile-rows 0 -frame-parallel 0 -lag-in-frames 20 -auto-alt-ref 1 
 
 

@@ -15,21 +15,30 @@ set crf=
 set crf2=-b:v 0
 set crf2=
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p -r 25
 set qqq04=-vf "setsar=1:1"
-set qqq05=-tune-content screen -static-thresh 1000 -pix_fmt yuv420p
-set cpu01=-rc_lookahead 0 -aq-mode 0 -enable-tpl 0 
-set cpu02=-row-mt 1 -tile-columns 2 -threads 6
+set qqq05=-static-thresh 1 -tune ssim -tune-content screen 
+set qqq06=-noise-sensitivity 1 -drop-threshold 1
+set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01% %cpu02x%
-set output=_output_vp9_原始大小.webm
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 8
+set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
+set cpu03=-corpus-complexity 1
 
-echo 時間差 > 時間差.txt
-echo %date%_%time% >> 時間差.txt
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+echo %ppp01%
+
+
+
+
+set output=_output_vp9_原始大小%RANDOM%.webm
+
+set time0=%date%_%time%
 
 ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus %ppp01%  -y %output%
 
-echo %date%_%time% >> 時間差.txt
+set time1=%date%_%time%
 
 
 
@@ -39,11 +48,26 @@ set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
 
 
-
+echo %time0%
+echo %time1%
 
 
 pause
 exit 
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_
+echo %nnn% 
+
+
+
+
+set qqq04=-vf "setsar=1:1"
 set af=-af "loudnorm=I=-20.0,volumedetect"
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
 vp9預設crf=32

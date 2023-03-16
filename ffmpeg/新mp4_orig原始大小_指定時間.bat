@@ -7,7 +7,7 @@ set qqq02=-qp 20
 set qqq02=
 
 
-set tt=-ss 0:3:0.0 -to 0:4:0.0
+set tt=-ss 0:0:0.0 -to 0:0:16.9
 set tt0=
 echo %tt%
 

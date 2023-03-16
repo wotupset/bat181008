@@ -5,6 +5,16 @@ set /p input=檔案:
 
 echo %date%_%time%
 
+
+
+
+
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
+ffmpeg -i %input% -c:v copy -c:a libopus %af% -y "調整音量.webm"
+
+pause
+exit
+-c:v libvpx-vp9  -c:a libopus
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 echo +++++
 ffmpeg -i %input% -af "loudnorm=print_format=json" -vn -sn -dn  -f null -y NUL
@@ -15,12 +25,6 @@ echo +++++
 set /p input2=輸入:
 
 
-
-set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
-ffmpeg -i %input% -c:v copy  %af% -y 調整音量.mkv
-
-pause
-exit
 print_format=summary
 print_format=json
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"

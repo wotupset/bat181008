@@ -7,7 +7,7 @@ set /p input=檔案:
 
 
 set wh=800
-set wh=960
+set wh0=960
 set wh0=1280
 
 set aa01=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
