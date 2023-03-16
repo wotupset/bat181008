@@ -2,8 +2,8 @@ echo off
 chcp 65001
 
 
-set url=https://exhentai.org/g/2365444/dfae306562/
-start "" "xeHentai-2.0.2.3.exe" %url% --download-range 87-98
+set url=https://exhentai.org/g/1143138/afec6991b3/
+start "" "xeHentai-2.0.2.3.exe" %url% --download-range 79-106
 
 
 
