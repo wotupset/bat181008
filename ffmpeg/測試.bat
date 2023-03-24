@@ -2,14 +2,64 @@ echo off
 chcp 65001
 
 set /p input=檔案:
-
-ffmpeg  -i %input% -vf hwupload=extra_hw_frames=64,format=qsv -c:v h264_qsv -y "123.mkv" 
-
+echo %input%
 
 
+
+
+set tt=-ss 0:0:2.0 -to 0:3:32.0
+set tt0=
+echo %tt%
+
+
+set time0=%date%_%time%
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+
+set time1=%date%_%time%
+
+
+echo %time0%
+echo %time1%
 
 pause
 exit
+
+-vf "scale_cuda=1280:720" 
+
+資料會放在GPU裡 格式=nv12
+-hwaccel cuda -hwaccel_output_format cuda
+
+cpu=27%
+ffmpeg -hwaccel cuda -i %input% -vf "scale=1280:720" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+cpu=17%
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+
+
+-vf "scale_cuda=1280:720,setsar=1/1,hwdownload,format=nv12"
+-vf "scale_cuda=1280:720:format=yuv420p,setsar=1/1,hwdownload,format=yuv420p"
+
+
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v libx264 -y test.mp4
+ffmpeg -hwaccel cuda  -i %input%    -vf "scale=800:450,setsar=1/1"   -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+
+-vf "hwdownload,hwupload"
+scale=800:450,setsar=1/1
+-hwaccel cuda -hwaccel_output_format cuda
+ffmpeg  -i %input% -c:v h264_nvenc   -y output.mp4
+
+set tt=-ss 0:15:0.0 -to 0:20:0.0
+set tt0=
+echo %tt%
+
+
+ -f null -y NUL 
+
+-vf "hwupload_cuda"
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input%  -c:v h264_nvenc   -y output.mp4
+
 
 ffmpeg -i "$0" -map 0 -c copy "${0%%.*}".mkv
 set /p input=檔案:
