@@ -6,14 +6,7 @@ echo %date%
 echo %time%
 
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
 
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%_640p
-echo %nnn%
 
 
 
@@ -22,8 +15,7 @@ set /p input=檔案:
 
 
 
-
-set wh=1024
+set wh=640
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 
 set vf0=-vf "scale=720:1280,setsar=1/1" 
@@ -47,7 +39,7 @@ set qqq02=
 
 set output=_output_a_%nnn%_.mp4
 
-ffmpeg  -i %input%  %vf% -c:v h264_nvenc %qqq02% -y %output%
+ffmpeg -hwaccel cuda -i %input%  %vf% -c:v h264_nvenc %qqq02% -y %output%
 
 
 
@@ -58,6 +50,18 @@ start "" "%output%"
 
 pause
 exit
+
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_640p
+echo %nnn%
+
+
 畫質較好 但較慢
 -c:v libx264 
 畫質較差 但較快

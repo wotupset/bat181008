@@ -14,7 +14,7 @@ echo %tt%
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=1280:720:interp_algo=bilinear,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
 
 set time1=%date%_%time%
 
@@ -24,6 +24,13 @@ echo %time1%
 
 pause
 exit
+
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
+nearest  default 
+bilinear
+bicubic
+lanczos
+
 
 -vf "scale_cuda=1280:720" 
 

@@ -23,6 +23,7 @@ set wh0=1024
 set wh0=1280
 
 
+
 set crf=-crf 50
 set crf=-crf 25
 set crf=-crf 30
@@ -30,25 +31,25 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf0=-crf 35
-set crf0=
+set crf=-crf 35
+set crf=
 
 
 set crf2=-b:v 0
 set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
-set crf2=-r 25
 set crf2=-cpu-used 4 -b:v 1500K
 set crf2=-cpu-used 4
-set crf2=-b:v 500K -minrate 50k -maxrate 1000k  
+set crf2=-r 50
+set crf2=-b:v 200K -minrate 50k -maxrate 300k -bufsize 100k 
 set crf2=
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-static-thresh 100123 -tune-content screen -tune ssim
-set qqq06=-noise-sensitivity 1 -drop-threshold 1
+set qqq05=-static-thresh 222111 -tune-content screen 
+set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 8
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 4
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 

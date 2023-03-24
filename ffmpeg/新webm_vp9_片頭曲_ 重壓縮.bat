@@ -23,7 +23,7 @@ echo %nnn%
 set wh=512
 set wh=400
 set wh=480
-set wh0=640
+set wh=640
 set wh0=800
 set wh0=960
 set wh0=1280
@@ -35,19 +35,17 @@ set crf=
 
 set crf2=-b:v 300K  -minrate 300k -maxrate 300k
 set crf2=-b:v 250K  -minrate 250k -maxrate 250k
-set crf2=-b:v 100K -minrate 100k -maxrate 100k
-set crf2=-b:v 300K -undershoot-pct 0 -overshoot-pct 0
+set crf2=-b:v 200K -minrate 10k -maxrate 200k -bufsize 100k
 set crf20=
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-pix_fmt yuv420p
-set qqq06=-static-thresh 1 -noise-sensitivity 1 -drop-threshold 1
+set qqq05=-static-thresh 222111 -tune-content screen 
+set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
-set qqq08=-tune ssim -tune-content screen 
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 8
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 4
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 

@@ -37,25 +37,29 @@ set crf=
 set crf2=-b:v 0
 set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
 set crf2=-b:v 400K -r 25
-set crf2=-r 25
 set crf2=-cpu-used 4
+set crf2=-r 25
+set crf2=-r 50
+set crf2=-b:v 200K  -minrate 200k -maxrate 200k  -bufsize 100k  
 set crf2=
 
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p -r 25
+
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-static-thresh 1 -tune ssim -tune-content screen 
-set qqq06=-noise-sensitivity 1 -drop-threshold 1
+set qqq05=-static-thresh 222111 -tune-content screen 
+set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 8
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 4
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
+
 
 
 set output=_output_vp9_快%RANDOM%.webm

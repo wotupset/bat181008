@@ -13,19 +13,18 @@ set /p input=檔案:
 
 
 set wh=800
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 
-set vf0=-vf "scale=1280:720,setsar=1/1" 
-set vf0=-vf "scale=720:1280,setsar=1/1" 
-set vf0=-vf "scale=960:720,setsar=1/1" 
-set vf0=-vf "scale=800:450,setsar=1/1" 
-set vf0=-vf "scale=450:800,setsar=1/1" 
-set vf=-vf "scale=800:600,setsar=1/1" 
-set vf0=-vf "scale=600:800,setsar=1/1" 
-set vf0=-vf "scale=640:480,setsar=1/1" 
-set vf0=-vf "scale=540:720,setsar=1/1" 
-set vf0=-vf "scale=1920:1080,setsar=1/1" 
+set wh0=960:720
+set wh0=800:600
+set wh0=640:480
 
+set wh0=1920:1080
+set wh=1280:720
+set wh0=800:450
+set wh0=640:360
+
+set vf=-vf "scale=%wh%:flags=fast_bilinear,setsar=1/1" 
 
 echo %vf%
 
@@ -34,16 +33,14 @@ set qqq02=-qp 10
 set qqq02=-cq 10
 set qqq02=
 
-set tt=-ss 0:1:0.0 -to 0:2:0.0
+set tt=-ss 0:0:2.0 -to 0:16:52.0
 set tt0=
 echo %tt%
 
 set output=_output_a_%RANDOM%.mp4
+title %output%
 
-ffmpeg %tt% -i %input%  %qqq03% %vf%    -map 0:0 -map 0:1 -map -0:2 -c:v h264_nvenc -pix_fmt yuv420p  %qqq02% -y %output%
-
-
-
+ffmpeg -hwaccel cuda  %tt% -i %input%  %qqq02%   %vf%   -c:v h264_nvenc -pix_fmt yuv420p  %qqq02% -y %output%
 
 
 
@@ -52,6 +49,27 @@ ffmpeg %tt% -i %input%  %qqq03% %vf%    -map 0:0 -map 0:1 -map -0:2 -c:v h264_nv
 pause
 exit
 
+
+set vf=-vf "scale_cuda=4096:2160:interp_algo=bilinear,setsar=1/1" 
+nearest  default 
+bilinear
+bicubic
+lanczos
+
+
+
+Default value is 'bicubic'
+set vf=-vf "scale=%wh%:flags=fast_bilinear,setsar=1/1" 
+set vf=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
+set vf=-vf "scale=%wh%:flags=neighbor,setsar=1/1" 
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+
+
+-vf "scale_cuda=800:450,setsar=1/1" 
+
+-map 0:0 -map 0:1 -map -0:2
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
 

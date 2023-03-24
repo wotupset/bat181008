@@ -43,7 +43,7 @@ set crf2=-r 15
 set crf2=
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p -r 25
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set qqq05=-static-thresh 1 -tune ssim -tune-content screen 
 set qqq06=-noise-sensitivity 1 -drop-threshold 1
@@ -59,7 +59,7 @@ echo %ppp01%
 
 set output=_output_vp9_快_指定時間%RANDOM%.webm
 
-set tt=-ss 0:14:30.0 -to 0:15:30.0
+set tt=-ss 0:0:0.0 -to 0:0:15.0
 set tt0=
 echo %tt%
 
