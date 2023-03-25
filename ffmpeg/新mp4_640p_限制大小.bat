@@ -3,22 +3,21 @@ chcp 65001
 
 set /p input=檔案:
 
-set output=_output_vp9_限制檔案上限%RANDOM%.webm
+set output=_output_mp4_限制檔案上限%RANDOM%.mp4
 
 
 
 set time0=%date%_%time%
 
-set tt=-ss 0:2:0.0 -to 0:2:45.0
-set tt0=
+set tt=-ss 0:0:0.0 -to 0:0:30.0
+set tt=
 echo %tt%
 
-set vf=-vf "scale=800:450:flags=lanczos,setsar=1:1"
-set vf0=-vf "scale_cuda=800:450:interp_algo=nearest,hwdownload,format=nv12"
-set vf0=
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1:1"
+set vf=
 echo %vf%
 
-ffmpeg -hwaccel nvdec -threads 4 %tt% -i %input% -c:v libvpx-vp9 %vf% -pix_fmt yuv420p -fs 4500K  -y %output%
+ffmpeg -hwaccel cuda %tt% -i %input% -c:v h264_nvenc -pix_fmt yuv420p  -fs 4500K -qp 20 %vf% -y %output%
 
 
 
@@ -34,25 +33,6 @@ echo %time1%
 
 pause
 exit 
-set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
-nearest 鋸齒明顯 檔案大
-bilinear 檔案小
-bicubic
-lanczos 中等
-https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
-
-
-set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
-neighbor 鋸齒明顯 檔案大
-bilinear 檔案小
-bicubic
-lanczos 中等
-https://ffmpeg.org/ffmpeg-scaler.html
-
--crf 35 -b:v 0
-
-set vf=-vf "scale=450:800:flags=bilinear,setsar=1:1"
-
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450:flags=fast_bilinear,setsar=1:1,hwdownload,format=nv12" -crf 35 -b:v 0 -y %output%
 -static-thresh 222111 
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450,setsar=1:1,hwdownload,format=nv12" -static-thresh 222111 -crf 35 -b:v 0 -y %output%

@@ -14,7 +14,7 @@ echo %tt%
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test%RANDOM%.mp4
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=800:450,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test%RANDOM%.mp4
 
 set time1=%date%_%time%
 
@@ -34,11 +34,19 @@ ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda
 
 
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
-nearest 鋸齒明顯
-bilinear
+nearest 鋸齒明顯 檔案大
+bilinear 檔案小
 bicubic
-lanczos
+lanczos 中等
+https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
 
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
+neighbor 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-scaler.html
 
 -vf "scale_cuda=1280:720" 
 
