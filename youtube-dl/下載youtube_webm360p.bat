@@ -14,7 +14,7 @@ set nn01=-o yt-webm-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
 
-yt-dlp  -f bestvideo[ext=webm][height=360]+bestaudio[ext=webm] %nn01% %poi%
+yt-dlp --limit-rate 2500K -f bestvideo[ext=webm][height=360]+bestaudio[ext=webm] %nn01% %poi%
 
 
 goto top

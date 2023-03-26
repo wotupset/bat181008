@@ -7,6 +7,9 @@ yt-dlp.exe --update
 yt-dlp.exe --version 
 
 
+pause
+exit
+
 echo youtube-dl
 youtube-dl.exe --update
 youtube-dl.exe --version 

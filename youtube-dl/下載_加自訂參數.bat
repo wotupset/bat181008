@@ -5,11 +5,15 @@ chcp 65001
 :top
 
 
-set /p poi=youtube網址:
+set /p poi=youtube網址::
 echo %poi%
 
+yt-dlp -F %poi%
 
-yt-dlp -r 3M -f 247+251 %poi%
+set /p aa1=影片品質::
+echo %aa1%
+
+yt-dlp --limit-rate 3000K --restrict-filenames --windows-filenames -f %aa1%+251 %poi%
 
 
 

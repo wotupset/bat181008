@@ -18,7 +18,7 @@ set /p poi=youtube網址:
 echo %poi%
 
 
-start "" yt-dlp    %poi% -o "LIVE+%nnn%.mkv"
+start "" yt-dlp %poi%  --restrict-filenames  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 
 pause
 pause
@@ -28,11 +28,27 @@ goto top
 
 exit
 
+--restrict-filenames  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
+
+
+set nnn=%%(timestamp)s
+set nnn=%%(upload_date)s-%%(upload_time)s
+
+
+-o "LIVE+%nnn%.mkv"
+%%(title)s
+
+--restrict-filenames
+自動將不合法的字元替換為下劃線（_）或刪除它們
+
+
+
 start "" yt-dlp    %poi%
 set vdate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vtime=%time:~0,2%
 if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
 set vtime=%vtime%%time:~3,2%%time:~6,2%
+
 
 
 

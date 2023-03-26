@@ -10,8 +10,7 @@ echo %poi%
 
 
 
-yt-dlp -r 3M --download-sections "*0:9:0-0:12:0"   %poi%
-
+start "" yt-dlp --limit-rate 3000K  --download-sections "*0:3:0-0:6:0"   %poi%
 
 
 goto top
@@ -20,6 +19,10 @@ goto top
 
 pause
 exit
+
+--download-sections "*0:0:0-0:0:0" 
+
+
 --force-keyframes-at-cuts
 
 

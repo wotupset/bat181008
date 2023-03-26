@@ -23,7 +23,7 @@ set /p poi=youtube網址:
 echo "%poi%"
 
 
-start "" yt-dlp   -r 4M  %poi% -o "%nnn%.mkv"
+start "" yt-dlp  --windows-filenames --limit-rate 3000K  %poi% 
 
 
 
@@ -34,6 +34,12 @@ goto top
 pause
 exit
 
+--restrict-filenames 避免不合法的檔案名稱
+
+
+--continue
+ --cookies=cookiejar
+-o "%nnn%.mkv"
 
 --download-sections??
 
