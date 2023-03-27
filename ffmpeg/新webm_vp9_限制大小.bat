@@ -9,16 +9,18 @@ set output=_output_vp9_限制檔案上限%RANDOM%.webm
 
 set time0=%date%_%time%
 
-set tt=-ss 0:2:0.0 -to 0:2:45.0
+set tt=-ss 0:0:19.0 -to 0:2:19.0
+set tt=-ss 0:0:0.0 -t 0:0:10.0
 set tt0=
 echo %tt%
 
 set vf=-vf "scale=800:450:flags=lanczos,setsar=1:1"
-set vf0=-vf "scale_cuda=800:450:interp_algo=nearest,hwdownload,format=nv12"
+set vf=-vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12"
+set vf=-vf "hwdownload,format=nv12"
 set vf0=
 echo %vf%
 
-ffmpeg -hwaccel nvdec -threads 4 %tt% -i %input% -c:v libvpx-vp9 %vf% -pix_fmt yuv420p -fs 4500K  -y %output%
+ffmpeg -hwaccel nvdec -hwaccel_output_format cuda -threads 2 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -threads 0 %vf% -pix_fmt yuv420p -fs 4500K  -y %output%
 
 
 

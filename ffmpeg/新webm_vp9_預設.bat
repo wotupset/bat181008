@@ -3,22 +3,21 @@ chcp 65001
 
 set /p input=檔案:
 
-set output=_output_vp9_預設.webm
+set output=_output_vp9_預設%RANDOM%.webm
 
 
 
-echo 時間差 > 時間差.txt
-echo %date%_%time% >> 時間差.txt
+set time0=%date%_%time%
 
 
-ffmpeg  -i %input%  -c:v libvpx-vp9  -y %output%
+ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx-vp9 -c:a libopus -threads 0 -y %output%
 
-echo %date%_%time% >> 時間差.txt
-
+set time1=%date%_%time%
 
 
 
-start "" %output%
+echo %time0%
+echo %time1%
 
 
 

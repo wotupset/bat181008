@@ -34,6 +34,7 @@ set crf=-crf 35
 set crf=
 
 
+
 set crf2=-b:v 0
 set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
 set crf2=-b:v 400K -r 25
@@ -45,14 +46,13 @@ set crf2=
 
 
 
-
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
-set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set qqq05=-static-thresh 222111 -tune-content screen 
 set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 4
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 0
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 
@@ -66,7 +66,7 @@ set output=_output_vp9_快%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg -hwaccel cuda -threads 2 -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 
 set time1=%date%_%time%
 
@@ -83,6 +83,24 @@ echo %time1%
 
 pause
 exit
+set qqq04=-vf "scale=%wh%:%wh%:flags=lanczos:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
+nearest 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
+
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
+neighbor 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-scaler.html
+
+
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
 

@@ -24,7 +24,7 @@ set wh=512
 set wh=400
 set wh=480
 set wh=640
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1280
 
@@ -35,7 +35,7 @@ set crf=
 
 set crf2=-b:v 300K  -minrate 300k -maxrate 300k
 set crf2=-b:v 250K  -minrate 250k -maxrate 250k
-set crf2=-b:v 200K -minrate 10k -maxrate 200k -bufsize 100k
+set crf2=-b:v 200K -minrate 10k -maxrate 200k -bufsize 200k
 set crf20=
 
 
@@ -61,7 +61,7 @@ set output=_output_vp9_oped%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01%    -y %output%
+ffmpeg -hwaccel cuda %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01%    -y %output%
 
 set time1=%date%_%time%
 

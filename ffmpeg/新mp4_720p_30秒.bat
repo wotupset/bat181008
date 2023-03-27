@@ -10,15 +10,14 @@ set wh=800
 set wh0=960
 set wh0=1280
 
-set aa01=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set aa02=-c:v h264_nvenc  -b:v 1500k
+set aa01=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set aa02=-b:v 1500k
 
 set tt=-ss 0:0:0.0 -to 00:0:30.0 
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -i %input%  %aa01% %aa02% -y "720p30s.mp4"
-
+ffmpeg -hwaccel cuda -threads 4 %tt% -i %input% -c:v h264_nvenc %aa01% %aa02% -y "720p30s.mp4"
 
 
 
@@ -27,10 +26,27 @@ ffmpeg %tt% -i %input%  %aa01% %aa02% -y "720p30s.mp4"
 pause
 exit
 
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
+:interp_algo=bilinear
+nearest 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
+
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
+:flags=bilinear
+neighbor 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-scaler.html
+
 -qp 30
 set vf=-vf "scale=720:1280,setsar=1/1" 
 set vf0=-vf "scale=1280:720,setsar=1/1" 
-
+-c:v h264_nvenc
 
 -qp 30
 

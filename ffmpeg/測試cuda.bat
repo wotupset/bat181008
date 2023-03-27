@@ -7,14 +7,20 @@ echo %input%
 
 
 
-set tt=-ss 0:2:0.0 -to 0:2:45.0
+set tt=-ss 0:0:7.5 -to 0:0:25.0
+set tt=-ss 0:0:5.0 -t 0:1:0.0
 set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=800:450,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test%RANDOM%.mp4
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -row-mt 1 -threads 0 -deadline realtime -cpu-used 6 -crf 50  -y test%RANDOM%.webm
+
+
+
+
+
 
 set time1=%date%_%time%
 
@@ -24,6 +30,26 @@ echo %time1%
 
 pause
 exit
+-r 25
+-tune-content screen 
+
+3583K
+-crf 50
+4137K
+-deadline realtime -cpu-used 6 -crf 50
+4594K
+-row-mt 1 
+
+-c:v libvpx -threads 0 -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -deadline realtime -cpu-used 6  -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 50 -r 25 -y test%RANDOM%.webm
+
+-c:v libx264 -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
+-c:v h264_nvenc -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
+
 
 
 相同

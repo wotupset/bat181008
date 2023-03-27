@@ -12,7 +12,7 @@ echo %oo4%
 echo 時間差 > 時間差.txt
 echo %date%_%time% >> 時間差.txt
 
-ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%     -s 300x300  -y  "_vp8_預設.webm" 
+ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%     -s 300x300  -y  "_vp8_預設%RANDOM%.webm" 
 
 echo %date%_%time% >> 時間差.txt
 
