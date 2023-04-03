@@ -3,28 +3,28 @@ chcp 65001
 
 set /p input=檔案:
 
+
+
+
+
+
+
+set tt=-ss 0:0:19.0 -to 0:2:19.0
+set tt=-ss 0:0:21.5 -t 0:1:0.0
+set tt=
+echo %tt%
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1:1"
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12"
+set vf=-vf "hwdownload,format=nv12"
+set vf=
+echo %vf%
+
 set output=_output_vp9_限制檔案上限%RANDOM%.webm
 
 
-
 set time0=%date%_%time%
-
-set tt=-ss 0:0:19.0 -to 0:2:19.0
-set tt=-ss 0:0:0.0 -t 0:0:10.0
-set tt0=
-echo %tt%
-
-set vf=-vf "scale=800:450:flags=lanczos,setsar=1:1"
-set vf=-vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12"
-set vf=-vf "hwdownload,format=nv12"
-set vf0=
-echo %vf%
-
-ffmpeg -hwaccel nvdec -hwaccel_output_format cuda -threads 2 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -threads 0 %vf% -pix_fmt yuv420p -fs 4500K  -y %output%
-
-
-
-
+ffmpeg -hwaccel nvdec -threads 1 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -threads 0 %vf% -fs 4500K -crf 40 -y %output%
 set time1=%date%_%time%
 
 
@@ -35,7 +35,12 @@ echo %time1%
 
 
 pause
-exit 
+exit
+-pix_fmt yuv420p
+-hwaccel_output_format cuda -threads 2
+-b:v 200K -minrate 50k -maxrate 300k -bufsize 100k 
+-crf 40 -b:v 0K
+
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
 nearest 鋸齒明顯 檔案大
 bilinear 檔案小

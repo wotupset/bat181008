@@ -7,16 +7,28 @@ echo %input%
 
 
 
-set tt=-ss 0:0:7.5 -to 0:0:25.0
-set tt=-ss 0:0:5.0 -t 0:1:0.0
+set tt=-ss 0:0:11.5 -t 0:0:19.5
+set tt=-ss 0:2:17.0 -to 0:2:37.0
 set tt0=
 echo %tt%
+
+set wh0=450:800
+set wh0=400:400
+set wh0=640:360
+set wh=800:450
+set wh0=1280:720
+echo %wh%
+
 
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -row-mt 1 -threads 0 -deadline realtime -cpu-used 6 -crf 50  -y test%RANDOM%.webm
-
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
+-vf "scale_cuda=%wh%:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12" ^
+-c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
+-crf 40 ^
+-static-thresh 222123 ^
+-y test%RANDOM%.webm
 
 
 
@@ -28,17 +40,40 @@ set time1=%date%_%time%
 echo %time0%
 echo %time1%
 
+
 pause
 exit
+-pix_fmt yuv420p
+-b:v 2500K -minrate 50k -maxrate 2500k -bufsize 500k ^
+-crf 35 ^
+-static-thresh 222123 ^
+
+color 6
+
+
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=450:800:interp_algo=bilinear,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
+
+-f null -y NUL
+-vf "hwdownload,format=nv12"
+-vf "scale_cuda=720:1280:interp_algo=bilinear,hwdownload,format=nv12"
+-vf "scale_cuda=450:800:interp_algo=bilinear,hwdownload,format=nv12"
+-vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12"
+-c:v h264_nvenc -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
+-c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 50 -y test%RANDOM%.webm
+ 
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=720:1280:interp_algo=bilinear,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 4 -deadline realtime -cpu-used 6 -crf 50 -r 25 -y test%RANDOM%.webm
+
 -r 25
 -tune-content screen 
+-row-mt 1 -threads 0 
 
 3583K
 -crf 50
 4137K
 -deadline realtime -cpu-used 6 -crf 50
-4594K
--row-mt 1 
 
 -c:v libvpx -threads 0 -y test%RANDOM%.webm
 -c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm

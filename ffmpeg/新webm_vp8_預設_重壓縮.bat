@@ -5,16 +5,19 @@ set /p input=檔案:
 
 
 
-set oo4=-pix_fmt yuv420p -ac 2 
-echo %oo4%
 
 
-echo 時間差 > 時間差.txt
-echo %date%_%time% >> 時間差.txt
+set output=_vp8_預設%RANDOM%.webm
 
-ffmpeg    -i %input% -c:v libvpx -c:a libopus  %oo4%     -s 300x300  -y  "_vp8_預設%RANDOM%.webm" 
+set time0=%date%_%time%
 
-echo %date%_%time% >> 時間差.txt
+ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx -c:a libopus -s 360x360 -y %output%
+
+set time1=%date%_%time%
+
+
+echo %time0%
+echo %time1%
 
 
 
@@ -22,6 +25,14 @@ echo %date%_%time% >> 時間差.txt
 
 pause
 exit
+set oo4=-pix_fmt yuv420p -ac 2 
+echo %oo4%
+
+echo 時間差 > 時間差.txt
+echo %date%_%time% >> 時間差.txt
+echo %date%_%time% >> 時間差.txt
+
+
 -cpu-used 4
  -b:v 300K  -minrate 300k -maxrate 300k
  -deadline good -speed 4

@@ -14,10 +14,9 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_cut_a_%nnn%_
-set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2 
 
-ffmpeg -ss 0:0:0.0 -to 0:0:4.3  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30 -y "01.mp4"
-ffmpeg -ss 0:0:52.0 -to 0:0:59.0  -i %input%   %qqq03%   -c:v h264_nvenc -cq 30 -y "02.mp4"
+ffmpeg -ss 0:0:25.1 -to 0:0:38.5  -i %input% -c:v h264_nvenc -y "01.mp4"
+ffmpeg -ss 0:0:56.0 -to 0:1:0.0  -i %input% -c:v h264_nvenc -y "02.mp4"
 
 
 

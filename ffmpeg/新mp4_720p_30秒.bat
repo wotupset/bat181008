@@ -17,7 +17,9 @@ set tt=-ss 0:0:0.0 -to 00:0:30.0
 set tt0=
 echo %tt%
 
-ffmpeg -hwaccel cuda -threads 4 %tt% -i %input% -c:v h264_nvenc %aa01% %aa02% -y "720p30s.mp4"
+set output=720p30s_%RANDOM%.mp4
+
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v h264_nvenc -qp 20 %aa01% %aa02% -y %output%
 
 
 

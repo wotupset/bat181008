@@ -42,10 +42,10 @@ set crf2=-r 15
 set crf2=
 
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
-set qqq04=-vf "scale=%wh%:%wh%:flags=lanczos:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-static-thresh 222111 -tune ssim -tune-content screen 
-set qqq06=-noise-sensitivity 1 -drop-threshold 1
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn 
+set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq05=-static-thresh 222111 -tune-content screen 
+set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim 
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 0
@@ -58,13 +58,13 @@ echo %ppp01%
 
 set output=_output_vp9_快_指定時間%RANDOM%.webm
 
-set tt=-ss 0:0:19.0 -to 0:0:30.0
+set tt=-ss 0:2:17.0 -to 0:2:35.0
 set tt0=
 echo %tt%
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 2 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 
 set time1=%date%_%time%
 
@@ -78,6 +78,7 @@ echo %time1%
 
 pause
 exit
+-pix_fmt yuv420p 
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
 nearest 鋸齒明顯 檔案大
 bilinear 檔案小

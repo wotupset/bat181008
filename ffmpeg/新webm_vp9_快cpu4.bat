@@ -6,7 +6,6 @@ echo %time%
 
 
 
-
 set /p input=檔案:
 
 set wh=1440
@@ -66,7 +65,7 @@ set output=_output_vp9_快%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 2 -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 
 set time1=%date%_%time%
 

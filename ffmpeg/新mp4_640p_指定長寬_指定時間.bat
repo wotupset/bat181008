@@ -21,29 +21,23 @@ set wh0=640:480
 
 set wh0=1920:1080
 set wh0=1280:720
-set wh0=800:450
+set wh=800:450
 set wh0=640:360
 
 set wh0=720:1280
-set wh=450:800
+set wh0=450:800
 
-set vf=-vf "scale=%wh%:flags=lanczos,setsar=1/1" 
-
+set vf=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
 echo %vf%
 
-set qqq02=-b:v 1000k
-set qqq02=-qp 10
-set qqq02=-cq 10
-set qqq02=
-
-set tt=-ss 0:0:2.0 -to 0:16:52.0
-set tt=
+set tt=-ss 0:0:41.0 -to 0:1:41.0
+set tt0=
 echo %tt%
 
 set output=_output_a_%RANDOM%.mp4
 title %output%
 
-ffmpeg -hwaccel cuda -threads 4 %tt% -i %input%  %qqq02%   %vf%   -c:v h264_nvenc -pix_fmt yuv420p  %qqq02% -y %output%
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% %vf% -c:v h264_nvenc -qp 20 -y %output%
 
 
 
@@ -51,14 +45,23 @@ ffmpeg -hwaccel cuda -threads 4 %tt% -i %input%  %qqq02%   %vf%   -c:v h264_nven
 
 pause
 exit
+-r 30
+-pix_fmt yuv420p
 
-
-set vf=-vf "scale_cuda=4096:2160:interp_algo=bilinear,setsar=1/1" 
-nearest  default 
-bilinear
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
+nearest 鋸齒明顯 檔案大
+bilinear 檔案小
 bicubic
-lanczos
+lanczos 中等
+https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
 
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
+neighbor 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-scaler.html
 
 
 Default value is 'bicubic'

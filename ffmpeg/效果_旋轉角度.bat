@@ -6,19 +6,19 @@ set /p input=檔案:
 echo "%input%"
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:1:30.0 -to 0:1:0.0
-set tt=
+set tt=-ss 0:0:35.0 -to 0:0:57.0
+set tt0=
 echo %tt%
 
 
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
+ffmpeg -hwaccel cuda -threads 1  %tt% -i %input% -vf "transpose=1" -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
 
 
 
-
-
+pause
 exit
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -vf "transpose=1" -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
+
+-pix_fmt yuv420p
 
 -vf "transpose=0"
 0 = 90° counter-clockwise and vertical flip (default) 逆時針+垂直翻轉

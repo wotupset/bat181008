@@ -3,11 +3,7 @@ chcp 65001
 
 set /p input=檔案:
 
-set output=_output_mp4_限制檔案上限%RANDOM%.mp4
 
-
-
-set time0=%date%_%time%
 
 set tt=-ss 0:0:0.0 -to 0:0:30.0
 set tt=
@@ -17,11 +13,10 @@ set vf=-vf "scale=800:450:flags=bilinear,setsar=1:1"
 set vf=
 echo %vf%
 
-ffmpeg -hwaccel cuda %tt% -i %input% -c:v h264_nvenc -pix_fmt yuv420p  -fs 4500K -qp 20 %vf% -y %output%
+set output=_output_mp4_限制檔案上限%RANDOM%.mp4
 
-
-
-
+set time0=%date%_%time%
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v h264_nvenc -qp 20 -fs 4500K  %vf% -y %output%
 set time1=%date%_%time%
 
 
@@ -33,6 +28,7 @@ echo %time1%
 
 pause
 exit 
+-pix_fmt yuv420p
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450:flags=fast_bilinear,setsar=1:1,hwdownload,format=nv12" -crf 35 -b:v 0 -y %output%
 -static-thresh 222111 
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450,setsar=1:1,hwdownload,format=nv12" -static-thresh 222111 -crf 35 -b:v 0 -y %output%

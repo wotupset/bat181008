@@ -60,9 +60,7 @@ echo %tt%
 set output=_output_vp9_oped%RANDOM%.webm
 
 set time0=%date%_%time%
-
-ffmpeg -hwaccel cuda %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01%    -y %output%
-
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 set time1=%date%_%time%
 
 

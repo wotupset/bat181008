@@ -1,5 +1,24 @@
-echo ®É¶¡®t > ®É¶¡®t.txt
-echo %date%_%time% >> ®É¶¡®t.txt
+echo off
+chcp 65001
+
+
+echo %date%
+echo %time%
+
+set date1=%date:~3,20%%
+set vardate=%date1:~2,2%%date1:~5,2%%date1:~8,2%
+set vartime1=%time:~0,2%
+if /i %vartime1% LSS 10 (set vartime1=0%time:~1,1%)
+set vartime=%vartime1%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+
+
+
+
+echo æ™‚é–“å·® > æ™‚é–“å·®.txt
+echo %date%_%time% >> æ™‚é–“å·®.txt
 
 
 
@@ -22,7 +41,7 @@ set time_hh=%time:~0,2%
 ) 
 
 set /a time_hms1 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
-echo ®É¶¡1=%time_hms1%
+echo æ™‚é–“1=%time_hms1%
 
 
 
@@ -36,7 +55,7 @@ timeout /t 3
 
 
 
-echo %date%_%time% >> ®É¶¡®t.txt
+echo %date%_%time% >> æ™‚é–“å·®.txt
 
 IF %time:~6,1% == 0 (
 set  time_ss=%time:~7,1%
@@ -57,9 +76,9 @@ set time_hh=%time:~0,2%
 ) 
 
 set /a time_hms2 = %time_hh% *60 *60 + %time_ii% *60 + %time_ss%
-echo ®É¶¡2=%time_hms2%
+echo æ™‚é–“2=%time_hms2%
 set /a time_hms3=%time_hms2% - %time_hms1%
-echo ¯Ó®É=%time_hms3%
+echo è€—æ™‚=%time_hms3%
 
 
 
@@ -67,11 +86,13 @@ pause
 exit
 
 %tmp:x=y%
-%time::=%  ¿é¥X=163058.68
+%time::=%  è¼¸å‡º=163058.68
 
 echo %date%
 echo %time%
 
+chcp 65001
+é€±äº” 2023/03/17
 
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
@@ -79,6 +100,17 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%_640p
+set nnn=%vardate%_%vartime%_%RANDOM%_
 echo %nnn%
 
+éUTF8
+2023/03/17 é€±äº”
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_
+echo %nnn%

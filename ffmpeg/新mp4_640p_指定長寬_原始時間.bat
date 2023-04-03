@@ -6,51 +6,51 @@ echo %date%
 echo %time%
 
 
-
-
-
-
 set /p input=檔案:
-
 
 
 
 set wh=640
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 
+
 set vf0=-vf "scale=720:1280,setsar=1/1" 
 set vf0=-vf "scale=1280:720,setsar=1/1" 
-set vf0=-vf "scale=450:800,setsar=1/1" 
-set vf=-vf "scale=800:450,setsar=1/1" 
+set vf=-vf "scale=450:800:flags=bilinear,setsar=1/1" 
+set vf0=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
 set vf0=-vf "scale=800:600,setsar=1/1" 
 set vf0=-vf "scale=600:800,setsar=1/1" 
 set vf0=-vf "scale=640:480,setsar=1/1" 
 set vf0=-vf "scale=540:720,setsar=1/1" 
 set vf0=-vf "scale=1920:1080,setsar=1/1" 
 
-
 echo %vf%
 
 
-
-set qqq02=-qp 20
-set qqq02=-cq 10
-set qqq02=
-
 set output=_output_a_%nnn%_.mp4
 
-ffmpeg -hwaccel cuda -i %input%  %vf% -c:v h264_nvenc %qqq02% -y %output%
 
-
-
-start "" "%output%" 
-
-
+ffmpeg -hwaccel cuda -threads 1 -i %input% %vf% -c:v h264_nvenc -qp 20 -y %output%
 
 
 pause
 exit
+start "" "%output%" 
 
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
+nearest 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
+
+
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
+neighbor 鋸齒明顯 檔案大
+bilinear 檔案小
+bicubic
+lanczos 中等
+https://ffmpeg.org/ffmpeg-scaler.html
 
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%

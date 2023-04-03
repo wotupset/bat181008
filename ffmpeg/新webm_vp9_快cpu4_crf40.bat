@@ -16,8 +16,8 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh=720
-set wh=800
+set wh0=720
+set wh0=800
 set wh0=960
 set wh0=1024
 set wh0=1280
@@ -63,7 +63,7 @@ set output=_output_vp9_快crf40_%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 2 -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 
 set time1=%date%_%time%
 
