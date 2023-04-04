@@ -8,7 +8,7 @@ echo %input%
 
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:2:17.0 -to 0:2:37.0
+set tt=-ss 0:15:33.0 -to 0:16:38.0
 set tt0=
 echo %tt%
 
@@ -23,8 +23,14 @@ echo %wh%
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
--vf "scale_cuda=%wh%:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12" ^
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% ^
+-vf "scale=%wh%:flags=bilinear,setsar=1:1" ^
+-ac 2 -sn -dn -map_chapters -1 -map_metadata -1 ^
+-c:v h264_nvenc -y FFF.mp4
+
+
+
+ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
 -c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
 -crf 40 ^
 -static-thresh 222123 ^
@@ -43,6 +49,16 @@ echo %time1%
 
 pause
 exit
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
+-vf "scale_cuda=%wh%:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12" ^
+-c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
+-crf 40 ^
+-static-thresh 222123 ^
+-y test%RANDOM%.webm
+
+
+
 -pix_fmt yuv420p
 -b:v 2500K -minrate 50k -maxrate 2500k -bufsize 500k ^
 -crf 35 ^
