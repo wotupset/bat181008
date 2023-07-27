@@ -1,40 +1,64 @@
 echo off
 chcp 65001
 
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+set output=_%nnn%_.webm
+
+
 set /p input=檔案:
 echo %input%
 
 
 
 
-set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:15:33.0 -to 0:16:38.0
-set tt0=
+set tt=-ss 0:0:1.5 -t 0:0:17.5
+set tt=-ss 0:8:19.1 -to 0:8:55.1
+set tt=
 echo %tt%
 
 set wh0=450:800
 set wh0=400:400
 set wh0=640:360
-set wh=800:450
+set wh0=480:270
+set wh0=800:450
+set wh0=800:800
 set wh0=1280:720
-echo %wh%
+set wh0=1200:720
+set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
+
+set wh=640
+set wh=800
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=
+echo %vf%
 
 
 
 set time0=%date%_%time%
 
 ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% ^
--vf "scale=%wh%:flags=bilinear,setsar=1:1" ^
--ac 2 -sn -dn -map_chapters -1 -map_metadata -1 ^
--c:v h264_nvenc -y FFF.mp4
+-c:v h264_nvenc -qp 10 ^
+%vf% ^
+-y FFF.mp4
 
 
 
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
--crf 40 ^
--static-thresh 222123 ^
--y test%RANDOM%.webm
+-c:v libvpx-vp9 -c:a libopus -speed 2 -crf 35 ^
+-y %output%
+
 
 
 
@@ -50,6 +74,51 @@ echo %time1%
 pause
 exit
 
+
+降低彩度
+-vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" ^
+-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect" ^
+
+-threads 2 -crf 35 -r 25
+-tune ssim ^
+-map_chapters -1 -map_metadata -1 
+-crf 35 ^
+-cq 30
+-cpu-used 4
+
+-b:v 500K -minrate 10k -maxrate 500k -bufsize 100k
+-static-thresh 1000 -tune-content screen 
+-cq 30 
+-cpu-used 4
+-b:v 300K -minrate 10k -maxrate 300k -bufsize 100k 
+-crf 40 
+-deadline realtime -cpu-used 6
+-vf "scale=%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" ^
+
+-deadline realtime -cpu-used 6
+???
+-rc_lookahead 5 -lag-in-frames 5 -drop-threshold 30 ^
+
+ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
+-c:v libvpx-vp9 -c:a libopus -threads 2 -deadline realtime -cpu-used 6 ^
+-static-thresh 1000 -tune-content screen -tune ssim ^
+-crf 35 ^
+-y test%RANDOM%.webm
+
+
+
+
+-rc_lookahead 1 -lag-in-frames 1 -drop-threshold 30
+-b:v 200K -minrate 10k -maxrate 200k -bufsize 200k ^
+-cpu-used 4 
+-b:v 500K -minrate 50k -maxrate 500k  ^
+
+-noise-sensitivity 0 -drop-threshold 0  ^
+
+-static-thresh 0
+-static-thresh 222123 ^
+-crf 40 ^
+
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
 -vf "scale_cuda=%wh%:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12" ^
 -c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
@@ -60,7 +129,7 @@ ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
 
 
 -pix_fmt yuv420p
--b:v 2500K -minrate 50k -maxrate 2500k -bufsize 500k ^
+-b:v 500K -minrate 50k -maxrate 500k -bufsize 100k ^
 -crf 35 ^
 -static-thresh 222123 ^
 

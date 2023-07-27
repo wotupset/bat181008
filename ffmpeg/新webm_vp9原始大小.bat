@@ -10,23 +10,26 @@ set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40 
 set crf=-crf 35
+set crf=-crf 25
 set crf=
 
 set crf2=-b:v 0
 set crf2=
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv444p 
 set qqq04=-vf "setsar=1:1"
-set qqq05=-static-thresh 222123 -tune-content screen 
-set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
+
+
+set qqq05=-tune ssim 
+set qqq06=-static-thresh 1000 -tune-content screen -noise-sensitivity 0 
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 0
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 0 -threads 2
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
+set ppp01=%crf% %crf2% %qqq03% %qqq04%  %cpu01%
 echo %ppp01%
 
 
@@ -35,12 +38,9 @@ echo %ppp01%
 set output=_output_vp9_原始大小%RANDOM%.webm
 
 set time0=%date%_%time%
-ffmpeg -hwaccel cuda -threads 1 -i %input%  -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 set time1=%date%_%time%
 
-
-set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
-ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
 
 
 echo %time0%
@@ -50,6 +50,19 @@ echo %time1%
 pause
 exit 
 
+-hwaccel cuda -threads 1
+
+-pix_fmt yuv420p 
+-pix_fmt yuv444p 
+
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
+ffmpeg -i %output% -c:v copy %af% -y _調整音量n_%output%
+
+
+
+
+-drop-threshold 30
+-pix_fmt yuv420p 
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
 

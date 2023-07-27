@@ -21,8 +21,8 @@ set wh0=640:480
 
 set wh0=1920:1080
 set wh0=1280:720
-set wh=800:450
-set wh0=640:360
+set wh0=800:450
+set wh=640:360
 
 set wh0=720:1280
 set wh0=450:800
@@ -30,14 +30,14 @@ set wh0=450:800
 set vf=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
 echo %vf%
 
-set tt=-ss 0:0:41.0 -to 0:1:41.0
+set tt=-ss 0:0:52.0 -to 0:1:4.0
 set tt0=
 echo %tt%
 
 set output=_output_a_%RANDOM%.mp4
 title %output%
 
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% %vf% -c:v h264_nvenc -qp 20 -y %output%
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% %vf% -c:v h264_nvenc -qp 10 -y %output%
 
 
 

@@ -4,6 +4,7 @@ ffmpeg  -i %input% -f lavfi -i anullsrc -c:v copy  -shortest -y "h264_anullsrc.m
 
 
 
+
 pause
 exit
 

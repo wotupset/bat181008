@@ -24,7 +24,7 @@ set wh=512
 set wh=400
 set wh=480
 set wh=640
-set wh=800
+set wh0=800
 set wh0=960
 set wh0=1280
 
@@ -41,16 +41,17 @@ set crf20=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-static-thresh 222111 -tune-content screen 
-set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
-set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 4
+set qqq05=-tune ssim
+set qqq06=-rc_lookahead 1 -lag-in-frames 1 -drop-threshold 30
+set qqq07=-static-thresh 1000 -tune-content screen
+
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 1
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %qqq08% %cpu01% %cpu02% %cpu03%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
 
 set tt=-ss 0:2:56.0 -to 0:4:22.0
@@ -75,7 +76,7 @@ echo %time1%
 pause
 exit 
 pause
-
+-noise-sensitivity 1 -drop-threshold 1
 -map 0:v:0 -map 0:a:0 
 
 for %%I in ( %output% ) do @echo %%~zF %%F

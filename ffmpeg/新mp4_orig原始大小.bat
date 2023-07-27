@@ -16,10 +16,9 @@ echo %nnn%
 
 set /p input=檔案:
 set output=_output_a_%nnn%_.mp4
-set qqq03= -map_chapters -1 -map_metadata -1 -pix_fmt yuv420p -ac 2  
 
 
-set tt=-ss 0:30:0.0 -to 0:35:0.0
+set tt=-ss 0:0:2.0 -to 0:0:32.0
 set tt0=
 echo %tt%
 
@@ -30,7 +29,7 @@ set qqq02=-qp 30
 set qqq02=
 
 
-ffmpeg  %tt%  -i %input%   %qqq03%   -c:v h264_nvenc   %qqq02%    -y "%output%"
+ffmpeg  %tt%  -i %input%    %qqq02%    -y "%output%"
 
 
 
@@ -45,6 +44,8 @@ ffmpeg  %tt%  -i %input%   %qqq03%   -c:v h264_nvenc   %qqq02%    -y "%output%"
 
 pause
 exit
+-c:v h264_nvenc
+
 start "" "%output%" 
 -c:v libx264
 -c:v h264_nvenc

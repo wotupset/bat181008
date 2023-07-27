@@ -10,7 +10,7 @@ set output=_output_vp9_預設%RANDOM%.webm
 
 
 set time0=%date%_%time%
-ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx-vp9 -c:a libopus -threads 0  -y %output%
+ffmpeg  -i %input% -c:v libvpx-vp9  -crf 20 -b:v 0k  -an   -y %output%
 set time1=%date%_%time%
 
 
@@ -23,7 +23,10 @@ echo %time1%
 
 pause
 exit 
- -an
+-c:a libopus
+-threads 2 
+-hwaccel cuda -threads 1
+
 -c:a libopus 
 
 ffmpeg -i %output% -af "volumedetect" -f null -y nul

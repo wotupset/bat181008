@@ -5,19 +5,32 @@ chcp 65001
 set /p input=檔案:
 echo "%input%"
 
+
+ffmpeg -i %input%
+
+
+
+pause
+exit
+
+
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:1:30.0 -to 0:1:0.0
-set tt=
+set tt=-ss 0:0:30.0 -to 0:1:0.0
+set tt0=
 echo %tt%
+
+
+
+
+ffmpeg -i input.mp4 -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -c:v h264_nvenc -pix_fmt yuv420p -crf 18 output.mp4
+
+ffmpeg %tt% -i %input% -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -pix_fmt yuv420p -c:v libx264 -crf 18 output.mp4
+
 
 
 ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
 
 
-
-
-
-exit
 ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -vf "transpose=1" -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
 
 -vf "transpose=0"
