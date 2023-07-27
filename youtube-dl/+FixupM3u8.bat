@@ -1,6 +1,16 @@
+echo off
+chcp 65001
+
+set /p poi=輸入::
+echo "%poi%"
+
+ffmpeg -i "%poi%" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 30 file.mp4
+
+pause
+exit
 
 
-yt-dlp.exe  https://streamable.com/o/hyphyp
+yt-dlp.exe -f  302+251  https://www.youtube.com/watch?v=u4f3jKqA4EQ
 
 cmd
 

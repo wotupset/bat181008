@@ -23,7 +23,7 @@ set /p poi=youtube網址:
 echo "%poi%"
 
 
-start "" yt-dlp  --windows-filenames --limit-rate 3000K  %poi% 
+start "" yt-dlp  --restrict-filenames --limit-rate 3000K   %poi% 
 
 
 
@@ -33,8 +33,12 @@ goto top
 
 pause
 exit
+-o "下載預設%nnn%.%%(ext)s"
 
---restrict-filenames 避免不合法的檔案名稱
+-o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
+--windows-filenames 只留下winsdow接受的檔名字元
+--restrict-filenames 更嚴格的檔案名稱
+
 
 
 --continue

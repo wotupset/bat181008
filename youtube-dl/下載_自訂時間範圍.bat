@@ -8,9 +8,10 @@ chcp 65001
 set /p poi=youtube網址:
 echo %poi%
 
+set tt="*0:29:30.0-0:30:30.0"
+echo %tt%
 
-
-start "" yt-dlp --limit-rate 3000K  --download-sections "*0:3:0-0:6:0"   %poi%
+start "" yt-dlp --limit-rate 2500K  --download-sections %tt%  %poi%
 
 
 goto top
@@ -19,6 +20,9 @@ goto top
 
 pause
 exit
+有時無法下載要用best
+start "" yt-dlp --limit-rate 2500K  -f best --download-sections "*0:0:0.0-0:3:10.0"  %poi%
+
 
 --download-sections "*0:0:0-0:0:0" 
 

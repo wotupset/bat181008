@@ -3,38 +3,18 @@ chcp 65001
 
 set /p input=檔案:
 
-set tt=-ss 0:0:11.0 -to 0:3:0.0
+set tt=-ss 0:0:0.0 -t 0:0:10.0
+set tt=-ss 0:0:0.0 -to 0:0:8.7
 set tt=
 echo %tt%
 
+ffmpeg %tt% -i %input% -c:v ffv1   -y "ffv1_lossless.mkv"  
 
-ffmpeg %tt% -i %input%  -sn -dn  -crf 0 -b:v 0  -y "_lossless.mkv" 
 
 
 pause
 exit
-ffmpeg %tt% -i %input% -c:v ffv1 -y "ffv1_lossless.mkv"  
-ffmpeg %tt% -i %input% -c:v copy -c:a copy -sn -dn    -y "_lossless.mkv" 
-
--shortest -fflags +shortest -max_interleave_delta 100M 
--seek_timestamp 1 
--c:v copy -c:a copy
-&& ffplay.exe "_lossless.mkv"
-&& ffprobe "_lossless.mkv"
-
-
--copyts
--seek_timestamp 1 
--muxdelay 0
-
-
-ffmpeg -i %input%    -c:v libvpx-vp9 -crf 25 -b:v 0  -y  "無損.webm"
-
-
-ffmpeg -y  -an -i %input%    -c:v libvpx-vp9 -crf 10 -b:v 0  "vp9_crf10.webm"
-ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
-
-ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+ffmpeg  -i %input% -c:v ffv1  -map_chapters -1 -map_metadata -1  -y "ffv1_lossless.mkv"  
 
 ffmpeg  -i %input%  -ss 0:0:25.0 -to 0:0:34.0   -c:v copy -an -sn -y "lossless.webm"  
 ffmpeg -i %input% -ss 0:1:54.0 -to 0:2:5.0 -c:v copy  -c:a aac  -y  "lossless.mkv"

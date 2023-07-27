@@ -7,7 +7,7 @@ echo %poi%
 
 
 
-youtube-dl --write-thumbnail --skip-download  %poi%
+yt-dlp --write-thumbnail --skip-download  %poi%
 
 
 

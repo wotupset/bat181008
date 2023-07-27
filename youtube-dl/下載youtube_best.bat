@@ -11,7 +11,7 @@ set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
 
-yt-dlp  -f best -r 3M %nn01% %poi%
+yt-dlp --windows-filenames  -f best --limit-rate 2500K %nn01% %poi%
 
 
 goto top

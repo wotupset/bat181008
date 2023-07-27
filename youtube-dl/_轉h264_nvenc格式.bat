@@ -3,26 +3,27 @@ chcp 65001
 
 echo %date%_%time%
 
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vartime=%time:~0,2%
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
+set /p input=檔案:
+echo %input%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
+set vf=-vf "scale=1280:720,setsar=1/1" 
+set vf=
+echo %vf%
 
+set tt=-ss 0:0:11.5 -t 0:0:19.5
+set tt=-ss 0:9:2.0 -to 0:9:52.0
+set tt=
+echo %tt%
 
-set /p poi=檔案:
+set output=_h264_nvenc.mp4
 
-echo %poi%
+ffmpeg %tt% -i %input%  %qqq03% %vf%   -c:v h264_nvenc  -y  %output%
 
-ffmpeg -i %poi% -c:v copy -c:a copy  -bsf:v h264_mp4toannexb  -y ts_%nnn%.mkv
 
 pause
-
-
-
 exit
+
+-qp 20
 
 -bsf:v h264_mp4toannexb
 -err_detect crccheck
