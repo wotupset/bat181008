@@ -7,7 +7,8 @@ set /p input=檔案:
 
 
 
-ffmpeg -i %input% -itsoffset -0.6 -i %%input%% -map 0:v -map 1:a -c:v copy -c:a copy -y  聲音時間偏移.mp4
+ffmpeg -i %input% -itsoffset +0.2 -i %input% -map 0:v -map 1:a -c:v copy -c:a copy -y  聲音時間偏移.mp4
+
 
 
 pause

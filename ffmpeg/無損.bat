@@ -3,21 +3,26 @@ chcp 65001
 
 set /p input=檔案:
 
-set tt=-ss 0:0:56.2 -to 0:0:57.7
+set tt=-ss 0:1:30.0  -to 0:1:37.46
 set tt0=
 echo %tt%
 
 
-
-ffmpeg %tt%  -i %input% -c:v libx264  -crf 0 -b:v 0 -y "h264_lossless.mp4"
-
-
+ffmpeg %tt% -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
 
 
 
 pause
-
 exit
+ffmpeg %tt%  -i %input% -c:v libx264  -crf 5 -b:v 0 -pix_fmt yuv420p  -y "h264_lossless.mp4"
+
+
+
+-vf "eq=contrast=1.1:brightness=0.0:saturation=1.2"
+
+ffmpeg %tt% -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+
+ffmpeg %tt%  -i %input% -c:v libx264  -crf 0 -b:v 0 -y "h264_lossless.mp4"
 
 ffmpeg %tt%  -i %input%   -c:v libvpx-vp9  -lossless 1  -y "vp9_lossless.webm"
 

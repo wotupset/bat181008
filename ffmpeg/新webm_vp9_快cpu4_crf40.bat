@@ -31,23 +31,26 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35
-set crf=-crf 25
-set crf0=
+set crf=-crf 30
+set crf=
 
 
-set crf2=-b:v 0
 set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
 set crf2=-cpu-used 4 -b:v 1500K
 set crf2=-cpu-used 4
 set crf2=-r 50
-set crf2=-b:v 200K -minrate 50k -maxrate 200k 
+set crf2=-b:v 2000K -minrate 1000k -maxrate 3000k 
+set crf2=-b:v 0
+set crf2=-b:v 3000K
 set crf2=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
 set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq040=-vf "scale=800:450:flags=bilinear,setsar=1:1"
 
-set qqq05=-tune ssim
+set qqq05= -static-thresh 4441000 -tune-content screen -drop-threshold 50
+
+
 set qqq06=-noise-sensitivity 1 -drop-threshold 1 
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
 
@@ -56,16 +59,22 @@ set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1
 set cpu03=-corpus-complexity 1
 
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
-set ppp01=%crf% %crf2% %qqq03% %qqq04%  %cpu01%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
+
+
+
+
+set tt=-ss 0:0:1.5 -t 0:0:17.5
+set tt=-ss 0:0:1.5 -to 0:0:11.5
+set tt=
+echo %tt%
 
 set output=_output_vp9_快crf40_%RANDOM%.webm
 
-
-
 set time0=%date%_%time%
 
-ffmpeg  -i %input% -c:v libvpx-vp9 -c:a libopus  %ppp01% -y %output%
+ffmpeg %tt%  -i %input% -c:v libvpx-vp9 -c:a libopus -pix_fmt yuv420p %ppp01% -y %output%
 
 set time1=%date%_%time%
 
@@ -77,6 +86,10 @@ echo %time1%
 
 pause
 exit
+-tune ssim
+-speed 4
+-hwaccel cuda -threads 1
+-speed 1
 -hwaccel cuda -threads 1
 -speed 2
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"

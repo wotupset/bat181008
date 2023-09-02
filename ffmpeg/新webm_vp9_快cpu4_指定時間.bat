@@ -17,10 +17,10 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh=720
-set wh=800
-set wh=960
-set wh=1024
+set wh0=720
+set wh0=800
+set wh0=960
+set wh0=1024
 set wh0=1280
 
 set crf=-crf 50
@@ -31,7 +31,7 @@ set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 35
 set crf=-crf 25
-set crf0=
+set crf=
 
 
 set crf2=-b:v 0
@@ -59,13 +59,13 @@ echo %ppp01%
 
 set output=_output_vp9_快_指定時間%RANDOM%.webm
 
-set tt=-ss 0:0:56.2 -to 0:0:57.7
+set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt0=
 echo %tt%
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 
 set time1=%date%_%time%
 
@@ -77,6 +77,7 @@ echo %time1%
 
 pause
 exit
+-hwaccel cuda -threads 1
 
 set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
 set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"

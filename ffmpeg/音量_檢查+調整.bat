@@ -10,10 +10,15 @@ echo %date%_%time%
 
 
 set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
-ffmpeg -i %input% -c:v copy -c:a libopus %af% -y "調整音量.webm"
+set af0=-af "volume=-10dB"
+ffmpeg -i %input% -c:v copy  %af% -y "調整音量.mkv"
+
+
+
 
 pause
 exit
+
 -c:v libvpx-vp9  -c:a libopus
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
 echo +++++

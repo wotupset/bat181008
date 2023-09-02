@@ -1,10 +1,15 @@
+ffmpeg -h encoder=libwebp
+ffmpeg -h encoder=mjpeg
+
+
+pause
 cmd
 
 
 
 exit
 
-ffmpeg -h
+ffmpeg -h encoder=libwebp
 
 ffmpeg -h encoder=libvpx
 ffmpeg -h encoder=libvpx-vp9

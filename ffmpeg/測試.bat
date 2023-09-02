@@ -6,18 +6,72 @@ set /p input=檔案:
 echo "%input%"
 
 
-ffmpeg -i %input%
+
+ffmpeg -f lavfi -i testsrc=d=5:s=1280x720:r=25,format=yuv420p -c:v ffv1  -y "ffv1_lossless.mkv"  
+
+
+
 
 
 
 pause
 exit
 
+set wh=800
+set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+
+ffmpeg.exe -i %input% %qqq04% -c:v libvpx-vp9 -c:a libopus -y "測試1_1預設.webm"
+ffmpeg.exe -i %input% %qqq04% -c:v libvpx-vp9 -c:a libopus -crf 20 -y "測試2_crf20.webm"
+ffmpeg.exe -i %input% %qqq04% -c:v libvpx-vp9 -c:a libopus -crf 30 -y "測試3_crf30.webm"
+
+
+
+
+ffmpeg.exe -i %input% -c:v libwebp  -vf "scale=1000:1000:force_original_aspect_ratio=decrease" -pix_fmt yuv420p -y "420.webp"
+ffmpeg.exe -i %input% -c:v libwebp  -vf "scale=1000:1000:force_original_aspect_ratio=decrease" -pix_fmt yuv444p -y "444.webp"
+
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:30.0 -to 0:1:0.0
+set tt=-ss 0:0:0.0 -to 0:0:4.0
+set tt=
+echo %tt%
+
+set aaa=-r 25 -speed 2 -s 720x1280 -b:v 200K -minrate 10k -maxrate 200k -bufsize 200k
+set aaa=-r 25 -speed 2 -s 720x1280 -crf 40
+echo %aaa%
+
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 %aaa% -y output1.webm
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 %aaa% -auto-alt-ref 1 -lag-in-frames 25 -y output2.webm
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 %aaa% -auto-alt-ref 1 -lag-in-frames 25 -static-thresh 100 -y output3.webm
+
+
+
+-crf 35
+
+
+1=91
+3=86
+4=81
+
+set tt=-ss 0:0:11.5 -t 0:0:19.5
+set tt=-ss 0:0:0.0 -to 0:0:4.0
 set tt0=
 echo %tt%
+
+
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -r 25 -crf 40 -y output1.webm
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -r 25 -crf 40 -auto-alt-ref 1 -lag-in-frames 25 -y output2.webm
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -r 25 -crf 40 -auto-alt-ref 1 -lag-in-frames 25 -static-thresh 100 -y output3.webm
+
+
+set tt=-ss 0:0:11.5 -t 0:0:19.5
+set tt=-ss 0:0:1.0 -to 0:0:2.0
+set tt0=
+echo %tt%
+
+
+
+
 
 
 

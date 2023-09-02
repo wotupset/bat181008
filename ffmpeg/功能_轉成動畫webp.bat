@@ -1,19 +1,70 @@
 echo off
 chcp 65001
 
-echo %date%
-echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set /p input=檔案:
+echo "%input%"
 
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
+set tt=-ss 0:0:11.5 -t 0:0:19.5
+set tt=-ss 0:0:20.0 -to 0:0:22.0
+set tt0=
+echo %tt%
 
 
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-set output=_%nnn%_.webm
+ffmpeg %tt% -i %input% -c:v libwebp -r 25 -s 1280x720 -loop 0  -lossless 0   -quality  50  -an  -cr_size 8 -cr_threshold 8 -y output.webp
+
+
+
+pause
+exit
+ffmpeg %tt% -i %input% -c:v libwebp -r 25 -s 1280x720 -loop 0  -lossless 0   -quality  50  -an  -cr_size 8 -cr_threshold 8 -y output.webp
+
+
+
+
+ffmpeg %tt% -i %input% -c:v libwebp -r 25 -loop 0  -lossless 0   -quality  80  -an   -cr_size 8   -cr_threshold 50  -y output.webp
+
+無限循環撥放
+-loop 0
+
+
+
+ffmpeg -i input.mp4 -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -c:v h264_nvenc -pix_fmt yuv420p -crf 18 output.mp4
+
+ffmpeg %tt% -i %input% -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -pix_fmt yuv420p -c:v libx264 -crf 18 output.mp4
+
+
+
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
+
+
+ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -vf "transpose=1" -c:v h264_nvenc -qp 20 -y test%RANDOM%.mp4
+
+-vf "transpose=0"
+0 = 90° counter-clockwise and vertical flip (default) 逆時針+垂直翻轉
+1 = 90° clockwise 順時針
+2 = 90° counter-clockwise 逆時針
+3 = 90° clockwise and vertical flip 順時針+垂直翻轉
+
+
+
+
+:top
+
+echo RAINBOW
+color 6
+
+pause
+loop top
+
+
+
+
+exit
+
+
+
+
 
 
 
@@ -23,47 +74,14 @@ echo %input%
 
 
 
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:17:29.5 -to 0:18:29.5
-set tt=
+set tt=-ss 0:2:0.0 -to 0:2:45.0
+set tt0=
 echo %tt%
-
-set wh0=450:800
-set wh0=400:400
-set wh=640:360
-set wh0=480:270
-set wh0=800:450
-set wh0=800:800
-set wh0=1280:720
-set wh0=1200:720
-set vf=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
-
-set wh=480
-set wh=640
-set wh0=800
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=
-echo %vf%
-
 
 
 set time0=%date%_%time%
 
-ffmpeg %tt% -i %input% ^
--c:v h264_nvenc -qp 30 ^
-%vf% ^
--y FFF.mp4
-
-
-
-ffmpeg  -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -speed 3 -crf 40 ^
--y %output%
-
-
-
-
-
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test%RANDOM%.mp4
 
 set time1=%date%_%time%
 
@@ -71,106 +89,8 @@ set time1=%date%_%time%
 echo %time0%
 echo %time1%
 
-
 pause
 exit
-
--hwaccel cuda -threads 1
-
-
--af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect" ^
-
--threads 2 -crf 35 -r 25
--tune ssim ^
--map_chapters -1 -map_metadata -1 
--crf 35 ^
--cq 30
--cpu-used 4
-
--b:v 500K -minrate 10k -maxrate 500k -bufsize 100k
--static-thresh 1000 -tune-content screen 
--cq 30 
--cpu-used 4
--b:v 300K -minrate 10k -maxrate 300k -bufsize 100k 
--crf 40 
--deadline realtime -cpu-used 6
--vf "scale=%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" ^
-
--deadline realtime -cpu-used 6
-???
--rc_lookahead 5 -lag-in-frames 5 -drop-threshold 30 ^
-
-ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -threads 2 -deadline realtime -cpu-used 6 ^
--static-thresh 1000 -tune-content screen -tune ssim ^
--crf 35 ^
--y test%RANDOM%.webm
-
-
-
-
--rc_lookahead 1 -lag-in-frames 1 -drop-threshold 30
--b:v 200K -minrate 10k -maxrate 200k -bufsize 200k ^
--cpu-used 4 
--b:v 500K -minrate 50k -maxrate 500k  ^
-
--noise-sensitivity 0 -drop-threshold 0  ^
-
--static-thresh 0
--static-thresh 222123 ^
--crf 40 ^
-
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 1  %tt% -i %input% ^
--vf "scale_cuda=%wh%:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12" ^
--c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 ^
--crf 40 ^
--static-thresh 222123 ^
--y test%RANDOM%.webm
-
-
-
--pix_fmt yuv420p
--b:v 500K -minrate 50k -maxrate 500k -bufsize 100k ^
--crf 35 ^
--static-thresh 222123 ^
-
-color 6
-
-
-
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=450:800:interp_algo=bilinear,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
-
--f null -y NUL
--vf "hwdownload,format=nv12"
--vf "scale_cuda=720:1280:interp_algo=bilinear,hwdownload,format=nv12"
--vf "scale_cuda=450:800:interp_algo=bilinear,hwdownload,format=nv12"
--vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12"
--c:v h264_nvenc -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
--c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 50 -y test%RANDOM%.webm
- 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=720:1280:interp_algo=bilinear,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -threads 4 %tt% -i %input% -vf "scale_cuda=800:450:interp_algo=lanczos,hwdownload,format=nv12" -c:v libvpx-vp9 -c:a libopus -threads 4 -deadline realtime -cpu-used 6 -crf 50 -r 25 -y test%RANDOM%.webm
-
--r 25
--tune-content screen 
--row-mt 1 -threads 0 
-
-3583K
--crf 50
-4137K
--deadline realtime -cpu-used 6 -crf 50
-
--c:v libvpx -threads 0 -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -threads 0 -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -deadline realtime -cpu-used 6  -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 40 -y test%RANDOM%.webm
--c:v libvpx-vp9 -c:a libopus -threads 0 -deadline realtime -cpu-used 6 -crf 50 -r 25 -y test%RANDOM%.webm
-
--c:v libx264 -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
--c:v h264_nvenc -pix_fmt yuv420p -threads 0 -y test%RANDOM%.mp4
-
 
 
 相同
@@ -181,19 +101,11 @@ ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% -vf "scale_cuda
 
 
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
-nearest 鋸齒明顯 檔案大
-bilinear 檔案小
+nearest 鋸齒明顯
+bilinear
 bicubic
-lanczos 中等
-https://ffmpeg.org/ffmpeg-filters.html#scale_005fcuda
+lanczos
 
-
-set vf=-vf "scale=800:450:flags=bilinear,setsar=1/1" 
-neighbor 鋸齒明顯 檔案大
-bilinear 檔案小
-bicubic
-lanczos 中等
-https://ffmpeg.org/ffmpeg-scaler.html
 
 -vf "scale_cuda=1280:720" 
 

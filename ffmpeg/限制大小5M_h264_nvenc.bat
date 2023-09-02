@@ -1,57 +1,43 @@
 echo off
 chcp 65001
 
-
-echo %date%
-echo %time%
-
-
-
-
-
 set /p input=檔案:
 
-set wh0=960:720
-set wh0=800:600
-set wh0=640:480
-
-set wh0=1920:1080
-set wh0=1280:720
-set wh0=800:450
-set wh0=640:360
-set wh=480:360
-
-set wh0=720:1280
-set wh0=450:800
-set wh0=1000:800
-set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
 
 
-set wh=800
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 
-echo %vf%
-
-set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:4.5 -to 0:0:7.5
+set tt=-ss 0:0:19.0 -to 0:2:19.0
+set tt=-ss 0:0:21.5 -t 0:1:0.0
 set tt=
 echo %tt%
 
-set output=_output_a_%RANDOM%.mp4
-title %output%
+set vf=-vf "scale=800:450:flags=bilinear,setsar=1:1"
+set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1:1,hwdownload,format=nv12"
+set vf=-vf "hwdownload,format=nv12"
+set vf=
+echo %vf%
 
-ffmpeg %tt% -i %input% %vf% -c:v h264_nvenc -qp 20 -y %output%
+set output=限制檔案大小5M_%RANDOM%.mp4
 
+
+set time0=%date%_%time%
+ffmpeg -hwaccel nvdec -threads 1 %tt% -i %input% -c:v h264_nvenc %vf% -fs 5000K -y %output%
+set time1=%date%_%time%
+
+
+echo %time0%
+echo %time1%
 
 
 
 
 pause
 exit
--hwaccel cuda -threads 1 
--qp 20
--r 30
+ -threads 0
 -pix_fmt yuv420p
+-hwaccel_output_format cuda -threads 2
+-b:v 200K -minrate 50k -maxrate 300k -bufsize 100k 
+-crf 40 -b:v 0K
 
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 
 nearest 鋸齒明顯 檔案大
@@ -68,135 +54,120 @@ bicubic
 lanczos 中等
 https://ffmpeg.org/ffmpeg-scaler.html
 
+-crf 35 -b:v 0
 
-Default value is 'bicubic'
-set vf=-vf "scale=%wh%:flags=fast_bilinear,setsar=1/1" 
-set vf=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
-set vf=-vf "scale=%wh%:flags=neighbor,setsar=1/1" 
+set vf=-vf "scale=450:800:flags=bilinear,setsar=1:1"
 
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
-ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -vf "scale_cuda=1280:720,hwdownload,format=nv12" -c:v h264_nvenc -pix_fmt yuv420p  -y test.mp4
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450:flags=fast_bilinear,setsar=1:1,hwdownload,format=nv12" -crf 35 -b:v 0 -y %output%
+-static-thresh 222111 
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "scale_cuda=800:450,setsar=1:1,hwdownload,format=nv12" -static-thresh 222111 -crf 35 -b:v 0 -y %output%
+ffmpeg -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p -fs 4500K -vf "format=nv12,hwupload_cuda,scale_cuda=800:450,setsar=1:1,hwdownload,format=nv12" -static-thresh 222111 -crf 35 -b:v 0 -y %output%
+-hwaccel cuda -hwaccel_output_format cuda
+ -an
+-c:a libopus 
 
+ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
--vf "scale_cuda=800:450,setsar=1/1" 
+-vf "smartblur=0.5:0.5:0"
 
--map 0:0 -map 0:1 -map -0:2
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+-pix_fmt yuv420p 
 
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
+-vf "smartblur=1:-1:0" 銳利?
+-vf "smartblur=1:1:0" 模糊
 
-set nnn=%vardate%_%vartime%_%RANDOM%_640p
-echo %nnn%
-
-
-start "" "%output%" 
-
-
--qp 30
-
--c:v hevc_cuvid
+  -vf "unsharp=5:5:1.0:5:5:0.0"
+ -vf "unsharp=5:5:1.0:5:5:0.0"
 
 
-UTF8的格式
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-非UTF8的格式
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+ -tune-content screen 
 
--qp 30
--map 0:v:0 -map 0:a:0
--cq 30
--qp 30
+-deadline realtime  -cpu-used 4 
 
--c:v h264_nvenc -cq 30
--vf "scale=1280:720,setsar=1/1" 
-
-
--vf "setsar=1/1,setdar=16/9" 
--c:v h264_nvenc -rc vbr -cq 25   檔案較大 
--c:v h264_nvenc -rc constqp -qp 25  檔案較小 
--b:v 0K 
+-deadline realtime  -cpu-used 4 
 
 
 
--map 0:v:0 -map 0:a:0
 
--vf "scale=1280:720,setsar=1/1"
--vf "scale=720:1280,setsar=1/1"
-
- -af "loudnorm=i=-30"
-set wh=1280
-set wh0=
--vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1/1"
+-aq-mode 0
 
 
--qp 30 較小
--cq 30 較大
+-af "loudnorm=i=-22"
 
--map 0:v:0 -map 0:a:1 -sn
+-deadline realtime -cpu-used 5
 
-set output=_output_a_%nnn%_.mp4
+-b:v 3000K -maxrate 3000K -bufsize 500K
+-deadline realtime -cpu-used 5
 
--map 0:v:0 -map 0:a:1 -sn
--map 0:v:0 序列0(第一個輸入檔案) 輸入v=影像 index=0(第一軌)
--map 0:a:1 序列0(第一個輸入檔案) 輸入a=聲音 index=1(第二軌)
--map 0:s:1 序列0(第一個輸入檔案) 輸入s=字幕 index=1(第二軌)
+ -r 5
+-af "loudnorm=i=-20"
+
+-deadline realtime -cpu-used 5
+-deadline realtime -cpu-used 8 
+-c:v libvpx-vp9 
+-c:v libvpx
+
+pause
+-aq-mode 2  沒差別?
+-crf 20
+
+-movflags faststart
+-c:v libvpx-vp9 -crf 25  -deadline realtime -cpu-used 8 
+-c:v vp9_qsv
+
+-b:a 32k 
+-threads 4 -speed 4
+-row-mt 1 -tile-rows 1 
+-row-mt 1 -tile-rows 1 -tile-columns 1
+-crf 10
+-crf 20 -b:v 0k 
+ -deadline realtime -cpu-used 8
+ -b:v 1000k  -sharpness 1 -tune psnr -quality best -deadline best 
+
+-row-mt 1
 
 
-ffmpeg -y  -i %input%  %qqq03% -vf "scale=480:360:force_original_aspect_ratio=decrease,setsar=1/1"  -c:v h264_nvenc -cq 30 "%output%"
+-aq-mode 0 
+-crf 25 -b:v 0
+ -c:a libopus
+ffmpeg -loop 1 -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y video.mp4
+ffmpeg -r 1    -i "1538929485083.jpg" -i "01.mp3" -ss 00:0:00.0 -to 00:0:30.0 -r 10 -y output.mp4
 
--ss 00:00:00.0 -to 00:10:0.0 
+-ss 00:0:00.0 -t 00:0:30.0
 
 
--qp 30 固定品質
--cq 30 固定頻寬
-^
+set qqq03=-map_chapters -1 -map_metadata -1 -pix_fmt yuv420p  -ac 2 ^
 -metadata title="標題" ^
 -metadata ARTIST="ARTIST" ^
 -metadata comment="comment" ^
 -metadata description="description" ^
 -metadata copyright="%nnn%" 
 
--vf "scale=1280:720"
--vf "scale=1280:720,setsar=1/1"
--vf "scale=1280:720:force_original_aspect_ratio=decrease"
+
+-c:v copy -c:a copy
+
+-c:v libvpx-vp9 -crf 30 -b:v 0
+-c:v libvpx-vp9 -b:v 1M
+-c:v libvpx-vp9 -pix_fmt yuv420p
+
+-r 30
+-g 30
+-c:v libvpx -cpu-used 2  -speed 4
 
 
--aspect 16:9 
+-c:v libvpx -deadline realtime -cpu-used 2
+-c:v libvpx -deadline realtime
 
--pix_fmt yuv420p 8位元
--pix_fmt yuv420p10le 10位元(x265) 
--pix_fmt yuv420p12le 12位元(x265) 
+_output_aa.mp4
 
--qp 30
--cq 30
+ -speed 4
+-ss 00:20:00.0 -to 00:20:30.0
+-threads 8 
+-speed 4
+-speed 1
 
-pause
--c:v libx264
--c:v h264_nvenc
--preset fast 
--preset veryfast 
--crf 20 -b:v 1000k
--ss 00:00:00.0 -to 00:10:0.0 
-
-  -preset veryfast -tune fastdecode
- -preset veryfast -tune fastdecode
-
-set ppp02= -ss 00:00:05.5 -t 00:00:8.5
-set ppp03= -map 0:0 -map 0:2
-
-
- -vf "scale=640:640:force_original_aspect_ratio=decrease:flags=lanczos" 
-
-
-%ppp02%
-
- -s 640x360 -ss 00:00:00.0 -to 00:00:35.0
-
--ss 00:00:00.0 -to 00:00:41.6
-
--preset veryfast -tune fastdecode
+-s 640x360
+-s 400x300
+-s 360x640
 
 
 ffmpeg -y -i "%qqq01%" -s 640x360 -crf 25 -b:v 0  -metadata title="不能只有我看到" "%qqq02%" 

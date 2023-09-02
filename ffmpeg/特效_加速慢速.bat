@@ -3,12 +3,12 @@ chcp 65001
 
 set /p input=檔案:
 
-ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 20    -pix_fmt yuv420p -y 加速慢速.mp4
+ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 5  -r 30  -pix_fmt yuv420p -y 加速慢速.mp4
 
 pause
 exit
 -cq 20
--r 30
+-r 30  變速後 fps也要改變
 
 視頻加速
 "setpts=0.1*PTS"

@@ -24,8 +24,8 @@ echo %input%
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:8:19.1 -to 0:8:55.1
-set tt=
+set tt=-ss 0:0:4.0 -to 0:0:14.5
+set tt0=
 echo %tt%
 
 set wh0=450:800
@@ -45,19 +45,19 @@ set vf0=
 echo %vf%
 
 
-
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% ^
--c:v h264_nvenc -qp 10 ^
+ffmpeg %tt% -i %input% ^
+-c:v h264_nvenc -qp 20 ^
 %vf% ^
 -y FFF.mp4
 
 
 
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -speed 2 -crf 35 ^
+-c:v libvpx-vp9 -c:a libopus -speed 2 -threads 4 -crf 35 -static-thresh 4441000 -tune-content screen -drop-threshold 50 ^
 -y %output%
+
 
 
 
@@ -73,6 +73,9 @@ echo %time1%
 
 pause
 exit
+-af "volume=+0dB" 
+-crf 35
+-hwaccel cuda -threads 1
 
 
 降低彩度

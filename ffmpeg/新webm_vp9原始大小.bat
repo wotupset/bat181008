@@ -16,8 +16,10 @@ set crf=
 set crf2=-b:v 0
 set crf2=
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv444p 
+
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn 
 set qqq04=-vf "setsar=1:1"
+set qqq05= -static-thresh 4441000 -tune-content screen -drop-threshold 50 
 
 
 set qqq05=-tune ssim 
@@ -29,17 +31,24 @@ set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1
 set cpu03=-corpus-complexity 1
 
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
-set ppp01=%crf% %crf2% %qqq03% %qqq04%  %cpu01%
+set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
 
 
+
+set tt=-ss 0:0:1.5 -t 0:0:17.5
+set tt=-ss 0:0:58.0 -to 0:1:3.0
+set tt=
+echo %tt%
 
 
 set output=_output_vp9_原始大小%RANDOM%.webm
 
 set time0=%date%_%time%
-ffmpeg  -i %input%  -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus -pix_fmt yuv420p  %ppp01% -y %output%
 set time1=%date%_%time%
+
+
 
 
 
@@ -49,7 +58,19 @@ echo %time1%
 
 pause
 exit 
+-pix_fmt yuv420p 
+-vf "eq=contrast=1.25:brightness=0.05:saturation=1.25"
 
+
+-speed 2 -threads 4
+-af "volume=+0dB" 
+-pix_fmt yuv420p 
+-static-thresh 4441000 -tune-content screen -drop-threshold 50
+-vf "eq=contrast=1.1:brightness=0.0:saturation=1.1" 
+
+靜默模式
+-hide_banner -loglevel quiet
+-pix_fmt yuv444p 
 -hwaccel cuda -threads 1
 
 -pix_fmt yuv420p 

@@ -6,43 +6,23 @@ echo %date%_%time%
 set /p input=檔案:
 echo %input%
 
-
-set wh=1280:720
-set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
-
-set wh=1920
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale=1280:720,setsar=1/1" 
+set vf=
 echo %vf%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:19.0 -to 0:0:24.0
+set tt=-ss 0:9:2.0 -to 0:9:52.0
 set tt=
 echo %tt%
 
-set output=_h264_nvenc_%RANDOM%.mp4
+set output=_libx264.mp4
 
-ffmpeg %tt% -i %input% %vf% -c:v h264_nvenc  -qp 20  -y  %output%
-
-
+ffmpeg %tt% -i %input%   %vf%   -c:v libx264  -pix_fmt yuv420p -y  %output%
 
 
 pause
 exit
--qp 20 泛用的設定
-
--cq 20 
--qp 10 -pix_fmt yuv420p
--profile high -preset medium 
--preset slow
-預設就是 yuv420p
--pix_fmt yuv420p
--vf "eq=contrast=1.1:brightness=0.1:saturation=1.1"
--vf "colorbalance=rs=0.1:gs=0.1:bs=0.1"
-
--pix_fmt yuv444p
--pix_fmt yuv420p
--pix_fmt rgb0
--pix_fmt nv12
+-vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int"
 -qp 20
 
 -bsf:v h264_mp4toannexb
