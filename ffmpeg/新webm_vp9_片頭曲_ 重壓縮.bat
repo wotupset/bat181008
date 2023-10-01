@@ -54,15 +54,15 @@ set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:28.0 -to 0:2:17.0
-set tt=
+set tt=-ss 0:0:16.0 -to 0:2:16.0
+set tt0=
 echo %tt%
 
 
 set output=_output_vp9_oped%RANDOM%.webm
 
 set time0=%date%_%time%
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01% -y %output%
 set time1=%date%_%time%
 
 
@@ -76,7 +76,7 @@ echo %time1%
 
 pause
 exit 
-
+-hwaccel cuda -threads 1
 -speed 2
 
 

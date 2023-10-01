@@ -8,19 +8,7 @@ echo %time%
 
 set /p input=檔案:
 
-set wh=1440
-set wh=1024
-set wh=1280
 
-set wh=400
-set wh=480
-set wh=512
-set wh=640
-set wh=720
-set wh=800
-set wh0=960
-set wh0=1024
-set wh0=1280
 
 
 
@@ -43,6 +31,20 @@ set crf2=-b:v 2000K -minrate 1000k -maxrate 3000k
 set crf2=-b:v 0
 set crf2=-b:v 3000K
 set crf2=
+
+set wh=1440
+set wh=1024
+set wh=1280
+
+set wh=400
+set wh=480
+set wh=512
+set wh=640
+set wh=720
+set wh=800
+set wh0=960
+set wh0=1024
+set wh0=1280
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
 set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
@@ -70,11 +72,26 @@ set tt=-ss 0:0:1.5 -to 0:0:11.5
 set tt=
 echo %tt%
 
-set output=_output_vp9_快crf40_%RANDOM%.webm
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+set output=_vp9_快crf40_%nnn%.webm
+
+
 
 set time0=%date%_%time%
 
-ffmpeg %tt%  -i %input% -c:v libvpx-vp9 -c:a libopus -pix_fmt yuv420p %ppp01% -y %output%
+ffmpeg %tt%  -i %input% -c:v libvpx-vp9 -c:a libopus -threads 4 -pix_fmt yuv420p %ppp01% -y %output%
 
 set time1=%date%_%time%
 
