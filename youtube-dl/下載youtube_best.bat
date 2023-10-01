@@ -1,7 +1,7 @@
 echo off
 chcp 65001
 
-:top
+
 
 
 set /p poi=youtube網址:
@@ -11,16 +11,23 @@ set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
 
-yt-dlp --windows-filenames  -f best --limit-rate 2500K %nn01% %poi%
+yt-dlp --limit-rate 2500K  -f 1080p %poi%
 
 
-goto top
 
 
 
 pause
 exit
+-f best
+--windows-filenames 只留下winsdow接受的檔名字元
+--restrict-filenames 更嚴格的檔案名稱
 
+
+:top
+goto top
+
+-f best
 yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
 
 youtube-dl %qq01% -f bestvideo[ext=mp4][height=720][fps=60]+bestaudio[ext=m4a]   %poi%

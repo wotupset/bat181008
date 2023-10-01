@@ -7,11 +7,12 @@ echo %poi%
 
 
 
-youtube-dl -F %poi%
+yt-dlp -F %poi%
 
 goto top
 pause
 exit
+youtube-dl -F %poi%
 cmd
 
 youtube-dl -F https://www.youtube.com/watch?v=BtYnc-x0n0Y

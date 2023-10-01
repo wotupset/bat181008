@@ -10,13 +10,30 @@ set tt=
 echo %tt%
 
 
+set crf2=-b:v 1000K -minrate 1000k -maxrate 1000k 
+set crf2= 
 
-set output=_output_vp9_預設%RANDOM%.webm
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+set output=_vp9_預設%nnn%.webm
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -speed 2  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -pix_fmt yuv420p  %crf2%  -y %output%
 set time1=%date%_%time%
+
+
 
 
 
@@ -28,6 +45,9 @@ echo %time1%
 
 pause
 exit 
+-pix_fmt yuv420p 
+-pix_fmt yuv444p
+
 -crf 40 -s 640x360
 -speed 4
 -threads 2 

@@ -22,7 +22,7 @@ echo %input%
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:50.0 -to 0:1:0.0
+set tt=-ss 0:0:7.0 -to 0:0:50.0
 set tt=
 echo %tt%
 
@@ -34,26 +34,28 @@ set wh0=800:450
 set wh0=800:800
 set wh0=1280:720
 set wh0=1200:720
-set vf=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
+set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
 
 set wh=640
+set wh0=480
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=
 echo %vf%
 
 
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 1 %tt% -i %input% ^
--c:v h264_nvenc -qp 30 ^
+ffmpeg %tt% -i %input% ^
+-c:v h264_nvenc -qp 30 -pix_fmt yuv420p ^
 %vf% ^
 -y FFF.mp4
 
 
 
+
+
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -speed 4 -crf 40  ^
+-c:v libvpx-vp9 -c:a libopus -speed 4 -crf 40 -af "volume=+0dB" -static-thresh 4441000 -tune-content screen -drop-threshold 50 ^ ^
 -y %output%
 
 
@@ -70,7 +72,8 @@ echo %time1%
 
 pause
 exit
-
+ -pix_fmt yuv420p
+-hwaccel cuda -threads 1
 -af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect" ^
 
 -threads 2 -crf 35 -r 25

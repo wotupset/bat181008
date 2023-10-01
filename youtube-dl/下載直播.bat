@@ -18,7 +18,7 @@ set /p poi=youtube網址:
 echo %poi%
 
 
-start "" yt-dlp %poi%  --restrict-filenames  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
+start "" yt-dlp %poi% --cookies "cookies推特.txt"   -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 
 pause
 pause
@@ -27,7 +27,7 @@ goto top
 
 
 exit
-
+--restrict-filenames
 --restrict-filenames  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 
 

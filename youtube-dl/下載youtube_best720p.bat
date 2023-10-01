@@ -9,8 +9,9 @@ echo %poi%
 
 
 set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
+echo %nn01%
 
-yt-dlp %nn01% -r 3M -f best   %poi%
+yt-dlp  --limit-rate 2500K  -f bestvideo[height=720]+bestaudio %poi%
 
 
 goto top

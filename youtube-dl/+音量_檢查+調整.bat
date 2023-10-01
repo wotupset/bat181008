@@ -8,11 +8,11 @@ echo %date%_%time%
 
 
 
-
+set af0=-af "volume=-10dB"
+set af0=-af "volume=-20dB"
 set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
-set af=-af "volume=+10dB"
-set af=-af "volume=-20dB"
-ffmpeg -i %input% -c:v copy  %af% -y "調整音量.mkv"
+set af=-af "volume=-5dB"
+ffmpeg -i %input% -c:v copy  %af% -y "_調整音量.mkv"
 
 
 

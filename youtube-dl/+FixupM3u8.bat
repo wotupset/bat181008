@@ -4,7 +4,7 @@ chcp 65001
 set /p poi=輸入::
 echo "%poi%"
 
-ffmpeg -i "%poi%" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 30 file.mp4
+ffmpeg -i "%poi%" -bsf:a aac_adtstoasc -c:v copy  file.mp4
 
 pause
 exit

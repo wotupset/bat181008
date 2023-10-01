@@ -10,9 +10,9 @@ echo %poi%
 
 
 set qq01=-o yt-bestvideo-%%(title)s-%%(id)s.%%(ext)s
+echo %qq01%
 
-
-yt-dlp.exe %qq01%  -r 2500K -f bestvideo[ext=mp4]+bestaudio   %poi%
+yt-dlp.exe --limit-rate 2500K  -f bestvideo[height=1080]+bestaudio  %poi%
 echo off
 chcp 65001
 

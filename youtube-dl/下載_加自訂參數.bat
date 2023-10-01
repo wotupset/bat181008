@@ -13,7 +13,7 @@ yt-dlp -F %poi%
 set /p aa1=影片品質::
 echo %aa1%
 
-yt-dlp --limit-rate 3000K --windows-filenames -f %aa1%+251 %poi%
+yt-dlp --limit-rate 3000K --windows-filenames --cookies "cookies推特.txt"  -f %aa1% %poi%
 
 
 

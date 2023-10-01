@@ -2,24 +2,34 @@ echo off
 chcp 65001
 
 
-:top
+echo "需要手動輸入 再解除pause"
+pause
 
 
-set /p poi=youtube網址:
+set poi=https://www.youtube.com/watch?v=9WTAvRVgtyg
 echo %poi%
 
-set tt="*0:29:30.0-0:30:30.0"
+
+set tt="*0:9:0.0-0:10:15.0"
 echo %tt%
 
-start "" yt-dlp --limit-rate 2500K  --download-sections %tt%  %poi%
+yt-dlp --cookies "cookies推特.txt" --limit-rate 3000K  --download-sections %tt%  %poi%
 
-
-goto top
 
 
 
 pause
 exit
+--limit-rate 2500K
+-f 299+140
+
+start "" yt-dlp --limit-rate 2500K  --download-sections %tt%  %poi%
+
+set /p poi=youtube網址:
+:top
+goto top
+
+
 有時無法下載要用best
 start "" yt-dlp --limit-rate 2500K  -f best --download-sections "*0:0:0.0-0:3:10.0"  %poi%
 

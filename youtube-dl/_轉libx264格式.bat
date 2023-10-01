@@ -6,22 +6,18 @@ echo %date%_%time%
 set /p input=檔案:
 echo %input%
 
-set wh=1280:720
-set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
-
-set wh=1280
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale=1280:720,setsar=1/1" 
 set vf=
 echo %vf%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:39.0 -to 0:1:13.0
-set tt0=
+set tt=-ss 0:9:2.0 -to 0:9:52.0
+set tt=
 echo %tt%
 
-set output=_h264_nvenc.mp4
+set output=_libx264.mp4
 
-ffmpeg %tt% -i %input%  %qqq03% %vf%   -c:v h264_nvenc -qp 20  -y  %output%
+ffmpeg %tt% -i %input%   %vf%   -c:v libx264 -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -y  %output%
 
 
 pause
