@@ -10,7 +10,6 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 set output=_%nnn%_.webm
@@ -22,47 +21,58 @@ echo %input%
 
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:2:30.0 -to 0:3:0.0
+set tt=-ss 0:1:10.0 -to 0:1:40.0
+set tt=-ss 0:13:15.0 -to 0:13:45.0
 set tt=
 echo %tt%
 
-set wh0=450:800
-set wh0=400:400
-set wh0=480:270
-set wh0=640:360
-set wh0=800:450
-set wh0=1280:720
-echo %wh%
+set wh=450:800
+set wh=400:400
+set wh=480:270
+set wh=640:360
+set wh=800:450
+set wh=1280:720
 set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
+
 
 
 set wh=512
 set wh=400
 set wh=480
 set wh=640
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set wh0=800
+set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=480:270,setsar=1:1"
 set vf0=
 echo %vf%
 
-set time0=%date%_%time%
+set af=-af "volume=+0dB" 
+set af=
+echo %af%
+
+
+set qqq05=-static-thresh 214441000 -tune-content screen 
+set cpu01=-row-mt 1 -cpu-used 4
+set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
+
+
+set ppp01=%vf% %af% %qqq05% %cpu01% %cpu02% 
+echo %ppp01%
+pause
+
+
 
 
 ffmpeg  %tt% -i %input% ^
--c:v h264_nvenc -qp 20 ^
+-c:v h264_nvenc -cq 30  ^
 %vf% ^
 -y FFF.mp4
 
 
-
+set time0=%date%_%time%
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -speed 2 -threads 4 -crf 35  -af "volume=+0dB" -static-thresh 4441000 -tune-content screen -drop-threshold 50 ^
+-c:v libvpx-vp9 -c:a libopus -crf 40 -b:v 0 %ppp01%  ^
 -y %output%
-
-
-
-
-
-
 set time1=%date%_%time%
 
 
@@ -72,6 +82,19 @@ echo %output%
 
 pause
 exit
+-crf 40 -b:v 0
+-pix_fmt yuv420p
+-cpu-used 4 -speed 4
+-speed 2 -threads 4
+
+-crf 35
+:flags=bilinear
+-hwaccel cuda
+
+-cq 30
+-qp 30
+
+-hwaccel cuda
 -b:v 50k -minrate 10k -maxrate 100k
 
 

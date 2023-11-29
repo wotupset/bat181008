@@ -3,16 +3,30 @@ chcp 65001
 
 set /p input=檔案:
 
-set tt=-ss 0:0:11.0 -to 0:3:0.0
-set tt=
+set tt=-ss 0:0:0.0 -to 0:0:30.0
+set tt=-ss 0:4:9.75 -to 0:4:11.4
+set tt0=
 echo %tt%
 
 
-ffmpeg %tt% -i %input%  -sn -dn  -crf 0 -b:v 0  -y "_lossless.mkv" 
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless.mkv" 
+
+
 
 
 pause
 exit
+
+
+accurate_seek必须放在-i参数之前 
+-accurate_seek 這是預設行為
+-noaccurate_seek 
+
+如果编码格式采用的copy 最好加上-avoid_negative_ts 1参数
+-avoid_negative_ts 1 
+
+ffmpeg %tt% -i %input%  -sn -dn  -crf 0 -b:v 0  -y "_lossless.mkv" 
+
 ffmpeg %tt% -i %input% -c:v ffv1 -y "ffv1_lossless.mkv"  
 ffmpeg %tt% -i %input% -c:v copy -c:a copy -sn -dn    -y "_lossless.mkv" 
 

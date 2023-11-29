@@ -6,27 +6,31 @@ echo %date%_%time%
 set /p input=檔案:
 echo %input%
 
-set wh=1280:720
+set wh=450:800
 set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
 
+set wh=640
+set wh=800
 set wh=1280
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=
+set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=
 echo %vf%
 
-set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:39.0 -to 0:1:13.0
+
+set tt=-ss 0:7:6.0 -to 0:7:41.0
+set tt=-ss 0:0:1.48 -to 0:4:11.4
+set tt=-ss 0:0:16.0 -to 0:0:29.0
 set tt0=
 echo %tt%
 
 set output=_h264_nvenc.mp4
 
-ffmpeg %tt% -i %input%  %qqq03% %vf%   -c:v h264_nvenc -qp 20  -y  %output%
+ffmpeg %tt% -i %input%  %vf%   -c:v h264_nvenc -cq 10  -y  %output%
 
 
 pause
 exit
-
+-cq 30
 -qp 20
 
 -bsf:v h264_mp4toannexb
