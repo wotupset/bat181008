@@ -6,17 +6,17 @@ set /p input=檔案:
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:4:37.5 -to 0:5:2.5
-set tt=
+set tt=-ss 0:0:6.0 -to 0:0:9.0
+set tt0=
 echo %tt%
 
 
 
 
 set aa=-vf "crop=360:360:480:305" 
-set aa=-vf "crop=1000:563:427:168" 
+set aa=-vf "crop=600:800:856:72" 
 
-ffmpeg %tt% -i %input%  %aa% -c:v h264_nvenc -qp 15 -y "_剪裁_自訂.mp4"
+ffmpeg %tt% -i %input%  %aa% -c:v h264_nvenc -cq 15 -y "_剪裁_自訂.mp4"
 
 
 pause
@@ -24,11 +24,13 @@ exit
 set aa=-vf "crop=800:800:560:130" 
 
 -cq 18
-- 18
+-qp 15
 
 set aa=-vf "crop=512:910:54:125" 
-馬娘實況 
+馬娘實況 1920x1080
 set aa=-vf "crop=512:910:55:125" 
+馬娘實況 1600x900
+set aa=-vf "crop=428:760:44:102" 
 
 橫向長寬
 set aa0=-vf "crop=in_h:in_h:in_w/2-in_h/2:0" 

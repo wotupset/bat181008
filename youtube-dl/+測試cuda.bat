@@ -22,25 +22,16 @@ echo %input%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
 set tt=-ss 0:1:10.0 -to 0:1:40.0
-set tt=-ss 0:13:15.0 -to 0:13:45.0
-set tt=
+set tt=-ss 0:21:35.0 -to 0:22:10.0
+set tt0=
 echo %tt%
-
-set wh=450:800
-set wh=400:400
-set wh=480:270
-set wh=640:360
-set wh=800:450
-set wh=1280:720
-set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
-
-
 
 set wh=512
 set wh=400
 set wh=480
 set wh=640
-set wh0=800
+set wh=800
+set wh0=1280
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=480:270,setsar=1:1"
 set vf0=
@@ -51,27 +42,26 @@ set af=
 echo %af%
 
 
-set qqq05=-static-thresh 214441000 -tune-content screen 
+set qqq05= -tune-content screen 
 set cpu01=-row-mt 1 -cpu-used 4
-set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
+set cpu02=-rc_lookahead 1 -lag-in-frames 1 
 
 
 set ppp01=%vf% %af% %qqq05% %cpu01% %cpu02% 
 echo %ppp01%
-pause
 
 
 
 
 ffmpeg  %tt% -i %input% ^
--c:v h264_nvenc -cq 30  ^
+-c:v h264_nvenc -cq 30 ^
 %vf% ^
 -y FFF.mp4
 
 
 set time0=%date%_%time%
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -crf 40 -b:v 0 %ppp01%  ^
+-c:v libvpx-vp9 -c:a libopus -crf 40 -static-thresh 214441000  %ppp01%  ^
 -y %output%
 set time1=%date%_%time%
 
@@ -82,6 +72,12 @@ echo %output%
 
 pause
 exit
+-c:v libx264
+-c:v h264_nvenc
+-c:v mpeg2video
+-static-thresh 214441000
+
+
 -crf 40 -b:v 0
 -pix_fmt yuv420p
 -cpu-used 4 -speed 4

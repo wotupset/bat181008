@@ -6,20 +6,26 @@ echo "需要手動輸入 再解除pause"
 pause
 
 
-set poi=https://www.youtube.com/watch?v=9WTAvRVgtyg
+set poi=^
+https://www.youtube.com/watch?v=eAhlOJOquo0
+
+
+
 echo %poi%
 
 
-set tt="*0:9:0.0-0:10:15.0"
+set tt="*0:38:0.0-0:41:0.0"
+set tt="*0:0:0.0-0:2:0.0"
 echo %tt%
 
-yt-dlp --cookies "cookies推特.txt" --limit-rate 3000K  --download-sections %tt%  %poi%
+yt-dlp --cookies "cookies推特.txt"  --limit-rate 3000K  --download-sections %tt%  %poi%
 
 
 
 
 pause
 exit
+-f best
 --limit-rate 2500K
 -f 299+140
 

@@ -12,17 +12,18 @@ echo %vf%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
 set tt=-ss 0:9:2.0 -to 0:9:52.0
-set tt=
+set tt=-ss 0:20:5.0 -to 0:20:18.0
+set tt0=
 echo %tt%
 
 set output=_libx264.mp4
 
-ffmpeg %tt% -i %input%   %vf%   -c:v libx264 -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int" -y  %output%
+ffmpeg %tt% -i %input%   %vf%   -c:v libx264   -map 0:a:0 -map 0:v:0 -sn -dn  -crf 10  -pix_fmt yuv420p  -y  %output%
 
 
 pause
 exit
-
+-vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int"
 -qp 20
 
 -bsf:v h264_mp4toannexb

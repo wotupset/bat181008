@@ -12,7 +12,7 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
-set output=_vp9_快crf40_%nnn%.webm
+set output=_vp9_快cpu4_%nnn%.webm
 
 set /p input=檔案:
 
@@ -23,32 +23,21 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35 -r 25
 set crf=-crf 35
 set crf=
 
 
-set crf2=-b:v 1500K  -minrate 1500k -maxrate 1500k  
-set crf2=-cpu-used 4 -b:v 1500K
-set crf2=-cpu-used 4
-set crf2=-b:v 1500K
-set crf2=-b:v 500K -minrate 500k -maxrate 500k 
-set crf2=-b:v 800K -minrate 400k -maxrate 800k 
-set crf2=-b:v 200K -minrate 50k -maxrate 200k 
-set crf2=-b:v 900K -minrate 900k -maxrate 900k 
 set crf2=-b:v 1500K -minrate 10k -maxrate 1500k 
 set crf2=-b:v 500K -minrate 50k -maxrate 500k 
 set crf2=-b:v 300K -minrate 300k -maxrate 300k 
 set crf2=-b:v 500K -minrate 50k -maxrate 500k 
 set crf2=-b:v 2000K -minrate 10k -maxrate 2000k 
 set crf2= -b:v 1000K -minrate 10k -maxrate 1000k 
+set crf2=-b:v 2500K -minrate 10k -maxrate 3100k 
 set crf2=-b:v 1500K -minrate 10k -maxrate 1500k 
+set crf2=-b:v 2000K -minrate 2000k -maxrate 2000k 
 set crf2=
 
-
-set wh=1440
-set wh=1024
-set wh=1280
 
 set wh=400
 set wh=480
@@ -56,32 +45,31 @@ set wh=512
 set wh=640
 set wh=720
 set wh=800
-set wh=778
-set wh=960
-set wh=1024
-set wh=1280
-
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
-set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq040=-vf "scale=600:800,setsar=1:1"
-set qqq05= -static-thresh 214441000 -tune-content screen 
+set wh0=960
+set wh0=1024
+set wh0=1280
+set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=600:800,setsar=1:1"
+set vf0=
 
 
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq05=-tune-content screen   -static-thresh 214441000 
 set cpu01=-row-mt 1 -cpu-used 4 
-set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
 
 
 
-set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01% %cpu02% 
+
+set ppp01=%crf% %crf2% %vf% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
 
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:6:27.3 -to 0:7:55.0
-set tt=-ss 0:0:16.0 -to 0:0:29.0
-set tt0=
+set tt=-ss 0:0:24.0 -to 0:0:34.0
+set tt=-ss 0:21:35.0 -to 0:22:10.0
+set tt=
 echo %tt%
 
 
@@ -92,7 +80,7 @@ echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0  -static-thresh 214441000  %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -100,6 +88,8 @@ echo %time1%
 
 pause
 exit
+ -static-thresh 214441000 
+ 
 看不出效果
 -noise-sensitivity 4
 
@@ -109,7 +99,7 @@ exit
 
 set qqq06=-noise-sensitivity 1 -drop-threshold 1 
 set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
-set cpu02=-aq-mode 1   -enable-tpl 1 -lag-in-frames 1 
+set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
 set cpu03=-corpus-complexity 1
 set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %qqq06% %qqq07% %cpu01% %cpu02% %cpu03%
 

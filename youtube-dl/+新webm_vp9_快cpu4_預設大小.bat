@@ -14,51 +14,45 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-set output=_vp9_預設環境自訂長寬%nnn%.webm
+set output=_vp9_預設大小%nnn%.webm
 
 
 set /p input=檔案:
 
 
-
-
-set crf=-crf 40
-set crf=-crf 35
-set crf=-crf 30
-set crf=
-echo %crf%
-
-set wh=400
-set wh=480
-set wh=512
-set wh=640
-set wh=720
-set wh=800
-set wh0=960
-set wh0=1024
-set wh0=1280
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=450:800,setsar=1:1"
-set vf0=
-echo %vf%
-
-
-set qqq05=-tune-content screen  -pix_fmt yuv420p
-set cpu01=-row-mt 1 -cpu-used 1 
-set ppp01=%crf% %qqq05% %cpu01% 
-set ppp01=
-echo %ppp01%
-
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:16.0 -to 0:0:29.0
-set tt=-ss 0:5:7.1 -to 0:5:15.1
-set tt=-ss 0:21:35.0 -to 0:22:10.0
-set tt0=
+set tt=-ss 0:0:25.0 -to 0:0:35.0
+set tt=
 echo %tt%
 
+
+
+set crf=-crf 35 -b:v 1500K -minrate 10k -maxrate 1500k  
+set crf=-b:v 1000K -minrate 1000k -maxrate 1000k 
+set crf=-crf 0 -b:v 5000K -minrate 5000k -maxrate 5000k 
+set crf=-crf 0 -b:v 3000K -minrate 3000k -maxrate 3000k 
+set crf=-crf 0 -b:v 1000K -minrate 1000k -maxrate 1000k 
+set crf=-b:v 3000K -minrate 3000k -maxrate 3000k 
+set crf=-b:v 300K -minrate 300k -maxrate 300k 
+set crf=-b:v 500K -minrate 500k -maxrate 500k 
+set crf=-crf 40 
+set crf= 
+echo %crf%
+
+
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p  -sn -dn 
+set qqq05=-tune-content screen 
+set cpu01=-row-mt 1 -cpu-used 4   
+
+
+
+set ppp01=%crf% %qqq03% %qqq05% %cpu01%
+echo %ppp01%
+
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0 %vf% %crf%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9   %ppp01%  -y %output%
 set time1=%date%_%time%
+
 
 
 
@@ -71,33 +65,9 @@ echo %time1%
 
 pause
 exit 
-
- -static-thresh 214441000
-
-
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
-set qqq05= -static-thresh 214441000 -tune-content screen 
-
-set cpu01=-row-mt 1 -cpu-used 4   
-set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
-
-
-set ppp01=%crf% %qqq03% %qqq05% %cpu01% %cpu02% 
-
-
-set crf=-crf 35 -b:v 1500K -minrate 10k -maxrate 1500k  
-set crf=-b:v 1000K -minrate 1000k -maxrate 1000k 
-set crf=-crf 0 -b:v 5000K -minrate 5000k -maxrate 5000k 
-set crf=-crf 0 -b:v 3000K -minrate 3000k -maxrate 3000k 
-set crf=-crf 0 -b:v 1000K -minrate 1000k -maxrate 1000k 
-set crf=-b:v 3000K -minrate 3000k -maxrate 3000k 
-set crf=-b:v 300K -minrate 300k -maxrate 300k 
-set crf=-b:v 500K -minrate 500k -maxrate 500k 
-set crf=-crf 40 
-
-
+-static-thresh 214441000 
 -crf 40 -b:v 0
-
+set cpu02=-rc_lookahead 1 -lag-in-frames 1 -enable-tpl 0 -aq-mode 0 
 
 set crf20=-b:v 150K -minrate 10k -maxrate 150k -static-thresh 214441000 -tune-content screen
 

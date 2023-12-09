@@ -1,9 +1,19 @@
 
 
-yt-dlp.exe  https://streamable.com/o/hyphyp
+set /p input=檔案:
+echo %input%
+
+
+ffmpeg -ss 0:0:0.0 -to 0:0:10.0 -hwaccel cuda -threads 1 -i %input% -row-mt 1 -cpu-used 4  -y 123.webm
+
+
 
 cmd
 
+ffmpeg -devices  
+
+
+yt-dlp.exe  https://streamable.com/o/hyphyp
 youtube-dl -f worst URL
 
 best: Select the best quality format represented by a single file with video and audio.

@@ -14,50 +14,27 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-set output=_vp9_預設環境自訂長寬%nnn%.webm
+set output=_vp9_預設環境%nnn%.webm
 
 
 set /p input=檔案:
 
 
+set tt=-ss 0:0:1.5 -t 0:0:17.5
+set tt=-ss 0:0:16.0 -to 0:0:29.0
+set tt=-ss 0:4:38.8 -to 0:5:1.2
+set tt=-ss 0:0:0.0 -to 0:0:1.0
+set tt=
+echo %tt%
 
-
-set crf=-crf 40
-set crf=-crf 35
-set crf=-crf 30
-set crf=
+set crf= 
 echo %crf%
 
-set wh=400
-set wh=480
-set wh=512
-set wh=640
-set wh=720
-set wh=800
-set wh0=960
-set wh0=1024
-set wh0=1280
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=450:800,setsar=1:1"
-set vf0=
-echo %vf%
-
-
-set qqq05=-tune-content screen  -pix_fmt yuv420p
-set cpu01=-row-mt 1 -cpu-used 1 
-set ppp01=%crf% %qqq05% %cpu01% 
 set ppp01=
 echo %ppp01%
 
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:16.0 -to 0:0:29.0
-set tt=-ss 0:5:7.1 -to 0:5:15.1
-set tt=-ss 0:21:35.0 -to 0:22:10.0
-set tt0=
-echo %tt%
-
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0 %vf% %crf%  -y %output%
+ffmpeg  %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0  %ppp01%  -y %output%
 set time1=%date%_%time%
 
 
@@ -71,8 +48,6 @@ echo %time1%
 
 pause
 exit 
-
- -static-thresh 214441000
 
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
