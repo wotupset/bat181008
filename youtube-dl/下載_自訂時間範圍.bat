@@ -2,21 +2,18 @@ echo off
 chcp 65001
 
 
-echo "需要手動輸入 再解除pause"
-pause
 
-
-set poi=^
-https://www.youtube.com/watch?v=eAhlOJOquo0
-
-
-
+set /p poi=youtube網址::
 echo %poi%
 
 
+
 set tt="*0:38:0.0-0:41:0.0"
-set tt="*0:0:0.0-0:2:0.0"
+set tt="*0:3:0.0-0:5:0.0"
 echo %tt%
+
+pause
+
 
 yt-dlp --cookies "cookies推特.txt"  --limit-rate 3000K  --download-sections %tt%  %poi%
 
@@ -25,6 +22,17 @@ yt-dlp --cookies "cookies推特.txt"  --limit-rate 3000K  --download-sections %t
 
 pause
 exit
+
+set poi=^
+https://www.youtube.com/watch?v=vJds_pki9vU
+echo %poi%
+
+echo "需要手動輸入 再解除pause"
+pause
+
+
+
+
 -f best
 --limit-rate 2500K
 -f 299+140

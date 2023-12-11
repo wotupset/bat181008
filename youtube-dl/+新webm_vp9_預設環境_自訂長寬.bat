@@ -52,12 +52,12 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:16.0 -to 0:0:29.0
 set tt=-ss 0:5:7.1 -to 0:5:15.1
-set tt=-ss 0:21:35.0 -to 0:22:10.0
-set tt0=
+set tt=-ss 0:1:20.0 -to 0:1:30.0
+set tt=
 echo %tt%
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0 %vf% %crf%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0 %vf%  -y %output%
 set time1=%date%_%time%
 
 

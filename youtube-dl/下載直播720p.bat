@@ -14,15 +14,17 @@ set vtime=%time:~0,2%
 if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
 set vtime=%vtime%%time:~3,2%%time:~6,2%
 
-start "" yt-dlp -f best[height=720]   %poi%
+yt-dlp --cookies "cookies推特.txt"  -f 95   %poi%
 
 
-pause
 pause
 goto top
 
 
 exit
+start "" 
+-f best[height=1080]
+-f best[height=720] 
 
 start "" yt-dlp --hls-use-mpegts --no-part %poi%
 

@@ -23,8 +23,8 @@ set crf=-crf 32 -b:v 0
 set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
-set crf=-crf 35
-set crf=
+set crf0=-crf 35
+set crf0=
 
 
 set crf2=-b:v 1500K -minrate 10k -maxrate 1500k 
@@ -52,15 +52,18 @@ set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=600:800,setsar=1:1"
 set vf0=
 
+set af=-af "volume=-5dB" 
+set af0=
+echo %af%
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p -sn -dn
-set qqq05=-tune-content screen   -static-thresh 214441000 
+set qqq05=-tune-content screen  -static-thresh 214441000
 set cpu01=-row-mt 1 -cpu-used 4 
 
 
 
 
-set ppp01=%crf% %crf2% %vf% %qqq03% %qqq05% %cpu01% 
+set ppp01=%crf% %crf2% %vf% %af% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
 
@@ -69,7 +72,8 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:24.0 -to 0:0:34.0
 set tt=-ss 0:21:35.0 -to 0:22:10.0
-set tt=
+set tt=-ss 0:0:11.0 -to 0:0:23.0
+set tt0=
 echo %tt%
 
 
@@ -80,7 +84,7 @@ echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0  -static-thresh 214441000  %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0    %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
