@@ -21,8 +21,8 @@ echo %input%
 
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:1:10.0 -to 0:1:40.0
-set tt=-ss 0:21:35.0 -to 0:22:10.0
+set tt=-ss 0:0:21.0 -to 0:0:35.0
+set tt=-ss 0:8:5.0 -to 0:9:5.0
 set tt0=
 echo %tt%
 
@@ -33,35 +33,38 @@ set wh=640
 set wh=800
 set wh0=1280
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=480:270,setsar=1:1"
 set vf0=
 echo %vf%
 
-set af=-af "volume=+0dB" 
+set af=-af "volume=+5dB" 
 set af=
 echo %af%
 
-
-set qqq05= -tune-content screen 
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq05= -tune-content screen  -static-thresh 214441000
 set cpu01=-row-mt 1 -cpu-used 4
-set cpu02=-rc_lookahead 1 -lag-in-frames 1 
 
+set crf=-crf 40
+set crf0=-crf 35
+set crf0=
 
-set ppp01=%vf% %af% %qqq05% %cpu01% %cpu02% 
+set crf2p=500k
+set crf2=-b:v %crf2p% -minrate 10k -maxrate %crf2p% 
+set crf20=
+
+set ppp01=%vf% %af% %crf% %crf2% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
-
-
-
-ffmpeg  %tt% -i %input% ^
--c:v h264_nvenc -cq 30 ^
+ffmpeg -hwaccel cuda -threads 4 %tt% -i %input% ^
+-c:v h264_nvenc  -pix_fmt yuv420p ^
 %vf% ^
 -y FFF.mp4
 
-
 set time0=%date%_%time%
-ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -crf 40 -static-thresh 214441000  %ppp01%  ^
+ffmpeg -hwaccel cuda -threads 4 -i FFF.mp4 ^
+-c:v libvpx-vp9 -c:a libopus  -map 0:a -map 0:v %ppp01%   ^
 -y %output%
 set time1=%date%_%time%
 
@@ -72,6 +75,8 @@ echo %output%
 
 pause
 exit
+-cq 10
+set cpu02=-rc_lookahead 1 -lag-in-frames 1 
 -c:v libx264
 -c:v h264_nvenc
 -c:v mpeg2video

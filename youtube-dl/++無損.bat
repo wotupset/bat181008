@@ -4,7 +4,7 @@ chcp 65001
 set /p input=檔案:
 
 set tt=-ss 0:0:0.0 -to 0:0:30.0
-set tt=-ss 0:4:9.75 -to 0:4:11.4
+set tt=-ss 0:1:50.0 -to 0:2:30.0
 set tt0=
 echo %tt%
 

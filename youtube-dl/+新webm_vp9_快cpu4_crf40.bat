@@ -21,23 +21,20 @@ set crf=-crf 25
 set crf=-crf 30
 set crf=-crf 32 -b:v 0 
 set crf=-crf 50
-set crf=-crf 45
+set crf=-crf 45 
 set crf=-crf 40
-set crf0=-crf 35
-set crf0=
+set crf=-crf 35 
+set crf=
+echo %crf%
 
 
-set crf2=-b:v 1500K -minrate 10k -maxrate 1500k 
-set crf2=-b:v 500K -minrate 50k -maxrate 500k 
-set crf2=-b:v 300K -minrate 300k -maxrate 300k 
-set crf2=-b:v 500K -minrate 50k -maxrate 500k 
-set crf2=-b:v 2000K -minrate 10k -maxrate 2000k 
-set crf2= -b:v 1000K -minrate 10k -maxrate 1000k 
-set crf2=-b:v 2500K -minrate 10k -maxrate 3100k 
-set crf2=-b:v 1500K -minrate 10k -maxrate 1500k 
-set crf2=-b:v 2000K -minrate 2000k -maxrate 2000k 
-set crf2=
+set crf20=-b:v 500K -bufsize 100k 
+set crf2p=500k
+set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% 
+set crf20=
 
+
+echo %crf2%
 
 set wh=400
 set wh=480
@@ -48,32 +45,28 @@ set wh=800
 set wh0=960
 set wh0=1024
 set wh0=1280
+set wh0=1600
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=600:800,setsar=1:1"
+set vf0=-vf "scale=450:800,setsar=1:1"
 set vf0=
+echo %vf%
 
-set af=-af "volume=-5dB" 
-set af0=
+set af=-af "volume=-10dB" 
+set af=-af "volume=+5dB" 
+set af=
 echo %af%
 
-set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq03=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p -sn -dn
 set qqq05=-tune-content screen  -static-thresh 214441000
 set cpu01=-row-mt 1 -cpu-used 4 
-
-
-
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
 
-
-
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:24.0 -to 0:0:34.0
-set tt=-ss 0:21:35.0 -to 0:22:10.0
-set tt=-ss 0:0:11.0 -to 0:0:23.0
-set tt0=
+set tt=-ss 0:4:30.0 -to 0:5:20.0
+set tt=-ss 0:0:0.0 -to 0:1:0.0
+set tt=
 echo %tt%
 
 
@@ -84,7 +77,7 @@ echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0    %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -92,6 +85,13 @@ echo %time1%
 
 pause
 exit
+-map 0:a -map 0:v 
+
+set crf2=-b:v 100K -minrate 100k -maxrate 100k -bufsize 100k 
+-map_chapters -1 -map_metadata -1 
+
+效果較差
+set cpu02=-rc_lookahead 5 -lag-in-frames 5 -enable-tpl 0 -aq-mode 0 
  -static-thresh 214441000 
  
 看不出效果

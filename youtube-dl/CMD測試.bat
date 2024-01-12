@@ -1,14 +1,30 @@
+echo off
+chcp 65001
 
 
 set /p input=檔案:
 echo %input%
 
+set tt=-ss 0:0:10.0 -to 0:0:10.0
+set tt=
 
-ffmpeg -ss 0:0:0.0 -to 0:0:10.0 -hwaccel cuda -threads 1 -i %input% -row-mt 1 -cpu-used 4  -y 123.webm
-
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda %tt% -i %input% ^
+-vf "scale_cuda=1280:1280:force_original_aspect_ratio=decrease,hwdownload,format=nv12" ^
+-c:v h264_nvenc  -pix_fmt yuv420p -y _TEST.mp4
 
 
 cmd
+exit
+
+-f null -
+
+指定cuda資料會放在硬體
+-hwaccel_output_format cuda 
+沒指定的話 需要在vf前面加上hwupload_cuda
+YUV420P 的片源通常硬體加速解碼會輸出 NV12 格式
+
+-c:v h264_nvenc  -pix_fmt yuv420p -y _TEST.mp4
+
 
 ffmpeg -devices  
 

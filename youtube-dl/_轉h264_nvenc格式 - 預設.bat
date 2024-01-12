@@ -11,10 +11,10 @@ echo %input%
 set wh=640
 set wh=800
 set wh=1280
-set wh0=1920
+set wh=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=450:800,setsar=1/1" 
-set vf0=
+set vf=-vf "scale=450:800,setsar=1/1" 
+set vf=
 echo %vf%
 
 set af=-af "volume=-5dB" 
@@ -27,18 +27,16 @@ echo %ppp01%
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt=-ss 0:0:0.0 -to 0:1:20.0
-set tt=
+set tt0=
 echo %tt%
 
-set output=_h264_nvenc.mp4
+set output=_h264_nvenc預設.mp4
 
-ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc  -pix_fmt yuv420p -map 0:a -map 0:v -y  %output%
+ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -pix_fmt yuv420p -map 0:a -map 0:v  -y  %output%
 
 
 pause
 exit
--cq 20
--cq 30
 :flags=bilinear
 
 

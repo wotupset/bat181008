@@ -23,7 +23,7 @@ set /p input=檔案:
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:16.0 -to 0:0:29.0
 set tt=-ss 0:4:38.8 -to 0:5:1.2
-set tt=-ss 0:5:47.5 -to 0:6:42.0
+set tt=-ss 0:0:8.5 -to 0:0:20.5
 set tt=
 echo %tt%
 
@@ -34,7 +34,7 @@ set ppp01=
 echo %ppp01%
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0  %ppp01%  -y %output%
+ffmpeg  %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus    %ppp01%  -y %output%
 set time1=%date%_%time%
 
 
@@ -49,6 +49,7 @@ echo %time1%
 pause
 exit 
 
+-map 0:v -map 0:a?
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
 set qqq05= -static-thresh 214441000 -tune-content screen 

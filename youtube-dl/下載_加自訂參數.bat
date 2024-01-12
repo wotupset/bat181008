@@ -8,7 +8,7 @@ chcp 65001
 set /p poi=youtube網址::
 echo %poi%
 
-yt-dlp -F %poi%
+yt-dlp --cookies "cookies推特.txt" -F %poi% 
 
 set /p aa1=影片品質::
 echo %aa1%
@@ -23,6 +23,9 @@ goto top
 
 pause
 exit
+
+
+
 --windows-filenames 只留下winsdow接受的檔名字元
 --restrict-filenames 更嚴格的檔案名稱
 

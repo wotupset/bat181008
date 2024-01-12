@@ -20,11 +20,8 @@ set output=_vp9_預設環境自訂長寬%nnn%.webm
 set /p input=檔案:
 
 
-
-
 set crf=-crf 40
 set crf=-crf 35
-set crf=-crf 30
 set crf=
 echo %crf%
 
@@ -32,32 +29,33 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh=720
-set wh=800
+set wh0=720
+set wh0=800
 set wh0=960
 set wh0=1024
 set wh0=1280
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=450:800,setsar=1:1"
+set vf0=-vf "scale=870:640,setsar=1:1"
 set vf0=
-echo %vf%
+
+set af=-af "volume=-10dB" 
+set af=
 
 
 set qqq05=-tune-content screen  -pix_fmt yuv420p
-set cpu01=-row-mt 1 -cpu-used 1 
-set ppp01=%crf% %qqq05% %cpu01% 
-set ppp01=
+set cpu01=-row-mt 1 -cpu-used 2
+
+set ppp01=%vf% %af% %crf% %qqq05% %cpu01% 
+set ppp010=
 echo %ppp01%
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:16.0 -to 0:0:29.0
-set tt=-ss 0:5:7.1 -to 0:5:15.1
-set tt=-ss 0:1:20.0 -to 0:1:30.0
+set tt=-ss 0:0:40.0 -to 0:0:54.5
 set tt=
 echo %tt%
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:a:0 -map 0:v:0 %vf%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01%  -y %output%
 set time1=%date%_%time%
 
 
@@ -71,6 +69,8 @@ echo %time1%
 
 pause
 exit 
+有BUG? 轉巴哈的影片會當機
+-map 0:v -map 0:a
 
  -static-thresh 214441000
 
