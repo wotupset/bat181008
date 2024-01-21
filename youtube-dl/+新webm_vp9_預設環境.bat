@@ -23,8 +23,8 @@ set /p input=檔案:
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:16.0 -to 0:0:29.0
 set tt=-ss 0:4:38.8 -to 0:5:1.2
-set tt=-ss 0:0:8.5 -to 0:0:20.5
-set tt=
+set tt=-ss 0:0:0.0 -to 0:0:15.0
+set tt0=
 echo %tt%
 
 set crf= 

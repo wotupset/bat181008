@@ -24,11 +24,12 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf=
+set crf=-crf 30
+set crf0=
 echo %crf%
 
-set crf2p=500k
-set crf2=-b:v %crf2p% -minrate 10k -maxrate %crf2p% 
+set crf2p=1000k
+set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
 set crf20=
 echo %crf2%
 
@@ -51,7 +52,7 @@ echo %ppp01%
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:20:35.0 -to 0:21:35.0
-set tt0=
+set tt=
 echo %tt%
 
 

@@ -22,7 +22,7 @@ echo %input%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
 set tt=-ss 0:0:21.0 -to 0:0:35.0
-set tt=-ss 0:8:5.0 -to 0:9:5.0
+set tt=-ss 0:2:10.0 -to 0:1:0.0
 set tt0=
 echo %tt%
 
@@ -30,7 +30,7 @@ set wh=512
 set wh=400
 set wh=480
 set wh=640
-set wh=800
+set wh0=800
 set wh0=1280
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
@@ -38,6 +38,7 @@ set vf0=-vf "scale=480:270,setsar=1:1"
 set vf0=
 echo %vf%
 
+set af=-af "volume=-10dB" 
 set af=-af "volume=+5dB" 
 set af=
 echo %af%
@@ -52,15 +53,20 @@ set crf0=
 
 set crf2p=500k
 set crf2=-b:v %crf2p% -minrate 10k -maxrate %crf2p% 
-set crf20=
+set crf2=
 
 set ppp01=%vf% %af% %crf% %crf2% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
-ffmpeg -hwaccel cuda -threads 4 %tt% -i %input% ^
+echo 第1階段mp4
+
+ffmpeg  %tt% -i %input% ^
 -c:v h264_nvenc  -pix_fmt yuv420p ^
 %vf% ^
 -y FFF.mp4
+
+
+echo 第二階段webm
 
 set time0=%date%_%time%
 ffmpeg -hwaccel cuda -threads 4 -i FFF.mp4 ^
@@ -75,6 +81,10 @@ echo %output%
 
 pause
 exit
+
+-hwaccel cuda -threads 2
+不支援4:4:4解碼
+
 -cq 10
 set cpu02=-rc_lookahead 1 -lag-in-frames 1 
 -c:v libx264

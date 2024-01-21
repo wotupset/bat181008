@@ -12,7 +12,7 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
-set output=_vp9_快cpu4_%nnn%.webm
+set output=_vp9_快cpu4_%nnn%抖音.webm
 
 set /p input=檔案:
 
@@ -25,12 +25,16 @@ set crf=-crf 45
 set crf=-crf 40
 set crf0=-crf 35 
 set crf0=
+echo %crf%
 
 
 set crf20=-b:v 500K -bufsize 100k 
 set crf2p=500k
-set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
+set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% 
 set crf2=
+
+
+echo %crf2%
 
 set wh=400
 set wh=480
@@ -48,35 +52,33 @@ set vf0=
 echo %vf%
 
 
-set af=-af "volume=-5dB" 
 set af=-af "volume=+5dB" 
-set af=
+set af=-af "volume=-10dB" 
+set af0=
 echo %af%
 
-
-
-set qqq01=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p -sn -dn
-set qqq02=-tune-content screen  -static-thresh 214441000
+set qqq03=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq05=-tune-content screen  -static-thresh 214441000
 set cpu01=-row-mt 1 -cpu-used 4 
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq01% %qqq02% %cpu01% 
+set ppp01=%crf% %crf2% %vf% %af% %qqq03% %qqq05% %cpu01% 
 echo %ppp01%
 
 
-
-
 set tt=-ss 0:4:30.0 -to 0:5:20.0
-set tt=-ss 0:0:0.4 -to 0:1:0.0
-set tt=-ss 0:1:21.7 -to 0:1:33.3
-set tt=-ss 0:0:0.0 -to 0:0:30.0
-set tt=-ss 0:5:0.0 -to 0:5:22.0
-set tt=-ss 0:2:35.5 -to 0:2:50.0
+set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt=
+echo %tt%
+
+
+
+
+
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:v -map 0:a  %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -84,8 +86,8 @@ echo %time1%
 
 pause
 exit
--c:v libvpx-vp9 -c:a libopus
--map 0:v -map 0:a
+-map 0:a -map 0:v 
+
 set crf2=-b:v 100K -minrate 100k -maxrate 100k -bufsize 100k 
 -map_chapters -1 -map_metadata -1 
 

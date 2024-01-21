@@ -23,20 +23,20 @@ set /p input=檔案:
 
 
 
-set crf=-crf 35
 set crf=-crf 30
 set crf=-crf 60
 set crf=-crf 40
+set crf=-crf 35 -r 25
 set crf=
 
-set crf2p=300k
-set crf2=-b:v %crf2p% -minrate 10k -maxrate %crf2p% 
+set crf2p=200k
+set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
 set crf20=
 
 set wh=512
 set wh=400
 set wh=480
-set wh0=640
+set wh=640
 set wh0=800
 set wh0=960
 set wh0=1280
@@ -52,7 +52,7 @@ echo %af%
 
 set qqq03=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p  -sn -dn 
 set qqq05=-tune-content screen -static-thresh 214441000
-set cpu01=-row-mt 1 
+set cpu01=-row-mt 1 -cpu-used 2
 
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq03%  %qqq05% %cpu01% 
@@ -61,10 +61,10 @@ echo %ppp01%
 
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:0.0 -to 0:0:10.0
-set tt=-ss 0:16:55.0 -to 0:18:55.0
-set tt=-ss 0:0:10.0 -to 0:0:40.0
-set tt=
+set tt=-ss 0:5:22.2 -to 0:6:47.2
+set tt=-ss 0:4:0.0 -to 0:5:55.0
+set tt=-ss 0:0:0.0 -to 0:1:0.0
+set tt0=
 echo %tt%
 
 
@@ -85,6 +85,7 @@ echo %time1%
 
 pause
 exit 
+
 set cpu02=-rc_lookahead 1 -lag-in-frames 1
 -cpu-used 4
  -static-thresh 214441000

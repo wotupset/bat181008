@@ -33,6 +33,10 @@ goto top
 
 pause
 exit
+
+--cookies "cookies推特.txt"
+
+
 -o "下載預設%nnn%.%%(ext)s"
 
 -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"

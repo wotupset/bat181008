@@ -12,7 +12,7 @@ echo %vf%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
 set tt=-ss 0:9:2.0 -to 0:9:52.0
-set tt=-ss 0:2:20.0 -to 0:2:35.0
+set tt=-ss 0:5:37.5 -to 0:6:7.5
 set tt0=
 echo %tt%
 

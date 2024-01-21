@@ -2,8 +2,18 @@ echo off
 chcp 65001
 
 
+
+
+ffmpeg -i 01.webm -i 02.mp4 -map 0:a -map 1:v -c:v copy -c:a copy -y 03.mkv
+
+cmd
+exit
+
+
+
 set /p input=檔案:
 echo %input%
+
 
 set tt=-ss 0:0:10.0 -to 0:0:10.0
 set tt=

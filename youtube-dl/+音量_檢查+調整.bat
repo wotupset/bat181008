@@ -12,7 +12,7 @@ ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 set af0=-af "volume=-10dB"
 set af0=-af "volume=-20dB"
 set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
-set af=-af "volume=+5dB,volumedetect"
+set af=-af "volume=+10dB,volumedetect"
 ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量.mkv"
 
 

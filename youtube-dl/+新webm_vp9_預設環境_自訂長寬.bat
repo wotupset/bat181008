@@ -29,8 +29,8 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh0=720
-set wh0=800
+set wh=720
+set wh=800
 set wh0=960
 set wh0=1024
 set wh0=1280
@@ -39,6 +39,7 @@ set vf0=-vf "scale=870:640,setsar=1:1"
 set vf0=
 
 set af=-af "volume=-10dB" 
+set af=-af "volume=+5dB" 
 set af=
 
 
@@ -50,7 +51,10 @@ set ppp010=
 echo %ppp01%
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:40.0 -to 0:0:54.5
+set tt=-ss 0:1:21.7 -to 0:1:33.3
+set tt=-ss 0:0:46.0 -to 0:1:26.5
+set tt=-ss 0:1:5.0 -to 0:1:22.0
+set tt=-ss 0:2:35.5 -to 0:2:50.0
 set tt=
 echo %tt%
 
