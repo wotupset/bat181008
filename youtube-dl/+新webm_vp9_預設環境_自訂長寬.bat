@@ -29,8 +29,8 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh=720
-set wh=800
+set wh0=720
+set wh0=800
 set wh0=960
 set wh0=1024
 set wh0=1280
@@ -38,28 +38,18 @@ set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=870:640,setsar=1:1"
 set vf0=
 
-set af=-af "volume=-10dB" 
-set af=-af "volume=+5dB" 
-set af=
-
-
-set qqq05=-tune-content screen  -pix_fmt yuv420p
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 set cpu01=-row-mt 1 -cpu-used 2
 
-set ppp01=%vf% %af% %crf% %qqq05% %cpu01% 
-set ppp010=
+set ppp01=%vf% %qqq01% %cpu01% 
 echo %ppp01%
 
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:1:21.7 -to 0:1:33.3
-set tt=-ss 0:0:46.0 -to 0:1:26.5
-set tt=-ss 0:1:5.0 -to 0:1:22.0
-set tt=-ss 0:2:35.5 -to 0:2:50.0
-set tt=
+set tt=-ss 0:0:0.5 -to 0:0:4.5
+set tt0=
 echo %tt%
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus %ppp01%  -y %output%
 set time1=%date%_%time%
 
 

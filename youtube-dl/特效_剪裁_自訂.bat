@@ -6,17 +6,19 @@ set /p input=檔案:
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:6.0 -to 0:0:9.0
+set tt=-ss 0:1:10.0 -to 0:1:16.0
 set tt0=
 echo %tt%
 
 
 
 
-set aa=-vf "crop=360:360:480:305" 
-set aa=-vf "crop=600:800:856:72" 
+set aa=-vf "crop=512:910:54:125" 
+set aa=-vf "crop=640:640:480:260" 
+set aa=-vf "crop=600:800:850:120" 
+set aa=-vf "crop=900:900:0:390" 
 
-ffmpeg %tt% -i %input%  %aa% -c:v h264_nvenc -cq 15 -y "_剪裁_自訂.mp4"
+ffmpeg %tt% -i %input%  %aa% -c:v h264_nvenc -cq 10 -y "_剪裁_自訂.mp4"
 
 
 pause

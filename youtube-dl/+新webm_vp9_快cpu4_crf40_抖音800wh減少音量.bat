@@ -22,7 +22,7 @@ set crf=-crf 30
 set crf=-crf 32 -b:v 0 
 set crf=-crf 50
 set crf=-crf 45 
-set crf=-crf 40
+set crf0=-crf 40
 set crf0=-crf 35 
 set crf0=
 echo %crf%
@@ -57,28 +57,20 @@ set af=-af "volume=-10dB"
 set af0=
 echo %af%
 
-set qqq03=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p -sn -dn
-set qqq05=-tune-content screen  -static-thresh 214441000
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 set cpu01=-row-mt 1 -cpu-used 4 
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq03% %qqq05% %cpu01% 
+set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 set tt=-ss 0:4:30.0 -to 0:5:20.0
-set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=
+set tt=-ss 0:2:35.0 -to 0:3:35.0
+set tt0=
 echo %tt%
 
-
-
-
-
-
-
-
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -86,6 +78,8 @@ echo %time1%
 
 pause
 exit
+set qqq05=-tune-content screen  -static-thresh 214441000
+
 -map 0:a -map 0:v 
 
 set crf2=-b:v 100K -minrate 100k -maxrate 100k -bufsize 100k 

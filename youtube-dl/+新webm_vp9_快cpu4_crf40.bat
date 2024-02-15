@@ -17,20 +17,20 @@ set output=_vp9_快cpu4_%nnn%.webm
 set /p input=檔案:
 
 set crf=-crf 50
-set crf=-crf 25
+set crf=-crf 30 -b:v 0 
 set crf=-crf 30
-set crf=-crf 32 -b:v 0 
+set crf=-crf 32
 set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
-set crf0=-crf 35 
-set crf0=
+set crf=-crf 35
+set crf=
 
 
 set crf20=-b:v 500K -bufsize 100k 
-set crf2p=500k
+set crf2p=1000k
 set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
-set crf2=
+set crf20=
 
 set wh=400
 set wh=480
@@ -48,35 +48,33 @@ set vf0=
 echo %vf%
 
 
-set af=-af "volume=-5dB" 
 set af=-af "volume=+5dB" 
+set af=-af "volume=-5dB" 
 set af=
 echo %af%
 
 
 
-set qqq01=-map_chapters -1 -map_metadata -1  -ac 2 -pix_fmt yuv420p -sn -dn
-set qqq02=-tune-content screen  -static-thresh 214441000
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 set cpu01=-row-mt 1 -cpu-used 4 
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq01% %qqq02% %cpu01% 
+set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 
 
-set tt=-ss 0:4:30.0 -to 0:5:20.0
-set tt=-ss 0:0:0.4 -to 0:1:0.0
-set tt=-ss 0:1:21.7 -to 0:1:33.3
-set tt=-ss 0:0:0.0 -to 0:0:30.0
 set tt=-ss 0:5:0.0 -to 0:5:22.0
-set tt=-ss 0:2:35.5 -to 0:2:50.0
+set tt=-ss 0:9:51.0 -to 0:12:41.0
+set tt=-ss 0:1:46.39 -to 0:1:49.39
+set tt=-ss 0:4:48.0 -to 0:5:10.0
+set tt=-ss 0:14:9.0 -to 0:14:13.5
 set tt=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -map 0:v -map 0:a  %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -84,10 +82,16 @@ echo %time1%
 
 pause
 exit
+set qqq02=-tune-content screen  -static-thresh 214441000
+
+-map 0:v -map 0:a
+-map_chapters -1 -map_metadata -1 
+-map_metadata:g -1
+
+
 -c:v libvpx-vp9 -c:a libopus
 -map 0:v -map 0:a
 set crf2=-b:v 100K -minrate 100k -maxrate 100k -bufsize 100k 
--map_chapters -1 -map_metadata -1 
 
 效果較差
 set cpu02=-rc_lookahead 5 -lag-in-frames 5 -enable-tpl 0 -aq-mode 0 

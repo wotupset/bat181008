@@ -19,10 +19,9 @@ echo %input%
 
 
 
-
-set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:21.0 -to 0:0:35.0
-set tt=-ss 0:2:10.0 -to 0:1:0.0
+set tt=-ss 0:16:51.0 -to 0:17:33.0
+set tt=-ss 0:14:30.0 -to 0:16:0.0
+set tt=-ss 0:8:44.0 -to 0:9:22.0
 set tt0=
 echo %tt%
 
@@ -70,7 +69,7 @@ echo 第二階段webm
 
 set time0=%date%_%time%
 ffmpeg -hwaccel cuda -threads 4 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus  -map 0:a -map 0:v %ppp01%   ^
+-c:v libvpx-vp9 -c:a libopus -map_metadata:g -1  %ppp01%   ^
 -y %output%
 set time1=%date%_%time%
 
@@ -81,7 +80,7 @@ echo %output%
 
 pause
 exit
-
+ -map 0:a -map 0:v
 -hwaccel cuda -threads 2
 不支援4:4:4解碼
 

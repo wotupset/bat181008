@@ -2,7 +2,7 @@ echo off
 chcp 65001
 
 set poi=^
-https://www.youtube.com/watch?v=x5llVwx6i1s
+https://www.youtube.com/watch?v=H3ZnnUUoKdY
 echo %poi%
 
 
@@ -12,13 +12,14 @@ echo %poi%
 set tt="*0:38:0.0-0:41:0.0"
 set tt="*0:3:0.0-0:5:0.0"
 set tt="*0:57:0.0-1:0:0.0"
-set tt="*0:7:0.0-0:8:30.0"
+set tt="*0:16:0.0-0:18:0.0"
+set tt="*0:6:0.0-0:8:0.0"
 echo %tt%
 
 
 
 
-yt-dlp --limit-rate 3000K  --download-sections %tt%  %poi%
+yt-dlp --limit-rate 3000K   --download-sections %tt%  %poi%
 
 
 

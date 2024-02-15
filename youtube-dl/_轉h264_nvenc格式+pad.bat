@@ -10,10 +10,9 @@ echo %input%
 
 set wh=640
 set wh=800
-set wh0=1280
+set wh=1280
 set wh0=1920
-set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "hwupload_cuda,scale_cuda=%wh%:%wh%:interp_algo=lanczos:force_original_aspect_ratio=decrease,setsar=1:1,hwdownload"
+set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,pad=1280:720:-1:-1:color=black"
 set vf0=-vf "scale=450:800,setsar=1/1" 
 set vf0=
 echo %vf%
@@ -27,18 +26,18 @@ echo %ppp01%
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt0=
+set tt=-ss 0:0:0.0 -to 0:1:20.0
+set tt=-ss 0:7:27.5 -to 0:9:8.0
+set tt=
 echo %tt%
 
 set output=_h264_nvenc.mp4
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc  %ppp01%   -y  %output%
+ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc  -map_metadata:g -1 -pix_fmt yuv420p  -y  %output%
 
 
 pause
 exit
--map_metadata:g -1 -pix_fmt yuv420p 
 -map 0:a -map 0:v
 
 -cq 20

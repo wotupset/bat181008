@@ -4,19 +4,21 @@ chcp 65001
 set /p input=檔案:
 
 set tt=-ss 0:0:0.0 -to 0:0:30.0
-set tt=-ss 0:1:50.0 -to 0:2:30.0
-set tt0=
+set tt=-ss 0:0:20.0 -to 0:0:55.0
+set tt=
 echo %tt%
 
 
-ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless.mkv" 
 
-
-
+ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
 
 pause
 exit
 
+
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless.mkv" 
+
+ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
 
 accurate_seek必须放在-i参数之前 
 -accurate_seek 這是預設行為
