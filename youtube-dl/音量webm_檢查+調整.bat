@@ -1,82 +1,79 @@
 echo off
 chcp 65001
 
-echo %date%
-echo %time%
-
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
-
-if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
-set vartime=%vartime%%time:~3,2%%time:~6,2%
-
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-
-
 set /p input=檔案:
 
-
+echo %date%_%time%
 
 ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 
-set af=-af "volume=+5dB,volumedetect"
-ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量dB.mkv"
-set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 
-ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量loudnorm.mkv"
+set af=-af "loudnorm,volumedetect"
+ffmpeg -i %input% -c:v copy  %af% -y _調整音量loudnorm預設.mkv
+
+set af=-af "dynaudnorm,volumedetect"
+
+ffmpeg -i %input% -c:v copy  %af% -y _調整音量dynaudnorm預設.mkv
+
+set af=-af "acompressor,volumedetect"
+ffmpeg -i %input% -c:v copy  %af% -y _調整音量acompressor預設.mkv
 
 
 
 pause
 exit
 
-預設
-set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
+set af=-af "volume=+10dB"
+ffmpeg -i %input% -c:v copy  %af% -y _調整音量loudnorm2.mkv
 
 
-ffmpeg -i "_調整音量.mkv" -af "volumedetect"  -f null -y NUL
 
--hide_banner -loglevel error
--af "dynaudnorm"
+set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
 
--c:v libvpx-vp9  -c:a libopus
+
+
+-51
+-28
+-20
+-31
+-51
+
+-25 原始
+-26 _調整音量loudnorm.mkv
+-18 _調整音量loudnorm2.mkv
+-15 _調整音量dynaudnorm.mkv
+-25 _調整音量acompressor.mkv
+
+
+set af=-af "acompressor,volumedetect"
 ffmpeg -i %input% -af "volumedetect" -vn -sn -dn  -f null -y NUL
-echo +++++
-ffmpeg -i %input% -af "loudnorm=print_format=json" -vn -sn -dn  -f null -y NUL
-echo +++++
-ffmpeg -i %input% -af "ebur128" -vn -sn -dn  -f null -y NUL
-echo +++++
+
+
+set af=-af "volume=+10dB"
+
+set af=-af "loudnorm,volumedetect"
+set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
+set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"
+
+ffmpeg -i %input% -c:v copy  %af% -y 調整音量n.mkv
+
+set af=-af "dynaudnorm,volumedetect"
+ffmpeg -i %input% -c:v copy  %af% -y 調整音量d.mkv
+
+
+
+
+
+pause
+exit
 
 set /p input2=輸入:
-
-
-print_format=summary
-print_format=json
-set af=-af "loudnorm=I=-20.0:print_format=json,volumedetect"
-
 set af=-af "volume=%input2%dB,volumedetect"
-set af=-af "volume=+10dB"
-set af=-af "loudnorm=I=-20:TP=-2:LRA=7,volumedetect"
-set af=-af "loudnorm=I=-20.0:LRA=20.0:print_format=json"
-set af=-af "loudnorm=I=-20.0:print_format=json"
 
-
-
-set af=-af "loudnorm" 預設-24db 還是太小聲 
-
-'I, i'
-Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
-
-'LRA, lra'
-Set loudness range target. Range is 1.0 - 20.0. Default value is 7.0.
-
-'TP, tp'
-Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
-
-./ffmpeg -i /path/to/input.wav -af loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=-27.2:measured_TP=-14.4:measured_LRA=0.1:measured_thresh=-37.7:offset=-0.7:linear=true:print_format=summary output.wav
-
-
+set af=-af "loudnorm=print_format=json,volumedetect"
 
 ffmpeg -i %input% -c:v copy  %af% -y FFF.webm
 

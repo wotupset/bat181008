@@ -11,7 +11,7 @@ set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
 
-yt-dlp --limit-rate 2500K  -f 1080p %poi%
+yt-dlp --limit-rate 2500K  -f best  %poi%
 
 
 

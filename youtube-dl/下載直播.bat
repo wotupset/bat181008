@@ -2,7 +2,15 @@ echo off
 chcp 65001
 
 
+
+set /p poi=youtube網址:
+echo %poi%
+
+
 :top
+
+echo %date%
+echo %time%
 
 set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
 set vartime=%time:~0,2%
@@ -10,23 +18,23 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%_
+set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn% 
 
 
-set /p poi=youtube網址:
-echo %poi%
 
-
-start "" yt-dlp %poi% --cookies "cookies推特.txt"   -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
+start "" yt-dlp %poi% --cookies "cookies推特.txt"  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 
 pause
-pause
-cls
 goto top
 
 
 exit
+cls
+--fixup force 
+
+
+
 --restrict-filenames
 --restrict-filenames  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 

@@ -13,7 +13,10 @@ set wh=800
 set wh=1280
 set wh0=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,pad=1280:720:-1:-1:color=black"
+set vf=-vf "scale=1280:720:force_original_aspect_ratio=decrease,setsar=1:1,pad=1280:720:-1:-1:color=black"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,pad=720:1280:-1:-1:color=black"
 set vf0=-vf "scale=450:800,setsar=1/1" 
+set vf0=-vf "scale=1280:720,setsar=1/1" 
 set vf0=
 echo %vf%
 

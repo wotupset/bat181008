@@ -1,7 +1,19 @@
 echo off
 chcp 65001
 
-echo %date%_%time%
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+
+set output=_libx264_%nnn%.mp4
 
 set /p input=檔案:
 echo %input%
@@ -10,20 +22,23 @@ set vf=-vf "scale=1280:720,setsar=1/1"
 set vf=
 echo %vf%
 
-set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:9:2.0 -to 0:9:52.0
 set tt=-ss 0:5:37.5 -to 0:6:7.5
-set tt=-ss 0:2:8.3 -to 0:3:33.3
+set tt=-ss 0:23:0.0 -to 0:23:50.0
+set tt=-ss 0:13:23.0 -to 0:14:3.0
+set tt=-ss 0:0:8.0 -to 0:2:0.0
+set tt=-ss 0:17:56.5 -to 0:21:26.5
 set tt0=
 echo %tt%
 
-set output=_libx264.mp4
 
-ffmpeg %tt% -i %input%   %vf%   -c:v libx264     -pix_fmt yuv420p  -y  %output%
+
+ffmpeg %tt% -i %input%   %vf%   -c:v libx264 -crf 20  -y  %output%
 
 
 pause
 exit
+-maxrate 1000k -bufsize 1000k 
+ -pix_fmt yuv420p 
  -crf 30
 -map 0:a:0 -map 0:v:0 -sn -dn 
 -vf "scale=in_range=full:out_range=tv:flags=full_chroma_inp+full_chroma_int"

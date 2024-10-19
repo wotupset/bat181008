@@ -18,26 +18,28 @@ echo %nnn%
 set /p input=檔案:
 
 
-
-
-
-
-
+set crf=-crf 63
 set crf=-crf 60
+set crf=-crf 50 
 set crf=-crf 45
 set crf0=-crf 40
-set crf0=-crf 35 -r 25
+set crf0=-crf 35
 set crf0=
 
-set crf2p=500k
+set crf2p=200k
+set crf2p0=300k
+set crf2p0=400k
+set crf2p=1500k
 set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
+set crf20=-b:v 500k -minrate 10k -maxrate 1500k
+set crf20=-b:v 1000k
 set crf2=
 
 set wh=512
 set wh=400
 set wh=480
 set wh=640
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1280
 
@@ -45,21 +47,25 @@ set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=640:480:force_original_aspect_ratio=decrease,setsar=1:1" 
 set vf0=
 
-set af=-af "volume=-5dB" 
+set af=-af "volume=-10dB" 
 set af=-af "volume=+5dB" 
 set af=
 echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
-set cpu01=-row-mt 1 -cpu-used 1
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq03% %cpu01% 
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4 
+set cpu01=-row-mt 1 -threads 8 -cpu-used 4
+
+set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 
-set tt=-ss 0:1:0.0 -to 0:1:45.0
-set tt=-ss 0:22:11.0 -to 0:23:32.0
+set tt=-ss 0:22:45.65 -to 0:25:5.55
+set tt=-ss 0:22:44.7 -to 0:25:4.5
+set tt=-ss 0:22:45.8 -to 0:25:8.0
+set tt=-ss 0:0:40.0 -to 0:1:50.0
 set tt0=
 echo %tt%
 
@@ -67,7 +73,7 @@ echo %tt%
 set output=_output_vp9_oped%nnn%.webm
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
 set time1=%date%_%time%
 
 

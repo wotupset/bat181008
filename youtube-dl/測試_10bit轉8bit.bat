@@ -6,8 +6,8 @@ set /p input=檔案:
 echo "%input%"
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:4.5 -to 0:0:10.5
-set tt=
+set tt=-ss 0:0:0.5 -to 0:0:4.0
+set tt0=
 echo %tt%
 
 ffmpeg %tt% -i %input%  -c:v h264_nvenc -y output_預設.mp4
@@ -29,7 +29,7 @@ exit
 scale=-1:-1:flags=bilinear,
 
 ffmpeg %tt% -i %input%  -c:v h264_nvenc -cq 18 -pix_fmt yuv420p -colorspace bt709 -y output_yuv420p_bt709.mp4
-ffmpeg %tt% -i %input%  -c:v h264_nvenc -cq 18 -pix_fmt yuv420p -vf "eq=contrast=1.25:brightness=0.0:saturation=1.25" -y output_yuv420p_vf.mp4
+ffmpeg %tt% -i %input%  -c:v h264_nvenc -cq 18 -pix_fmt yuv420p -vf "eq=contrast=1.2:brightness=0.0:saturation=1.2" -y output_yuv420p_vf.mp4
 ffmpeg %tt% -i %input%  -c:v h264_nvenc -cq 18 -pix_fmt yuv420p -y output_yuv420p.mp4
 
 -pix_fmt yuv420p -color_matrix bt709

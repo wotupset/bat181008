@@ -2,22 +2,35 @@ echo off
 chcp 65001
 
 
-:top
+
 
 set /p poi=youtube網址:
 echo %poi%
 
+yt-dlp -F %poi%
+
+set /p ppp=參數:
+echo %ppp%
 
 
-set vdate=%date:~2,2%%date:~5,2%%date:~8,2%
-set vtime=%time:~0,2%
-if /i %vtime% LSS 10 (set vtime=0%time:~1,1%)
-set vtime=%vtime%%time:~3,2%%time:~6,2%
+:top
 
-yt-dlp --cookies "cookies推特.txt"  -f 95   %poi%
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
 
 
+start "" yt-dlp --cookies "cookies推特.txt"  -f %ppp%  %poi%
 pause
+
 goto top
 
 

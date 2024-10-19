@@ -1,31 +1,54 @@
 echo off
 chcp 65001
 
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn% 
+
+
+
 set poi=^
-https://www.youtube.com/watch?v=H3ZnnUUoKdY
+https://www.youtube.com/watch?v=4SLAlp10EGE
 echo %poi%
 
 
 
-
-
-set tt="*0:38:0.0-0:41:0.0"
-set tt="*0:3:0.0-0:5:0.0"
-set tt="*0:57:0.0-1:0:0.0"
-set tt="*0:16:0.0-0:18:0.0"
-set tt="*0:6:0.0-0:8:0.0"
+set tt="*0:0:0.0-0:2:0.0"
+set tt="*0:24:0.0-0:25:30.0"
+set tt="*0:12:20.0-0:13:0.0"
+set tt="*1:16:30.0-1:18:30.0"
 echo %tt%
 
+set ff=-f 232+140
+set ff=
+echo %ff%
 
 
+yt-dlp --download-sections %tt% --limit-rate 3000K   -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
 
-yt-dlp --limit-rate 3000K   --download-sections %tt%  %poi%
 
 
 
 
 pause
 exit
+
+--force-keyframes-at-cuts
+
+-f 312+140
+--force-keyframes-at-cuts 
+
+-f best
+yt-dlp --limit-rate 3000K   --download-sections %tt%  -f 22 --force-keyframes-at-cuts  %poi%
+
+--force-keyframes-at-cuts
+
+
  --cookies "cookies推特.txt" 
 set poi=^
 https://www.youtube.com/watch?v=JpnyuIMHCVg

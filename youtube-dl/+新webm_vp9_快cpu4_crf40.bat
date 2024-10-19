@@ -18,70 +18,93 @@ set /p input=檔案:
 
 set crf=-crf 50
 set crf=-crf 30 -b:v 0 
-set crf=-crf 30
 set crf=-crf 32
 set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
 set crf=-crf 35
-set crf=
-
+set crf0=-crf 30 -b:v 0 
+set crf0=-crf 20 -b:v 0 -r 30 
+set crf0= 
+echo %crf%
 
 set crf20=-b:v 500K -bufsize 100k 
 set crf2p=1000k
 set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
-set crf20=
+set crf2=-b:v 5000K
+set crf2=
+echo %crf2%
 
 set wh=400
 set wh=480
-set wh=512
+set wh0=512
 set wh=640
-set wh=720
-set wh=800
+set wh0=720
+set wh0=800
 set wh0=960
 set wh0=1024
 set wh0=1280
 set wh0=1600
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=450:800,setsar=1:1"
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=560:800,setsar=1:1"
+set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
+set vf0=-vf "scale=iw*2:ih*2,setsar=1:1"
 set vf0=
 echo %vf%
 
-
-set af=-af "volume=+5dB" 
+    
 set af=-af "volume=-5dB" 
+set af=-af "volume=+8dB" 
+set af=-af "loudnorm"
 set af=
 echo %af%
 
 
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
-set cpu01=-row-mt 1 -cpu-used 4 
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
+set cpu01=-row-mt 1 -threads 8 -cpu-used 2
+set cpu010=-row-mt 1 -threads 8
+set cpu010=
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
-
-
-set tt=-ss 0:5:0.0 -to 0:5:22.0
-set tt=-ss 0:9:51.0 -to 0:12:41.0
-set tt=-ss 0:1:46.39 -to 0:1:49.39
-set tt=-ss 0:4:48.0 -to 0:5:10.0
-set tt=-ss 0:14:9.0 -to 0:14:13.5
-set tt=
+set tt=-ss 0:0:0.0 -to 0:0:20.0
+set tt=-ss 0:20:50.0 -to 0:21:0.0
+set tt=-ss 0:2:12.0 -to 0:2:36.0
+set tt=-ss 0:1:30.0 -to 0:2:10.0
+set tt0=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output% 
 set time1=%date%_%time%
 
 echo %time0%
 echo %time1%
+echo %output%
+
 
 pause
 exit
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+fast_bilinear
+bilinear
+bicubic 預設
+lanczos 精細
+
+
+
+-hide_banner 
+
+
 set qqq02=-tune-content screen  -static-thresh 214441000
 
 -map 0:v -map 0:a

@@ -24,11 +24,13 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf=
+set crf0=-crf 30
+set crf0=-crf 20 -b:v 0
+set crf0=
 echo %crf%
 
-set crf2p=1000k
-set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
+set crf2p=3000k
+set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% -bufsize %crf2p%
 set crf2=
 echo %crf2%
 
@@ -41,15 +43,22 @@ set af=-af "volume=+5dB"
 set af=
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
-set cpu01=-row-mt 1 -cpu-used 4   
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
+set cpu01=-row-mt 1 -cpu-used 2
+set cpu01=-row-mt 1 -threads 8 -cpu-used 2
+set cpu010=
+
+
+set ppp01=%crf% %crf2% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:0.0 -to 0:0:30.0
+set tt=-ss 0:0:10.0 -to 0:0:40.0
+set tt=-ss 0:0:4.0 -to 0:0:44.0
+set tt=-ss 0:0:3.56 -to 0:0:37.0
 set tt=
 echo %tt%
 

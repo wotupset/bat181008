@@ -21,25 +21,38 @@ echo %input%
 
 
 
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:7.0 -to 0:0:50.0
-set tt=
-echo %tt%
 
-set wh0=450:800
-set wh0=400:400
-set wh0=640:360
-set wh0=480:270
-set wh0=800:450
-set wh0=800:800
-set wh0=1280:720
-set wh0=1200:720
-set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1:1"
+set crf=-crf 40
+set crf=-crf 35
+set crf=
+
 
 set wh=640
 set wh0=480
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=1280:720:flags=bilinear,setsar=1:1"
+set vf0=
 echo %vf%
+
+set af=-af "volume=+0dB" 
+set af=
+echo %af%
+
+
+
+set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq05= -tune-content screen  -static-thresh 214441000
+set cpu01=-row-mt 1 -cpu-used 4
+
+
+set ppp01=%vf% %af% %qqq03% %qqq05% %cpu01% 
+echo %ppp01%
+
+
+set tt=-ss 0:0:1.5 -t 0:0:17.5
+set tt=-ss 0:0:7.0 -to 0:0:50.0
+set tt=
+echo %tt%
 
 
 
@@ -51,11 +64,8 @@ ffmpeg %tt% -i %input% ^
 -y FFF.mp4
 
 
-
-
-
 ffmpeg -hwaccel cuda -threads 1 -i FFF.mp4 ^
--c:v libvpx-vp9 -c:a libopus -speed 4 -crf 40 -af "volume=+0dB" -static-thresh 4441000 -tune-content screen -drop-threshold 50 ^ ^
+-c:v libvpx-vp9 -c:a libopus  -crf 40   ^
 -y %output%
 
 

@@ -20,32 +20,34 @@ set output=_vp9_預設環境%nnn%.webm
 set /p input=檔案:
 
 
-set tt=-ss 0:1:16.2 -to 0:1:23.9
+set tt=-ss 0:3:27.5 -to 0:4:28.0
+set tt=-ss 0:0:27.0 -to 0:0:57.0
+set tt=-ss 0:0:54.0 -to 0:2:4.0
 set tt=
 echo %tt%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
-set cpu01=-row-mt 1 -cpu-used 2
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:0
 
-set ppp01= %qqq01% %cpu01%
+set cpu01=-row-mt 1 
+set cpu010=
+
+set ppp01=%qqq01% %cpu01% 
 echo %ppp01%
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input%  -c:v libvpx-vp9 -c:a libopus  %ppp01%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %ppp01% -y %output%
 set time1=%date%_%time%
-
-
-
 
 echo %time0%
 echo %time1%
-
+echo %output%
 
 
 
 pause
 exit 
-
+set cpu010=-row-mt 1 -cpu-used 1
+%cpu01%
 -map 0:v -map 0:a?
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
