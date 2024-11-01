@@ -29,7 +29,7 @@ copy *.%FFF% +,,
 mkdir %nnn%
 move *.%FFF% ./%nnn%/
 
-set FFF=avi
+set FFF=jpg
 copy *.%FFF% +,,
 mkdir %nnn%
 move *.%FFF% ./%nnn%/
