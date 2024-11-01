@@ -13,7 +13,7 @@ echo %nnn%
 
 
 set poi=^
-https://www.youtube.com/watch?v=4SLAlp10EGE
+https://youtu.be/Fw4wdaSszu0?si=ZPGVVC0jb1Z2KZ63
 echo %poi%
 
 
@@ -21,7 +21,7 @@ echo %poi%
 set tt="*0:0:0.0-0:2:0.0"
 set tt="*0:24:0.0-0:25:30.0"
 set tt="*0:12:20.0-0:13:0.0"
-set tt="*1:16:30.0-1:18:30.0"
+set tt="*0:0:38.2-0:1:50.0"
 echo %tt%
 
 set ff=-f 232+140

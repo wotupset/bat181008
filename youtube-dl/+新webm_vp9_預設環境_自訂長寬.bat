@@ -22,8 +22,8 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf=-crf 30
-set crf= 
+set crf0=-crf 30
+set crf0= 
 echo %crf%
 
 set wh=400
@@ -31,7 +31,7 @@ set wh0=480
 set wh0=512
 set wh=640
 set wh0=720
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1024
 set wh0=1280 
@@ -53,8 +53,8 @@ echo %ppp01%
 
 set tt=-ss 0:1:41.5 -to 0:1:55.0
 set tt=-ss 0:7:55.0 -to 0:8:10.0
-set tt=-ss 0:1:59.5 -to 0:2:8.0
-set tt=
+set tt=-ss 0:0:4.5 -to 0:0:19.5
+set tt0=
 echo %tt%
 
 set time0=%date%_%time%

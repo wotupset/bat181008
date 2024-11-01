@@ -24,7 +24,7 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf0=-crf 30
+set crf=-crf 30 -b:v 0
 set crf0=-crf 20 -b:v 0
 set crf0=
 echo %crf%
@@ -46,8 +46,8 @@ echo %af%
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
-set cpu01=-row-mt 1 -cpu-used 2
-set cpu01=-row-mt 1 -threads 8 -cpu-used 2
+set cpu01=-row-mt 1 -threads 8 -cpu-used 4
+set cpu01=-row-mt 1 -threads 8
 set cpu010=
 
 
@@ -58,7 +58,7 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:0:3.56 -to 0:0:37.0
+set tt=-ss 0:0:4.5 -to 0:0:19.5
 set tt=
 echo %tt%
 
@@ -79,6 +79,9 @@ echo %time1%
 
 pause
 exit 
+
+-an  -map 0:v:0 -map 0:a:0
+
 set qqq02=-tune-content screen  -static-thresh 214441000
 -map_chapters -1 -map_metadata -1 
 

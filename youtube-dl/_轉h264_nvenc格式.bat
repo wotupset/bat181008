@@ -20,9 +20,9 @@ echo %input%
 
 
 set wh=640
-set wh0=800
+set wh=800
 set wh0=1024
-set wh=960
+set wh0=960
 set wh=1280
 set wh0=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
@@ -38,13 +38,13 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 
 set tt=-ss 0:22:45.65 -to 0:25:5.55
 set tt=-ss 0:0:1.5 -to 0:1:45.0
-set tt=-ss 0:20:34.0 -to 0:21:57.0
-set tt0=
+set tt=-ss 0:0:12.0 -to 0:0:35.0
+set tt=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v h264_nvenc  -qp 25  %vf%  %qqq01%  -y  %output%
+ffmpeg %tt% -i %input% -c:v h264_nvenc  -qp 20  %vf%  %qqq01%  -y  %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -54,7 +54,7 @@ echo %output%
 
 pause
 exit
-
+-map 0:v:0 -map 0:a:1
 -b:v 1000K -maxrate 1000k -bufsize 1000k 
 
 原始 61.3MB

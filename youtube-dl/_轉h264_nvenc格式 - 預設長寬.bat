@@ -20,28 +20,29 @@ echo %input%
 
 set vf=-filter_complex "[0:v]setsar=1/1[v1];" -map [v1] -map 0:a
 set vf=-vf "scale=640:480,setsar=1:1"
-set vf0=-map 0:v:0 -map 0:a:0
-set vf0=
+set vf=
 echo %vf%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
-set ppp01=%vf% %qqq01%
-echo %ppp01%
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  -map 0:v:0 -map 0:a:0
+
 
 set tt=-ss 0:20:50.0 -to 0:21:0.0
 set tt=-ss 0:22:0.0 -to 0:22:20.0
-set tt=-ss 0:9:18.0 -to 0:9:51.5
-set tt=-ss 0:0:1.0 -to 0:1:31.0
+set tt=-ss 0:0:20.1 -to 0:1:50.0
 set tt0=
 echo %tt%
 
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc -qp 25  %ppp01%  -y  %output%
+ffmpeg %tt% -i %input% -c:v h264_nvenc -qp 20  %vf% %qqq01%   -y  %output%
 
 
 pause
 exit
+
+ -map 0:v:0 -map 0:a:1
+ 
+ 
 -qp 25
 -cq 25 
 

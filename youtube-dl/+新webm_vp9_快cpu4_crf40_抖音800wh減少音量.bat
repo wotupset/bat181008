@@ -24,6 +24,7 @@ set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
 set crf=-crf 35 
+set crf0=-crf 30 -b:v 0 
 set crf0=
 echo %crf%
 
@@ -41,11 +42,12 @@ set wh=480
 set wh=512
 set wh=640
 set wh0=720
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1024
 set wh0=1280
 set wh0=1600
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=450:800,setsar=1:1"
 set vf0=
@@ -56,12 +58,15 @@ set af=-af "volume=+5dB"
 set af=-af "volume=-10dB" 
 set af=-af "loudnorm"
 set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
+set af=-af "loudnorm=I=-25"
 set af0=-af "volume=-5dB" 
 set af0=-an
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
-set cpu01=-row-mt 1 -threads 8 -cpu-used 2
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:0
+set cpu01=-row-mt 1 -threads 8 -cpu-used 4
+set cpu01=-row-mt 1 -threads 8
+set cpu010=
 
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
@@ -71,7 +76,7 @@ echo %ppp01%
 set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
-set tt=-ss 0:2:23.5 -to 0:2:55.5
+set tt=-ss 0:3:0.0 -to 0:3:35.0
 set tt0=
 echo %tt%
 

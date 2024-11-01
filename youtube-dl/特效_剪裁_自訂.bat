@@ -20,18 +20,17 @@ set /p input=檔案:
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:3:33.0 -to 0:4:3.0
-set tt=-ss 0:12:26.0 -to 0:12:30.2
-set tt=-ss 0:1:31.73 -to 0:1:32.73
-set tt=
+set tt=-ss 0:0:1.0 -to 0:0:6.2
+set tt0=
 echo %tt%
 
-set aa=-vf "crop=480:480:630:70" 
-set aa=-vf "crop=640:640:360:360" 
-set aa=-vf "crop=630:840:660:210" 
-set aa=-vf "crop=720:1280:1555:500" 
-set aa=-vf "crop=260:260:140:1100" 
+set vf=-vf "crop=480:480:630:70" 
+set vf=-vf "crop=640:640:360:360" 
+set vf=-vf "crop=800:800:560:150" 
+set vf=-vf "crop=660:660:670:210" 
 
-ffmpeg %tt% -i %input%  %aa% -c:v h264_nvenc -cq 10 -y %output%
+
+ffmpeg %tt% -i %input%  %vf% -c:v h264_nvenc -cq 10 -pix_fmt yuv420p -y %output%
 
 
 pause

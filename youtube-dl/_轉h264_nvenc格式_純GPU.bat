@@ -22,8 +22,8 @@ echo %input%
 set wh=640
 set wh=800
 set wh=1280
-set wh0=1920
-set vf0=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,hwdownload,format=nv12"
+set wh=1920
+set vf=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,hwdownload,format=nv12"
 set vf=-vf "scale_cuda=1280:720,hwdownload,format=nv12"
 set vf0=
 echo %vf%
@@ -32,13 +32,13 @@ set af=-af "volume=-10dB"
 set af=
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -r 60
 echo %ppp01%
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt=-ss 0:8:55.0 -to 0:12:55.0
-set tt0=
+set tt=
 echo %tt%
 
 
@@ -46,7 +46,7 @@ set time0=%date%_%time%
 
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda  %tt% -i %input% ^
 %vf% %qqq01% ^
--c:v h264_nvenc  -qp 25  ^
+-c:v h264_nvenc  -qp 20  ^
 -y %output%
 
 set time1=%date%_%time%

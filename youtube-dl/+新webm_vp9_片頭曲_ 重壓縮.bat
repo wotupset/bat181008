@@ -22,7 +22,7 @@ set crf=-crf 63
 set crf=-crf 60
 set crf=-crf 50 
 set crf=-crf 45
-set crf0=-crf 40
+set crf=-crf 40
 set crf0=-crf 35
 set crf0=
 
@@ -35,10 +35,9 @@ set crf20=-b:v 500k -minrate 10k -maxrate 1500k
 set crf20=-b:v 1000k
 set crf2=
 
-set wh=512
 set wh=400
 set wh=480
-set wh=640
+set wh0=640
 set wh=800
 set wh0=960
 set wh0=1280
@@ -54,19 +53,21 @@ echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4 
 set cpu01=-row-mt 1 -threads 8 -cpu-used 4
+set cpu010=-row-mt 1 -threads 8
+
+
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 
-set tt=-ss 0:22:45.65 -to 0:25:5.55
 set tt=-ss 0:22:44.7 -to 0:25:4.5
 set tt=-ss 0:22:45.8 -to 0:25:8.0
-set tt=-ss 0:0:40.0 -to 0:1:50.0
-set tt0=
+set tt=-ss 0:0:20.0 -to 0:1:50.0
+set tt=-ss 0:50:21.5 -to 0:53:11.5
+set tt=
 echo %tt%
 
 
@@ -87,6 +88,15 @@ echo %time1%
 
 pause
 exit 
+ -map 0:v:0 -map 0:a:1
+ 
+-map_metadata:g -1
+-map_chapters -1
+-ac 2
+
+ -an  -map 0:v:0 -map 0:a:0
+set cpu01=-row-mt 1 -threads 8 -cpu-used 4 -tile-columns 0 -tile-rows 0 -frame-parallel 1
+
 set qqq05x=-tune-content screen -static-thresh 214441000
 
 -map_chapters -1 -map_metadata -1 

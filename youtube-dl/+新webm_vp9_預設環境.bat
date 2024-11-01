@@ -26,7 +26,7 @@ set tt=-ss 0:0:54.0 -to 0:2:4.0
 set tt=
 echo %tt%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:0
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 set cpu01=-row-mt 1 
 set cpu010=
@@ -46,6 +46,7 @@ echo %output%
 
 pause
 exit 
+-map 0:v:0 -map 0:a:0
 set cpu010=-row-mt 1 -cpu-used 1
 %cpu01%
 -map 0:v -map 0:a?
