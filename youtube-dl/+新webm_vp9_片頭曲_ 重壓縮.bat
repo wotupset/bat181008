@@ -37,9 +37,9 @@ set crf2=
 
 set wh=400
 set wh=480
-set wh0=640
+set wh=640
 set wh=800
-set wh0=960
+set wh=960
 set wh0=1280
 
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1" 
@@ -66,8 +66,8 @@ echo %ppp01%
 set tt=-ss 0:22:44.7 -to 0:25:4.5
 set tt=-ss 0:22:45.8 -to 0:25:8.0
 set tt=-ss 0:0:20.0 -to 0:1:50.0
-set tt=-ss 0:50:21.5 -to 0:53:11.5
-set tt=
+set tt=-ss 0:0:0.0 -to 0:0:50.0
+set tt0=
 echo %tt%
 
 

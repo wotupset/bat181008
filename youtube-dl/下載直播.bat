@@ -23,7 +23,7 @@ echo %nnn%
 
 
 
-start "" yt-dlp %poi% --cookies "cookies推特.txt"  -o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
+start "" yt-dlp %poi% --cookies "cookies推特.txt"  -o "_%%(id)s_%nnn%.%%(ext)s"
 
 pause
 goto top
@@ -31,6 +31,8 @@ goto top
 
 exit
 cls
+
+-o "%%(live_status)s+%nnn%+%%(id)s.%%(ext)s"
 --fixup force 
 
 

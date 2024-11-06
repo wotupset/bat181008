@@ -1,16 +1,9 @@
 echo off
 chcp 65001
 
-
-
-
 set /p poi=youtube網址:
 echo %poi%
 
-yt-dlp -F %poi%
-
-set /p ppp=參數:
-echo %ppp%
 
 
 :top
@@ -28,13 +21,24 @@ set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
 
-start "" yt-dlp --cookies "cookies推特.txt"  -f %ppp%  %poi%
+start "" yt-dlp  %poi% -f best  -o "_%%(id)s_%nnn%_best.%%(ext)s"
 pause
 
 goto top
 
 
 exit
+
+
+
+
+
+
+
+
+
+
+
 start "" 
 -f best[height=1080]
 -f best[height=720] 

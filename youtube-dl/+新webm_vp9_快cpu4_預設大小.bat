@@ -24,7 +24,7 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf=-crf 30 -b:v 0
+set crf0=-crf 30  -b:v 0
 set crf0=-crf 20 -b:v 0
 set crf0=
 echo %crf%

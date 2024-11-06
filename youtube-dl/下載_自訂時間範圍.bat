@@ -13,15 +13,15 @@ echo %nnn%
 
 
 set poi=^
-https://youtu.be/Fw4wdaSszu0?si=ZPGVVC0jb1Z2KZ63
+https://www.youtube.com/watch?v=ieUd16Uq1dk
 echo %poi%
 
 
 
 set tt="*0:0:0.0-0:2:0.0"
 set tt="*0:24:0.0-0:25:30.0"
-set tt="*0:12:20.0-0:13:0.0"
-set tt="*0:0:38.2-0:1:50.0"
+set tt="*0:15:30.0-0:17:30.0"
+set tt="*0:17:30.0-0:19:30.0"
 echo %tt%
 
 set ff=-f 232+140
@@ -37,7 +37,7 @@ yt-dlp --download-sections %tt% --limit-rate 3000K   -o _切+%nnn%-%%(id)s.%%(ex
 
 pause
 exit
-
+ -f best
 --force-keyframes-at-cuts
 
 -f 312+140

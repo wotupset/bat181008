@@ -78,7 +78,7 @@ echo %ppp01%
 set tt=-ss 0:1:20.0 -to 0:1:32.0
 set tt=-ss 0:3:11.1 -to 0:3:14.1
 set tt=-ss 0:14:32.0 -to 0:15:31.5
-set tt=-ss 0:0:38.2 -to 0:1:50.0
+set tt=-ss 0:0:0.4 -to 0:1:0.0
 set tt0=
 
 
