@@ -1,5 +1,6 @@
 echo off
 chcp 65001
+title 預設大小
 
 echo %date%
 echo %time%
@@ -24,13 +25,15 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf0=-crf 30  -b:v 0
+set crf=-crf 30 
+set crf0=-crf 30 -b:v 2500K
 set crf0=-crf 20 -b:v 0
 set crf0=
 echo %crf%
 
 set crf2p=3000k
 set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% -bufsize %crf2p%
+set crf2=
 set crf2=
 echo %crf2%
 
@@ -48,6 +51,7 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8
+set cpu01=-row-mt 1 
 set cpu010=
 
 
@@ -58,13 +62,13 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:0:4.5 -to 0:0:19.5
+set tt=-ss 0:2:46.8 -to 0:3:26.8
 set tt=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9   %ppp01%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9  %ppp01%  -y %output%
 set time1=%date%_%time%
 
 

@@ -31,11 +31,10 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 set cpu01=-row-mt 1 
 set cpu010=
 
-set ppp01=%qqq01% %cpu01% 
-echo %ppp01%
+
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %qqq01% %cpu01%   -y %output%
 set time1=%date%_%time%
 
 echo %time0%

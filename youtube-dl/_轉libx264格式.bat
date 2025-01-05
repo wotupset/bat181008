@@ -22,23 +22,26 @@ set vf=-vf "scale=1280:720,setsar=1/1"
 set vf=
 echo %vf%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:1
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 
 set tt=-ss 0:5:37.5 -to 0:6:7.5
 set tt=-ss 0:23:0.0 -to 0:23:50.0
 set tt=-ss 0:13:23.0 -to 0:14:3.0
 set tt=-ss 0:50:21.5 -to 0:53:11.5
-set tt0=
+set tt=
 echo %tt%
 
 
 
-ffmpeg %tt% -i %input%  %vf% %qqq01%  -c:v libx264 -crf 20  -map 0:v:0 -map 0:a:1   -y  %output%
+ffmpeg %tt% -i %input%  %vf% %qqq01%  -c:v libx264 -crf 20     -y  %output%
 
 
 pause
 exit
+-map 0:v:0 -map 0:a:1
+-map 0:v:0 -map 0:a:1
+
 -maxrate 1000k -bufsize 1000k 
  -pix_fmt yuv420p 
  -crf 30

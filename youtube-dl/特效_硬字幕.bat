@@ -4,13 +4,17 @@ chcp 65001
 
 
 
-ffmpeg -i "01.mkv" -ss 0:4:17.0 -to 0:4:43.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=8" -y "字幕.mp4"
+ffmpeg -i "01.mkv" -ss 0:16:45.0 -to 0:19:10.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=25" -y "字幕.mp4"
 
 
 pause
 
 exit
 pause
+
+ffmpeg -i "01.mkv" -ss 0:18:45.0 -to 0:19:0.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=0" -y "字幕.mp4"
+
+
 
 ffmpeg -i "01.mkv" -ss 0:0:0.0 -to 0:4:43.0 -c:v h264_nvenc -qp 25  -sn -vf "subtitles=01.ass" -y "字幕.mp4"
 

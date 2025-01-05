@@ -20,7 +20,7 @@ set /p input=檔案:
 
 ffmpeg -i %input% -af "volumedetect" -f null -y NUL
 
-set af=-af "volume=+10dB,volumedetect"
+set af=-af "volume=-10dB,volumedetect"
 ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量_dB.mkv"
 
 set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5:print_format=summary,volumedetect"

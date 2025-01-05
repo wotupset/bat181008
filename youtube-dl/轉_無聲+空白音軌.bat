@@ -7,6 +7,8 @@ ffmpeg -f lavfi -i anullsrc -i %input%  -c:v copy  -shortest -map 0:a -map 1:v  
 
 pause
 exit
+ffmpeg -f lavfi -i anullsrc -i %input%  -c:v copy  -shortest -map 0:a -map 1:v  -y "h264_anullsrc.mp4"
+
 
 -map 0:a -map 1:v 
 -c:v copy -c:a aac

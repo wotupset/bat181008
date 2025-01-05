@@ -1,17 +1,24 @@
 echo off
 chcp 65001
+title 快crf
+
 
 echo %date%
 echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
+
+
+
+
+
 set output=_vp9_快cpu4_%nnn%.webm
 
 set /p input=檔案:
@@ -22,8 +29,8 @@ set crf=-crf 32
 set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
-set crf=-crf 35
-set crf0=-crf 30 -b:v 0
+set crf=-crf 35 
+set crf0=-crf 30
 set crf0=-crf 20 -b:v 0 -r 30 
 set crf0= 
 echo %crf%
@@ -31,7 +38,7 @@ echo %crf%
 set crf20=-b:v 500K -bufsize 100k 
 set crf2p=1000k
 set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
-set crf2=-b:v 5000K
+set crf2=-b:v 3000K -minrate 100k -maxrate 4000k 
 set crf2=
 echo %crf2%
 
@@ -40,8 +47,8 @@ set wh=480
 set wh0=512
 set wh=640
 set wh0=720
-set wh=800
-set wh=960
+set wh0=800
+set wh0=960
 set wh0=1024
 set wh0=1280
 set wh0=1600
@@ -49,16 +56,17 @@ set wh0=1600
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1120:630,setsar=1:1"
-set vf0=-vf "crop=660:660:670:210" 
+set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
 set vf0=-vf "scale=iw*2:ih*2,setsar=1:1"
 set vf0=
 echo %vf%
 
     
-set af=-af "volume=-5dB" 
+
 set af=-af "volume=+8dB" 
 set af=-af "loudnorm"
+set af=-af "volume=-10dB" 
 set af=
 echo %af%
 
@@ -67,19 +75,19 @@ echo %af%
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
-set cpu01=-row-mt 1 -threads 8 -cpu-used 4
-set cpu01=-row-mt 1 -threads 8
+set cpu01=-row-mt 1 -cpu-used 4
+set cpu01=-row-mt 1 
 set cpu010=
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
-set tt=-ss 0:1:20.0 -to 0:1:32.0
-set tt=-ss 0:3:11.1 -to 0:3:14.1
-set tt=-ss 0:14:32.0 -to 0:15:31.5
-set tt=-ss 0:0:0.4 -to 0:1:0.0
-set tt0=
+set tt=-ss 0:16:9.5 -to 0:17:9.5
+set tt=-ss 0:20:40.0 -to 0:21:10.0
+set tt=-ss 0:0:44.0 -to 0:0:48.5
+set tt=-ss 0:0:40.8 -to 0:0:56.8
+set tt=
 
 
 
@@ -94,6 +102,42 @@ echo %output%
 
 pause
 exit
+-map 0:v:0 -map 0:a:1
+
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%_mp4
+echo %nnn%
+
+
+
+設定 > 日期與時間 > 變更資料格式
+簡短日期 2024-11-20
+完整日期 2024年11月20日
+簡短時間 21:25
+完整時間 21:25:31
+
+
+
+echo %date%
+echo %time%
+
+set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vartime=%time:~0,2%
+
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+
+
+
+
  -an  -map 0:v:0 -map 0:a:0
 
 set vf=-vf "scale=1120:630,setsar=1:1"

@@ -1,17 +1,20 @@
 echo off
 chcp 65001
+title h264_nvenc預設長寬
 
 echo %date%
 echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
+
+
 
 set output=_h264_nvenc預設長寬%nnn%.mp4
 
@@ -23,23 +26,32 @@ set vf=-vf "scale=640:480,setsar=1:1"
 set vf=
 echo %vf%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  -map 0:v:0 -map 0:a:0
-
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+set qqq010= 
 
 set tt=-ss 0:20:50.0 -to 0:21:0.0
 set tt=-ss 0:22:0.0 -to 0:22:20.0
-set tt=-ss 0:0:20.1 -to 0:1:50.0
-set tt0=
+set tt=-ss 0:1:15.0 -to 0:3:25.0
+set tt=
 echo %tt%
 
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc -qp 20  %vf% %qqq01%   -y  %output%
+ffmpeg %tt% -i %input% -c:v h264_nvenc  %vf% %qqq01%    -y  %output%
 
 
 pause
 exit
+-an
 
+-map 0:v:0 -map 0:a:0
+-qp 20 
+ffmpeg -i 01x.mp4 -i 02x.mp4  -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]"  -y 合併.mp4
+
+
+
+-qp 25
+-qp 20 
  -map 0:v:0 -map 0:a:1
  
  

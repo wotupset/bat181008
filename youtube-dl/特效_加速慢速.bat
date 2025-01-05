@@ -3,7 +3,7 @@ chcp 65001
 
 set /p input=檔案:
 
-ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 10    -pix_fmt yuv420p -y 加速慢速.mp4
+ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 10  -r 30  -pix_fmt yuv420p -y 加速慢速.mp4
 
 pause
 exit

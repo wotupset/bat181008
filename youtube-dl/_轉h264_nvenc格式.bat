@@ -4,14 +4,17 @@ chcp 65001
 echo %date%
 echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
+
+
+
 set output=_h264_nvenc%nnn%.mp4
 
 set /p input=檔案:
@@ -20,10 +23,10 @@ echo %input%
 
 
 set wh=640
-set wh=800
+set wh0=800
 set wh0=1024
-set wh0=960
-set wh=1280
+set wh=960
+set wh0=1280
 set wh0=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1" -map 0:v:0 -map 0:a:0
@@ -36,15 +39,17 @@ echo %vf%
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 
-set tt=-ss 0:22:45.65 -to 0:25:5.55
-set tt=-ss 0:0:1.5 -to 0:1:45.0
-set tt=-ss 0:0:12.0 -to 0:0:35.0
-set tt=
+set tt=-ss 0:6:18.0 -to 0:8:38.0
+set tt=-ss 0:17:39.0 -to 0:18:10.0
+set tt=-ss 0:14:52.0 -to 0:18:10.0
+set tt=-ss 0:0:42.6 -to 0:2:28.0
+set tt=-ss 0:2:24.5 -to 0:2:31.0
+set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v h264_nvenc  -qp 20  %vf%  %qqq01%  -y  %output%
+ffmpeg %tt% -i %input% -c:v h264_nvenc   %vf%  %qqq01%  -y  %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -54,6 +59,8 @@ echo %output%
 
 pause
 exit
+-cq 30
+
 -map 0:v:0 -map 0:a:1
 -b:v 1000K -maxrate 1000k -bufsize 1000k 
 

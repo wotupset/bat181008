@@ -5,11 +5,11 @@ set /p input=檔案:
 
 set tt=-ss 0:0:0.0 -t 0:0:10.0
 set tt=-ss 0:0:1.8 -to 0:0:4.8
-set tt=-ss 0:20:50.0 -to 0:21:0.0
+set tt=-ss 0:0:42.5 -to 0:0:57.5
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -i %input% -c:v ffv1  -an -y "ffv1_lossless.mkv"  
+ffmpeg %tt% -i %input% -c:v ffv1 -vf "scale=1920:1080,setsar=1/1" -y "ffv1_lossless.mkv"  
 
 
 

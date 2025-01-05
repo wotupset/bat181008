@@ -13,23 +13,26 @@ echo %nnn%
 
 
 set poi=^
-https://www.youtube.com/watch?v=ieUd16Uq1dk
+https://www.youtube.com/watch?v=fwSeXa-lFQs
+
 echo %poi%
 
 
 
 set tt="*0:0:0.0-0:2:0.0"
-set tt="*0:24:0.0-0:25:30.0"
 set tt="*0:15:30.0-0:17:30.0"
-set tt="*0:17:30.0-0:19:30.0"
+set tt="*0:41:0.0-0:42:0.0"
+set tt="*0:0:0.0-0:1:0.0"
 echo %tt%
 
 set ff=-f 232+140
+set ff=-f 137+140
+set ff=-f best
 set ff=
 echo %ff%
 
 
-yt-dlp --download-sections %tt% --limit-rate 3000K   -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
+yt-dlp --download-sections %tt% --limit-rate 3000K -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
 
 
 
@@ -37,6 +40,7 @@ yt-dlp --download-sections %tt% --limit-rate 3000K   -o _切+%nnn%-%%(id)s.%%(ex
 
 pause
 exit
+
  -f best
 --force-keyframes-at-cuts
 

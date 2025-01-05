@@ -1,14 +1,15 @@
 echo off
 chcp 65001
+title 重壓縮
 
-echo %date%_%time% 
+echo %date%
+echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+
 set vartime=%time:~0,2%
-
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
-
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
@@ -20,9 +21,10 @@ set /p input=檔案:
 
 set crf=-crf 63
 set crf=-crf 60
+set crf=-crf 55
 set crf=-crf 50 
-set crf=-crf 45
-set crf=-crf 40
+set crf0=-crf 45
+set crf0=-crf 40
 set crf0=-crf 35
 set crf0=
 
@@ -33,16 +35,17 @@ set crf2p=1500k
 set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
 set crf20=-b:v 500k -minrate 10k -maxrate 1500k
 set crf20=-b:v 1000k
+set crf2=-b:v 500k
 set crf2=
 
 set wh=400
-set wh=480
-set wh=640
+set wh0=480
+set wh0=640
 set wh=800
-set wh=960
+set wh0=960
 set wh0=1280
 
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1" 
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
 set vf0=-vf "scale=640:480:force_original_aspect_ratio=decrease,setsar=1:1" 
 set vf0=
 
@@ -53,9 +56,9 @@ echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
-set cpu01=-row-mt 1 -threads 8 -cpu-used 4
-set cpu010=-row-mt 1 -threads 8
-
+set cpu01=-row-mt 1 -cpu-used 4
+set cpu01=-row-mt 1 
+set cpu010=
 
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
@@ -63,10 +66,9 @@ echo %ppp01%
 
 
 
-set tt=-ss 0:22:44.7 -to 0:25:4.5
-set tt=-ss 0:22:45.8 -to 0:25:8.0
+
 set tt=-ss 0:0:20.0 -to 0:1:50.0
-set tt=-ss 0:0:0.0 -to 0:0:50.0
+set tt=-ss 0:1:58.0 -to 0:3:28.0
 set tt0=
 echo %tt%
 
@@ -88,6 +90,7 @@ echo %time1%
 
 pause
 exit 
+-threads 10
  -map 0:v:0 -map 0:a:1
  
 -map_metadata:g -1
