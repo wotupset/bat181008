@@ -11,7 +11,7 @@ set qqq02=-cq 30
 set qqq02=-qp 30
 set qqq02=
 
-ffmpeg  -i %input%   %qqq03%   -c:v h264_nvenc %qqq02%  -y  "%output%"
+ffmpeg  -i %input%   %qqq03%   -c:v h264_nvenc -qp 30 %qqq02%  -y  "%output%"
 
 
 
@@ -25,7 +25,7 @@ start "" "%output%"
 ffmpeg -i %output% -af "volumedetect" -f null -y nul
 
 
- -c:v h264_nvenc  -qp 30  -r 25 
+-c:v h264_nvenc  -qp 30  -r 25 
 -vf "setsar=1/1,setdar=16/9" 
 -c:v h264_nvenc -rc vbr -cq 30   檔案較大 
 -c:v h264_nvenc -rc constqp -qp 30  檔案較小 

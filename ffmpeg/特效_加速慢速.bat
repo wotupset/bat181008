@@ -3,7 +3,7 @@ chcp 65001
 
 set /p input=檔案:
 
-ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 5  -r 30  -pix_fmt yuv420p -y 加速慢速.mp4
+ffmpeg  -i %input% -filter:v "setpts=2.0*PTS" -an -c:v h264_nvenc -cq 10  -r 25  -pix_fmt yuv420p -y 加速慢速.mp4
 
 pause
 exit
@@ -23,7 +23,7 @@ asetpts
  -an
  -an
 
--filter:v "setpts=5.0*PTS" 慢速.webm
+-filter:v "setpts=2.0*PTS" 慢速.webm
 -filter:v "setpts=0.5*PTS" 加速.webm
 
 

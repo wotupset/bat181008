@@ -30,11 +30,13 @@ set wh0=1280
 set crf=-crf 35
 set crf=-crf 30
 set crf=-crf 60
-set crf=
+set crf=-crf 40
+set crf0=
 
 set crf2=-b:v 300K  -minrate 300k -maxrate 300k
 set crf2=-b:v 250K  -minrate 250k -maxrate 250k
-set crf2=-b:v 200K -minrate 10k -maxrate 200k -bufsize 200k -static-thresh 4441000 -tune-content screen -drop-threshold 50
+set crf2=-b:v 200K -minrate 10k -maxrate 200k -static-thresh 4441000 -tune-content screen -drop-threshold 100
+set crf20=-b:v 150K -minrate 10k -maxrate 150k -static-thresh 4441000 -tune-content screen -drop-threshold 100
 set crf20=
 
 
@@ -54,7 +56,7 @@ set ppp01=%crf% %crf2% %qqq03% %qqq04% %qqq05% %cpu01%
 echo %ppp01%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
-set tt=-ss 0:0:16.0 -to 0:2:16.0
+set tt=-ss 0:20:15.5 -to 0:22:0.0
 set tt0=
 echo %tt%
 
@@ -76,6 +78,7 @@ echo %time1%
 
 pause
 exit 
+-bufsize 200k
 -hwaccel cuda -threads 1
 -speed 2
 

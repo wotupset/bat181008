@@ -1,14 +1,8 @@
 echo off
 chcp 65001
 
+ffmpeg -f concat -i mylist.txt -c:v copy -y 合併.mp4
 
-ffmpeg -i "01.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01x.ts
-ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
-ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
-
-
-del 01x.ts
-del 02x.ts
 
 pause
 exit
@@ -18,6 +12,8 @@ ffmpeg -i "02.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y 02x.ts
 ffmpeg -i "concat:01x.ts|02x.ts" -c copy -bsf:v h264_mp4toannexb  -y 合併.mp4
 
 
+del 01x.ts
+del 02x.ts
 
 
 

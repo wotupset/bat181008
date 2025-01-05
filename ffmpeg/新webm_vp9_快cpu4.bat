@@ -47,11 +47,12 @@ set crf2=
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p 
 set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set qqq05=-static-thresh 222111 -tune-content screen 
-set qqq06=-noise-sensitivity 1 -drop-threshold 1 -tune ssim
-set qqq07=-arnr-maxframes 1 -arnr-strength 1 -arnr-type 1 -max-intra-rate 1
+set qqq05=-tune ssim
+set qqq06=-static-thresh 1000 -tune-content screen
+set qqq07=-rc_lookahead 1 -lag-in-frames 1 -drop-threshold 30
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -threads 0
+
+set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 0 -threads 0
 set cpu02=-aq-mode 1 -rc_lookahead 1 -enable-tpl 1 -lag-in-frames 1 
 set cpu03=-corpus-complexity 1
 
@@ -82,6 +83,12 @@ echo %time1%
 
 pause
 exit
+-noise-sensitivity 0 -drop-threshold 30
+
+
+-tune psnr 
+-tune ssim
+
 set qqq04=-vf "scale=%wh%:%wh%:flags=lanczos:force_original_aspect_ratio=decrease,setsar=1:1"
 set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf=-vf "scale_cuda=800:450:interp_algo=bilinear,setsar=1/1" 

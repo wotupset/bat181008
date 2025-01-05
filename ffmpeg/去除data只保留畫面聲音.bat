@@ -1,48 +1,23 @@
-echo off
-chcp 65001
-
-set /p input=æª”æ¡ˆ:
-
-set tt=-ss 0:0:0.0 -t 0:0:10.0
-set tt=-ss 0:0:0.0 -to 0:0:8.7
-set tt=-ss 0:1:56.6 -to 0:2:11.0
-set tt=-ss 0:14:30.0 -to 0:15:1.0
-set tt0=
-echo %tt%
-
-ffmpeg %tt% -i %input% -c:v ffv1   -y "ffv1_lossless.mkv"  
+set /p input=ÀÉ®×:
 
 
+ffmpeg -i %input%  -dn -sn -c:v copy -c:a copy  -y "skip_data.mkv"
 
 
 pause
 exit
-ffmpeg  -i %input% -c:v ffv1  -map_chapters -1 -map_metadata -1  -y "ffv1_lossless.mkv"  
 
-ffmpeg  -i %input%  -ss 0:0:25.0 -to 0:0:34.0   -c:v copy -an -sn -y "lossless.webm"  
-ffmpeg -i %input% -ss 0:1:54.0 -to 0:2:5.0 -c:v copy  -c:a aac  -y  "lossless.mkv"
-ffmpeg  -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
+-map 0:v -map 0:a
 
+The -vn / -an / -sn / -dn options can be used to skip inclusion of video, audio, subtitle and data
+-map_chapters -1
 
-ffmpeg  -i %input%  -ss 0:0:53.0 -to 0:1:27.0  -c:v copy -c:a copy -sn -y "lossless.webm"  
-
-
--avoid_negative_ts make_zero
-
-
-
-ffmpeg  -i %input% -c:v ffv1 -sn -an -y "ffv1_lossless.mkv"  
-
-
-set tt=-ss 0:1:26.0 -to 0:1:57.0
-%tt%
--s 1280x720
 
 
 -ss 0:1:18.0 -to 0:4:0.0 
 
 
-ffmpeg -y -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0  "vp9_lossless.webm"
+ffmpeg  -i %input% -c:v libvpx-vp9  -crf 0 -b:v 0 -y  "vp9_lossless.webm"
 
 
 -ss 0:0:0.0 -to 0:0:19.5
@@ -62,7 +37,7 @@ ffmpeg -y -i %input% -c:v libx264  -crf 0 -b:v 0  "h264_lossless.mp4"
 
 out%Y-%m-%d_%H-%M-%S.mp4
 
-æœƒä»¥ä¸‰ä½æ•¸å­—ï¼Œè‡ªå‹•ç·¨è™Ÿçš„æª”åã€‚
+·|¥H¤T¦ì¼Æ¦r¡A¦Û°Ê½s¸¹ªºÀÉ¦W¡C
 ffmpeg -i input.mp4 -map 0 -c copy -f segment -segment_time 1800 -reset_timestamps 1 output_%03d.mp4
 
 -c copy -f segment -segment_time 1800 -reset_timestamps 1

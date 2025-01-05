@@ -4,13 +4,17 @@ chcp 65001
 set /p input=檔案:
 
 
-ffmpeg  -c:v h264_cuvid  -i %input% -ss 0:16:26.0 -to 0:17:57.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=1:force_style='FontSize=25'" -y 字幕.mkv
+ffmpeg -i %input% -ss 0:12:0.0 -to 0:12:8.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=9" -y 字幕.mkv
 
 
 pause
 
 exit
 pause
+
+ffmpeg   -i %input% -ss 0:1:45.0 -to 0:2:0.0 -c:v h264_nvenc -sn -vf "subtitles=01.mkv:si=9:force_style='FontSize=25'" -y 字幕.mkv
+
+
 -c:v hevc_cuvid
 
 //Nvidia CUVID HEVC decoder (codec hevc)

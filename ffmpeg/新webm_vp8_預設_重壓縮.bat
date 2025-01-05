@@ -11,7 +11,7 @@ set output=_vp8_預設%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx -c:a libopus -s 360x360 -y %output%
+ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx -c:a libopus  -y %output%
 
 set time1=%date%_%time%
 
@@ -25,6 +25,8 @@ echo %time1%
 
 pause
 exit
+-vf "scale=%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
+-s 360x360
 set oo4=-pix_fmt yuv420p -ac 2 
 echo %oo4%
 

@@ -11,7 +11,7 @@ del "01x_loop.mp4"
 
 
 
-.\ffmpeg -y -i "01.mp4" -i "01x_loop5.mp4" -shortest -r 120  -map 0:a -map 1:v  "FFF.mp4"
+.\ffmpeg -y -i "01.flac" -i "01x_loop5.mp4" -shortest -fflags +shortest -max_interleave_delta 100M   -map 0:a -map 1:v  "FFF.mp4"
 .\ffmpeg -y -i "FFF.mp4"   -c:v h264_nvenc  -r 5  -pix_fmt yuv420p   "cover.mp4"
 
 del "01x_loop5.mp4"

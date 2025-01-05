@@ -1,6 +1,9 @@
+ffmpeg -h encoder=libwebp >libwebp.txt
 
 ffmpeg -h encoder=libvpx-vp9 >libvpx-vp9.txt
 ffmpeg -h encoder=libvpx >libvpx.txt
+ffmpeg -h encoder=vp9_qsv >vp9_qsv.txt
+
 
 ffmpeg -h encoder=h264_nvenc >h264_nvenc.txt
 ffmpeg -h encoder=libx264 >libx264.txt
@@ -8,8 +11,8 @@ ffmpeg -h encoder=h264_qsv >h264_qsv.txt
 
 
 ffmpeg -h encoder=libaom-av1 >libaom-av1.txt
-ffmpeg -h encoder=librav1e >librav1e.txt
-ffmpeg -h encoder=libsvtav1 >libsvtav1.txt
+ffmpeg -h encoder=mpeg2video >mpeg2video.txt
+
 
 
 ffmpeg -h encoder=libwebp >libwebp.txt
@@ -23,6 +26,7 @@ ffmpeg -h >help.txt
 ffmpeg -encoders >encoders.txt
 ffmpeg -decoders >decoders.txt
 
+
 xcopy *.txt .\_help\*.txt
 del *.txt
 
@@ -32,6 +36,12 @@ ffmpeg -version
 
 pause
 exit
+
+
+ffmpeg -h encoder=librav1e >librav1e.txt
+ffmpeg -h encoder=libsvtav1 >libsvtav1.txt
+
+
 
 cmd
 

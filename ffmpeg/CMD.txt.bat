@@ -1,3 +1,16 @@
+echo off
+chcp 65001
+set /p input=檔案:
+
+ffmpeg  %input%  -y - | ffplay -
+
+pause
+ffmpeg -hide_banner -hwaccels
+cmd
+
+
+
+
 ffmpeg -h encoder=libwebp
 ffmpeg -h encoder=mjpeg
 

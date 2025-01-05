@@ -11,17 +11,18 @@ set wh=1280:720
 set vf0=-vf "scale=%wh%:flags=bilinear,setsar=1/1" 
 
 set wh=1920
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 echo %vf%
 
 set tt=-ss 0:0:11.5 -t 0:0:19.5
 set tt=-ss 0:0:19.0 -to 0:0:24.0
-set tt=
+set tt=-ss 0:20:5.0 -to 0:20:18.0
+set tt0=
 echo %tt%
 
 set output=_h264_nvenc_%RANDOM%.mp4
 
-ffmpeg %tt% -i %input% %vf% -c:v h264_nvenc  -qp 20  -y  %output%
+ffmpeg %tt% -i %input% %vf% -c:v h264_nvenc  -cq 10  -y  %output%
 
 
 

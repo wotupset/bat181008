@@ -47,7 +47,7 @@ set wh0=1024
 set wh0=1280
 
 set qqq03=-map_chapters -1 -map_metadata -1 -ac 2 -sn -dn -pix_fmt yuv420p
-set qqq04=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set qqq04=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set qqq040=-vf "scale=800:450:flags=bilinear,setsar=1:1"
 
 set qqq05= -static-thresh 4441000 -tune-content screen -drop-threshold 50
