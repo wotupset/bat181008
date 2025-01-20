@@ -5,21 +5,28 @@ chcp 65001
 set /p input=檔案:
 
 
-set tt=-ss 0:4:20.0 -to 0:4:50.0
+set tt=-ss 0:4:20.0 -to 0:5:20.0
 echo %tt%
 
 set output=+test+%RANDOM%
 echo %output%
 
-..\ffmpeg -loop 1 -i "01.webp"  %tt%  -i %input%  -shortest -fflags +shortest -max_interleave_delta 100M -c:v h264_nvenc -s 400x300  -y "FFF.mp4"
-..\ffmpeg -i "FFF.mp4" -c:v h264_nvenc -r 10  -map_chapters -1 -map_metadata -1  -pix_fmt yuv420p -qp 30 %output%.mp4
+..\ffmpeg -loop 1 -i "01.webp"  %tt%  -i %input%   -pix_fmt yuv420p -shortest  -max_interleave_delta 100M -c:v h264_nvenc  -y "FFF.mp4"
+..\ffmpeg -i "FFF.mp4" -c:v h264_nvenc -r 10 -map_chapters -1 -map_metadata -1  -pix_fmt yuv420p -qp 30 %output%.mp4
 
 del "FFF.mp4"
+pause
 exit
+
+
+-tune stillimage
+
 
 簡易版
 pause
 exit
+-fflags +shortest
+..\ffmpeg -loop 1 -i "3333.jpg"  %tt%  -i %input%  -shortest -fflags +shortest -max_interleave_delta 100M -c:v h264_nvenc -s 400x300  -y "FFF.mp4"
 
 -b:v 1000k -minrate 1000k -maxrate 1000k -bufsize 2000k
 
