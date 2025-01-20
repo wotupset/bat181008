@@ -24,7 +24,7 @@ set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
 set crf=-crf 35 
-set crf=-crf 30 
+set crf0=-crf 30 
 set crf0=
 echo %crf%
 
@@ -44,7 +44,7 @@ set wh=640
 set wh0=720
 set wh=800
 set wh=960
-set wh=1024
+set wh0=1024
 set wh0=1280
 set wh0=1600
 
@@ -81,11 +81,11 @@ set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
 set tt=-ss 0:0:0.0 -to 0:0:12.5
-set tt0=
+set tt=
 echo %tt%
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -95,6 +95,7 @@ pause
 exit
 
 
+ -static-thresh 2144421000 
 預設
 set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
 

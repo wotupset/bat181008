@@ -15,7 +15,7 @@ set wh0=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=increase,setsar=1:1,crop=1050:590:-1:-1"
 set vf=-vf "crop=720:720:-1:-1"
 set vf0=-vf "crop=564:564:345:0"
-set vf=-vf "crop=768:576"
+set vf=-vf "crop=512:512"
 set vf0=-vf "crop=720:1280"
 set vf0=-vf "crop=1280:720"
 set vf0=-vf "scale=450:800,setsar=1/1" 
@@ -32,7 +32,7 @@ echo %ppp01%
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt=-ss 0:0:50.0 -to 0:4:58.0
-set tt0=
+set tt=
 echo %tt%
 
 set output=_h264_nvenc-crop.mp4

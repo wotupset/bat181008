@@ -5,15 +5,15 @@ title 預設大小
 echo %date%
 echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
+
 
 set output=_vp9_預設大小%nnn%.webm
 
@@ -25,7 +25,7 @@ set /p input=檔案:
 
 set crf=-crf 40
 set crf=-crf 35
-set crf=-crf 30 
+set crf0=-crf 30 
 set crf0=-crf 30 -b:v 2500K
 set crf0=-crf 20 -b:v 0
 set crf0=
@@ -55,14 +55,14 @@ set cpu01=-row-mt 1
 set cpu010=
 
 
-set ppp01=%crf% %crf2% %af% %qqq01% %cpu01% 
+set ppp01=%crf% %crf2% %qqq01% %cpu01% 
 echo %ppp01%
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:2:46.8 -to 0:3:26.8
+set tt=-ss 0:0:0.0 -to 0:0:20.0
 set tt=
 echo %tt%
 

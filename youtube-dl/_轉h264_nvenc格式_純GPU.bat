@@ -28,6 +28,7 @@ set wh=1280
 set wh=1920
 set vf=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,hwdownload,format=nv12"
 set vf=-vf "scale_cuda=1280:720,hwdownload,format=nv12"
+set vf=-vf "scale_cuda=1280:720"
 set vf0=
 echo %vf%
 
@@ -35,13 +36,14 @@ set af=-af "volume=-10dB"
 set af=
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -r 60
-echo %ppp01%
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2  -sn -dn 
+set qqq010=
+
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:8:55.0 -to 0:12:55.0
-set tt=
+set tt=-ss 0:0:0.0 -to 0:10:0.0
+set tt0=
 echo %tt%
 
 
@@ -49,7 +51,7 @@ set time0=%date%_%time%
 
 ffmpeg -hwaccel cuda -hwaccel_output_format cuda  %tt% -i %input% ^
 %vf% %qqq01% ^
--c:v h264_nvenc  -qp 20  ^
+-c:v h264_nvenc -qp 20  ^
 -y %output%
 
 set time1=%date%_%time%
@@ -60,7 +62,9 @@ echo %output%
 
 pause
 exit
-GPU不支援444
+GPU不支援 -pix_fmt yuv420p
+GPU不支援444 
+GPU不支援10bit
 
 set vf0=-vf "scale=450:800,setsar=1/1" 
 scale_cuda 不支援 setsar=1/1

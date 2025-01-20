@@ -24,17 +24,16 @@ echo %input%
 
 set vf=-vf "scale_cuda=-1:-1,setsar=1:1,hwdownload,format=nv12" 
 set vf=-vf "hwdownload,format=nv12"
+set vf=
 echo %vf%
 
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
-
-echo %ppp01%
+set qqq01=
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:0:0.0 -to 0:1:5.0
-set tt=-ss 0:8:55.0 -to 0:12:55.0
+set tt=-ss 0:10:0.0 -to 0:11:0.0
 set tt0=
 echo %tt%
 

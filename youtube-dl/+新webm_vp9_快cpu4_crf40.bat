@@ -47,8 +47,8 @@ set wh=480
 set wh0=512
 set wh=640
 set wh0=720
-set wh0=800
-set wh0=960
+set wh=800
+set wh=960
 set wh0=1024
 set wh0=1280
 set wh0=1600
@@ -64,10 +64,11 @@ echo %vf%
 
     
 
-set af=-af "volume=+8dB" 
+
 set af=-af "loudnorm"
 set af=-af "volume=-10dB" 
-set af=
+set af=-af "volume=+1dB"  
+set af0=
 echo %af%
 
 
@@ -83,16 +84,18 @@ set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01%
 echo %ppp01%
 
 
-set tt=-ss 0:16:9.5 -to 0:17:9.5
+
 set tt=-ss 0:20:40.0 -to 0:21:10.0
-set tt=-ss 0:0:44.0 -to 0:0:48.5
-set tt=-ss 0:0:40.8 -to 0:0:56.8
+set tt=-ss 0:16:29.0 -to 0:16:48.3
+set tt=-ss 0:2:10.0 -to 0:4:10.0
+set tt=-ss 0:2:5.0 -to 0:3:12.0
+set tt=-ss 0:0:16.0 -to 0:0:38.0
 set tt=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output% 
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    -static-thresh 2144421000   %ppp01% -y %output% 
 set time1=%date%_%time%
 
 echo %time0%
@@ -102,6 +105,13 @@ echo %output%
 
 pause
 exit
+-static-thresh 2144421000 
+ 
+-tune-content screen  -static-thresh 2144421000
+-error-resilient default  
+-error-resilient partitions                   
+-static-thresh 1117770000
+ 
 -map 0:v:0 -map 0:a:1
 
 echo %date%
