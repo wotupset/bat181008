@@ -1,10 +1,22 @@
 echo off
 chcp 65001
 
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
 
 
 
-ffmpeg -i "01.mkv" -ss 0:16:45.0 -to 0:19:10.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=25" -y "字幕.mp4"
+
+ffmpeg -i "01.mkv" -ss 0:17:0.0 -to 0:17:30.0 -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontSize=24'" -y "硬字幕%nnn%.mp4"
 
 
 pause
@@ -12,6 +24,10 @@ pause
 exit
 pause
 
+
+ffmpeg -i "01.mkv" -ss 0:17:0.0 -to 0:17:30.0 -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
+
+-ss 0:16:00.0 -to 0:21:50.0
 ffmpeg -i "01.mkv" -ss 0:18:45.0 -to 0:19:0.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=0" -y "字幕.mp4"
 
 

@@ -13,16 +13,17 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
+set output=_lossless_%nnn%.mkv
 
 set /p input=檔案:
 
 set tt=-ss 0:11:38.0 -to 0:18:33.0
-set tt=-ss 0:17:56.5 -to 0:21:26.5
-set tt=-ss 0:20:34.0 -to 0:21:57.0
+set tt=-ss 0:1:10.0 -to 0:1:45.0
+set tt=-ss 0:4:15.5 -to 0:6:0.0
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mp4" 
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y %output%
 
 
 
@@ -38,6 +39,8 @@ ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1 
 ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless_%nnn%.mkv" 
 ffmpeg -i %input%    -c:v libvpx-vp9 -crf 10 -b:v 0  -y  "無損.webm"
 ffmpeg %tt% -i %input%  -sn -dn  -crf 10 -b:v 0  -y "_lossless.mkv" 
+
+
 ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless.mkv" 
 
 ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"

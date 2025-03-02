@@ -4,17 +4,20 @@ chcp 65001
 set /p input=檔案:
 
 set tt=-ss 0:0:0.0 -t 0:0:10.0
-set tt=-ss 0:0:1.8 -to 0:0:4.8
 set tt=-ss 0:0:42.5 -to 0:0:57.5
+set tt=-ss 0:0:0.0 -to 0:5:0.0
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -i %input% -c:v ffv1 -vf "scale=1920:1080,setsar=1/1" -y "ffv1_lossless.mkv"  
+ffmpeg %tt% -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
 
 
 
 pause
 exit
+-vf "scale=1920:1080,setsar=1/1"
+
+
 ffmpeg  -i %input% -c:v ffv1  -map_chapters -1 -map_metadata -1  -y "ffv1_lossless.mkv"  
 
 ffmpeg  -i %input%  -ss 0:0:25.0 -to 0:0:34.0   -c:v copy -an -sn -y "lossless.webm"  

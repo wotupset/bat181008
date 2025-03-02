@@ -15,10 +15,6 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-
-
-
-
 set output=_vp9_快cpu4_%nnn%.webm
 
 set /p input=檔案:
@@ -30,9 +26,9 @@ set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40
 set crf=-crf 35 
-set crf0=-crf 30
-set crf0=-crf 20 -b:v 0 -r 30 
-set crf0= 
+set crf0=-crf 30 -b:v 0
+set crf0=-crf 20 -b:v 5000k 
+set crf= 
 echo %crf%
 
 set crf20=-b:v 500K -bufsize 100k 
@@ -50,10 +46,14 @@ set wh0=720
 set wh=800
 set wh=960
 set wh0=1024
-set wh0=1280
+set wh=1280
+set wh0=1440
 set wh0=1600
 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1120:630,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
@@ -66,9 +66,11 @@ echo %vf%
 
 
 set af=-af "loudnorm"
+set af=-af "volume=+10dB" 
 set af=-af "volume=-10dB" 
-set af=-af "volume=+1dB"  
-set af0=
+set af=-af "volume=-5dB" 
+set af0=-an
+set af=
 echo %af%
 
 
@@ -87,15 +89,15 @@ echo %ppp01%
 
 set tt=-ss 0:20:40.0 -to 0:21:10.0
 set tt=-ss 0:16:29.0 -to 0:16:48.3
-set tt=-ss 0:2:10.0 -to 0:4:10.0
-set tt=-ss 0:2:5.0 -to 0:3:12.0
-set tt=-ss 0:0:16.0 -to 0:0:38.0
+set tt=-ss 0:16:19.0 -to 0:16:39.0
+set tt=-ss 0:17:6.5 -to 0:17:36.5
+set tt=-ss 0:16:56.5 -to 0:18:50.0
 set tt=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus    -static-thresh 2144421000   %ppp01% -y %output% 
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output% 
 set time1=%date%_%time%
 
 echo %time0%
@@ -105,6 +107,16 @@ echo %output%
 
 pause
 exit
+
+orig =1870
+gblur =1689
+avgblur =1406
+boxblur =977
+
+
+
+
+
 -static-thresh 2144421000 
  
 -tune-content screen  -static-thresh 2144421000

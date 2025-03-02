@@ -14,7 +14,7 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-
+set output=_output_vp9_oped%nnn%.webm
 
 set /p input=檔案:
 
@@ -23,8 +23,8 @@ set crf=-crf 63
 set crf=-crf 60
 set crf=-crf 55
 set crf=-crf 50 
-set crf0=-crf 45
-set crf0=-crf 40
+set crf=-crf 45
+set crf=-crf 40
 set crf0=-crf 35
 set crf0=
 
@@ -39,14 +39,15 @@ set crf2=-b:v 500k
 set crf2=
 
 set wh=400
-set wh0=480
-set wh0=640
+set wh=480
+set wh=640
 set wh=800
 set wh0=960
 set wh0=1280
 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
-set vf0=-vf "scale=640:480:force_original_aspect_ratio=decrease,setsar=1:1" 
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr" 
+set vf0=-vf "scale=640:480,setsar=1:1,gblur,chromanr" 
+set vf0=-vf "scale=640:480,setsar=1:1" 
 set vf0=
 
 set af=-af "volume=-10dB" 
@@ -68,15 +69,16 @@ echo %ppp01%
 
 
 set tt=-ss 0:0:20.0 -to 0:1:50.0
-set tt=-ss 0:1:58.0 -to 0:3:28.0
+set tt=-ss 0:0:18.0 -to 0:2:28.0
+set tt=-ss 0:4:0.5 -to 0:5:30.0
 set tt0=
 echo %tt%
 
 
-set output=_output_vp9_oped%nnn%.webm
+
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus   %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output%
 set time1=%date%_%time%
 
 

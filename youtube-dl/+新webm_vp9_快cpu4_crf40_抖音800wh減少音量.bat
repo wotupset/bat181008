@@ -41,13 +41,15 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh0=720
+set wh=720
 set wh=800
 set wh=960
-set wh0=1024
+set wh=1024
 set wh0=1280
 set wh0=1600
 
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr,gblur"
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=450:800,setsar=1:1"
@@ -62,11 +64,12 @@ set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
 set af0=-af "loudnorm=I=-25"
 set af0=-af "loudnorm=I=-30"
 set af=-af "volume=-5dB" 
-set af=-af "volume=-10dB" 
-set af0=-an
+set af0=-af "volume=-10dB" 
+set af0=-af "volume=-15dB"
+set af0= -an
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:0
+set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 set cpu01=-row-mt 1 -threads 8 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8
 set cpu01=-row-mt 1
@@ -80,8 +83,8 @@ echo %ppp01%
 set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
-set tt=-ss 0:0:0.0 -to 0:0:12.5
-set tt=
+set tt=-ss 0:0:0.0 -to 0:1:0.0
+set tt0=
 echo %tt%
 
 set time0=%date%_%time%
@@ -94,7 +97,7 @@ echo %time1%
 pause
 exit
 
-
+-map 0:v:0 -map 0:a:0
  -static-thresh 2144421000 
 預設
 set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
