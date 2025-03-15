@@ -44,14 +44,16 @@ set wh=640
 set wh=720
 set wh=800
 set wh=960
-set wh=1024
+set wh0=1024
 set wh0=1280
 set wh0=1600
 
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr,gblur"
 set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,avgblur"
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=450:800,setsar=1:1"
 set vf0=
 echo %vf%
@@ -59,12 +61,14 @@ echo %vf%
 
 set af=-af "volume=+5dB" 
 set af=-af "volume=-10dB" 
-set af=-af "loudnorm"
-set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
+
+
 set af0=-af "loudnorm=I=-25"
 set af0=-af "loudnorm=I=-30"
 set af=-af "volume=-5dB" 
-set af0=-af "volume=-10dB" 
+set af=-af "volume=-10dB" 
+set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
+set af=-af "loudnorm,volume=+5dB"
 set af0=-af "volume=-15dB"
 set af0= -an
 echo %af%
@@ -83,8 +87,8 @@ echo %ppp01%
 set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
-set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt0=
+set tt=-ss 0:0:32.0 -to 0:1:2.0
+set tt=
 echo %tt%
 
 set time0=%date%_%time%
@@ -96,6 +100,17 @@ echo %time1%
 
 pause
 exit
+
+
+orig =1870
+gblur =1689
+avgblur =1406
+boxblur =977
+
+
+
+
+
 
 -map 0:v:0 -map 0:a:0
  -static-thresh 2144421000 

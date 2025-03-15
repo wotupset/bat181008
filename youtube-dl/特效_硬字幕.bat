@@ -15,17 +15,32 @@ echo %nnn%
 
 
 
+set tt=-ss 0:12:8.0 -to 0:12:50.0
+set tt=-ss 0:21:30.0 -to 0:21:56.0
+set tt=-ss 0:5:0.0 -to 0:5:33.0
+set tt=-ss 0:1:35.0 -to 0:2:0.0
+set tt0=
 
-ffmpeg -i "01.mkv" -ss 0:17:0.0 -to 0:17:30.0 -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontSize=24'" -y "硬字幕%nnn%.mp4"
+
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=2:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
 
 
 pause
 
 exit
 pause
+fontsdir=Dancing_Script.ttf
 
 
-ffmpeg -i "01.mkv" -ss 0:17:0.0 -to 0:17:30.0 -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=2:force_style='Bold=1,FontSize=20,FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
+
+
+
+
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.ass" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=19" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontSize=24'" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -map 0:v:0 -map 0:a:0 -sn -vf "subtitles=01.mkv:si=32:force_style='FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
 
 -ss 0:16:00.0 -to 0:21:50.0
 ffmpeg -i "01.mkv" -ss 0:18:45.0 -to 0:19:0.0 -c:v h264_nvenc -qp 20  -sn -vf "subtitles=01.mkv:si=0" -y "字幕.mp4"

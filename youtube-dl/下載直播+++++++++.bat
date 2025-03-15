@@ -1,11 +1,8 @@
-chcp 65001
 echo off
+chcp 65001
+title 下載直播
 
 
-
-
-set /p poi=youtube網址:
-echo "%poi%"
 
 
 :top
@@ -22,16 +19,22 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
+set /p poi=youtube網址:
+echo "%poi%"
+
+
+
+
 
 
 start "" yt-dlp %poi%  -o "_%%(id)s_%nnn%_%RANDOM%.%%(ext)s"
 
 
 
-pause
+
 goto top
 
-
+pause
 exit
 cls
 

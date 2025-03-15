@@ -24,11 +24,14 @@ set crf=-crf 30 -b:v 0
 set crf=-crf 32
 set crf=-crf 50
 set crf=-crf 45 
-set crf=-crf 40
+set crf=-crf 40 
 set crf=-crf 35 
 set crf0=-crf 30 -b:v 0
 set crf0=-crf 20 -b:v 5000k 
-set crf= 
+set crf0=-b:v 1500k -b:a 96k
+set crf0=-b:v 500k -minrate 500k -maxrate 500k -b:a 90k -r 30
+set crf0=-b:v 1500k -b:a 80k 
+set crf0= 
 echo %crf%
 
 set crf20=-b:v 500K -bufsize 100k 
@@ -39,22 +42,26 @@ set crf2=
 echo %crf2%
 
 set wh=400
-set wh=480
+set wh0=480
 set wh0=512
 set wh=640
 set wh0=720
 set wh=800
-set wh=960
-set wh0=1024
+set wh0=960
+set wh=1024
 set wh=1280
 set wh0=1440
 set wh0=1600
 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
+
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,boxblur"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,avgblur"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
 set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1120:630,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
@@ -65,12 +72,14 @@ echo %vf%
     
 
 
-set af=-af "loudnorm"
+
 set af=-af "volume=+10dB" 
 set af=-af "volume=-10dB" 
-set af=-af "volume=-5dB" 
+set af=-af "volume=-10dB" 
+set af=-af "volume=+5dB" 
+set af=-af "loudnorm"
 set af0=-an
-set af=
+set af0=
 echo %af%
 
 
@@ -87,11 +96,12 @@ echo %ppp01%
 
 
 
-set tt=-ss 0:20:40.0 -to 0:21:10.0
-set tt=-ss 0:16:29.0 -to 0:16:48.3
-set tt=-ss 0:16:19.0 -to 0:16:39.0
-set tt=-ss 0:17:6.5 -to 0:17:36.5
-set tt=-ss 0:16:56.5 -to 0:18:50.0
+
+
+set tt=-ss 0:24:19.5 -to 0:24:28.9
+set tt=-ss 0:21:9.3 -to 0:21:31.0
+set tt=-ss 0:0:8.55 -to 0:0:30.0
+set tt=-ss 0:0:6.5 -to 0:0:19.5
 set tt=
 
 
@@ -107,13 +117,17 @@ echo %output%
 
 pause
 exit
+反而變大了
+set vf=-vf "scale=%wh%:%wh%:flags=fast_bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+ -r 60
+ 
 
 orig =1870
 gblur =1689
 avgblur =1406
 boxblur =977
 
-
+chromanr
 
 
 

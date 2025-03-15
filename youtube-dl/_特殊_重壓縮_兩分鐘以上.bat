@@ -20,25 +20,26 @@ set /p input=檔案:
 set output=特殊%nnn%.webm
 
 
-set tt=-ss 0:0:0.0 -t 0:0:10.0
-set tt=-ss 0:0:37.0 -to 0:1:57.0
-set tt=-ss 0:5:55.0 -to 0:6:55.0
-set tt=-ss 0:1:40.0 -to 0:2:32.0
-set tt=
+
+
+set tt=-ss 0:4:20.5 -to 0:6:20.5
+set tt=-ss 0:0:1.0 -to 0:1:57.0
+set tt=-ss 0:3:15.0 -to 0:5:50.0
+set tt0=
 echo %tt%
 
 
 
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc  -map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -vf "scale=800:800:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" -af "volume=+1dB" -y "FFF.mp4"  
+ffmpeg %tt% -i %input% -c:v h264_nvenc  -map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  -vf "scale=800:800:force_original_aspect_ratio=decrease,setsar=1:1"  -y "FFF.mp4"  
 
 ffmpeg -i "FFF.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF01.ts
 ffmpeg -i "concat:FFF01.ts" -c copy -bsf:a aac_adtstoasc -y "FFF02.mp4"
 del "FFF01.ts"
 
 set time0=%date%_%time%
-ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -row-mt 1 -crf 40 -static-thresh 2144421000    -y %output% 
+ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -row-mt 1 -crf 45 -static-thresh 2144421000  -vf "gblur,chromanr" -y %output% 
 del "FFF02.mp4"
 set time1=%date%_%time%
 
@@ -51,6 +52,18 @@ echo %output%
 
 pause
 exit
+
+:flags=bilinear
+
+
+,gblur,chromanr
+-r 30
+-r 25
+-af "loudnorm"
+
+-r 25
+-hwaccel auto
+-af "volume=+0.1dB"
 -qp 20
 
 -static-thresh 2144421000 

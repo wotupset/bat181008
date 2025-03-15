@@ -11,7 +11,7 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-set output=_剪裁_自訂%nnn%.mp4
+
 
 
 
@@ -21,21 +21,27 @@ set /p input=檔案:
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:3:33.0 -to 0:4:3.0
 set tt=-ss 0:2:28.5 -to 0:2:30.0
-set tt=-ss 0:0:48.0 -to 0:0:56.8
+set tt=-ss 0:4:0.0 -to 0:5:32.0 
+set tt=-ss 0:1:54.3 -to 0:1:57.3 
 set tt0=
 echo %tt%
 
 set vf=-vf "crop=480:480:630:70" 
-set vf=-vf "crop=640:640:360:360" 
-set vf=-vf "crop=800:800:900:70" 
+set vf=-vf "crop=800:450:980:40" 
+set vf=-vf "crop=1280:720:370:190" 
+
+set output=_剪裁_自訂%nnn%.mp4
 
 
-
-ffmpeg %tt% -i %input%  %vf% -c:v h264_nvenc -qp 10  -pix_fmt yuv420p -y %output%
+ffmpeg %tt% -i %input%  %vf%  -c:v h264_nvenc -qp 10 -pix_fmt yuv420p -y %output%
 
 
 pause
 exit
+-c:v libvpx-vp9 -c:a libopus 
+-c:v h264_nvenc -qp 10
+
+
 set aa=-vf "crop=800:800:560:130" 
 
 -cq 18

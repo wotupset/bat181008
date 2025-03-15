@@ -23,9 +23,8 @@ set /p input=檔案:
 
 
 
-set crf=-crf 40
-set crf=-crf 35
-set crf0=-crf 30 
+set crf=-crf 40 
+set crf0=-crf 35 
 set crf0=-crf 30 -b:v 2500K
 set crf0=-crf 20 -b:v 0
 set crf0=
@@ -35,16 +34,17 @@ set crf2p=3000k
 set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% -bufsize %crf2p%
 set crf2=
 set crf2=
-echo %crf2%
 
 
-set vf=
-echo %vf%
+set vf=-vf "setsar=1:1,gblur"
+set vf0=
+
 
 set af=-af "volume=-12dB" 
-set af=-af "volume=+5dB" 
+set af=-af "volume=-10dB" 
+set af=-af "volume=-5dB" 
 set af=
-echo %af%
+
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
@@ -55,20 +55,20 @@ set cpu01=-row-mt 1
 set cpu010=
 
 
-set ppp01=%crf% %crf2% %qqq01% %cpu01% 
+set ppp01=%crf% %crf2% %qqq01% %cpu01% %vf% %af%
 echo %ppp01%
 
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:0:0.0 -to 0:0:20.0
-set tt=
+set tt=-ss 0:1:0.0 -to 0:1:30.0
+set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9  %ppp01%  -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -static-thresh 2144421000  %ppp01%  -y %output%
 set time1=%date%_%time%
 
 
@@ -83,7 +83,7 @@ echo %time1%
 
 pause
 exit 
-
+-static-thresh 2144421000 
 -an  -map 0:v:0 -map 0:a:0
 
 set qqq02=-tune-content screen  -static-thresh 214441000
