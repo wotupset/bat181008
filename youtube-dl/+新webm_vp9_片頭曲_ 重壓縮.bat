@@ -26,33 +26,27 @@ set crf=-crf 50
 set crf=-crf 45
 set crf=-crf 40
 set crf0=-crf 35
+set crf0=-b:v 100k -minrate 100k -maxrate 100k -b:a 80k 
+set crf0=-b:v 200k -b:a 80k 
 set crf0=
-
-set crf2p=200k
-set crf2p0=300k
-set crf2p0=400k
-set crf2p=1500k
-set crf2=-b:v %crf2p% -minrate %crf2p% -maxrate %crf2p% 
-set crf20=-b:v 500k -minrate 10k -maxrate 1500k
-set crf20=-b:v 1000k
-set crf2=-b:v 500k
-set crf2=
 
 set wh=400
 set wh=480
 set wh=640
-set wh=800
+set wh0=800
 set wh0=960
 set wh0=1280
 
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr" 
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
 set vf0=-vf "scale=640:480,setsar=1:1,gblur,chromanr" 
 set vf0=-vf "scale=640:480,setsar=1:1" 
 set vf0=
 
 set af=-af "volume=-10dB" 
 set af=-af "volume=+5dB" 
-set af=
+set af=-an
+set af0=
 echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
@@ -70,7 +64,7 @@ echo %ppp01%
 
 set tt=-ss 0:0:20.0 -to 0:1:50.0
 set tt=-ss 0:0:18.0 -to 0:2:28.0
-set tt=-ss 0:4:0.5 -to 0:5:30.0
+set tt=-ss 0:0:3.1 -to 0:0:43.1
 set tt0=
 echo %tt%
 

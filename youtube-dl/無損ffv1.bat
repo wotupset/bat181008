@@ -1,20 +1,45 @@
 echo off
 chcp 65001
+title 無損
+
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+
+
 
 set /p input=檔案:
 
 set tt=-ss 0:0:0.0 -t 0:0:10.0
 set tt=-ss 0:0:42.5 -to 0:0:57.5
 set tt=-ss 0:0:0.0 -to 0:5:0.0
+set tt=-ss 0:0:8.0 -to 0:0:22.0
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -i %input% -c:v ffv1  -y "ffv1_lossless.mkv"  
 
+ffmpeg %tt% -i %input% -c:v ffv1   -y "_lossless%nnn%.mkv"  
 
 
 pause
 exit
+
+ffv1 307mb
+ffvhuff 826mb
+huffyuv 1.06gb
+
+ffmpeg %tt% -i %input% -c:v ffvhuff   -y "ffv1_lossless.mkv"  
+
+
+
 -vf "scale=1920:1080,setsar=1/1"
 
 

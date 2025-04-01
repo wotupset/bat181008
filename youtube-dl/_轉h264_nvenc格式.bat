@@ -26,8 +26,9 @@ set wh=640
 set wh0=800
 set wh0=1024
 set wh=960
+set wh0=1024
 set wh=1280
-set wh0=1920
+set wh=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1" -map 0:v:0 -map 0:a:0
 set vf0=-vf "scale=800:600,setsar=1/1"
@@ -40,16 +41,16 @@ echo %vf%
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 
-set tt=-ss 0:6:18.0 -to 0:8:38.0
+
 set tt=-ss 0:17:39.0 -to 0:18:10.0
-set tt=-ss 0:0:12.0 -to 0:0:51.5
-set tt=-ss 0:10:0.0 -to 0:11:0.0
+set tt=-ss 0:20:12.88 -to 0:20:14.28
+set tt=-ss 0:0:27.0 -to 0:1:27.0
 set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -hwaccel auto -i %input% -c:v h264_nvenc   %vf%  %qqq01%  -y  %output%
+ffmpeg %tt% -hwaccel auto -i %input% -c:v h264_nvenc -cq 25  %vf%  %qqq01%  -y  %output%
 set time1=%date%_%time%
 
 echo %time0%

@@ -4,39 +4,44 @@ chcp 65001
 echo %date%
 echo %time%
 
-set vardate=%date:~5,2%%date:~8,2%%date:~11,2%
-set vartime=%time:~0,2%
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
 
-set output=_lossless_%nnn%.mkv
 
 set /p input=檔案:
 
 set tt=-ss 0:11:38.0 -to 0:18:33.0
 set tt=-ss 0:1:10.0 -to 0:1:45.0
-set tt=-ss 0:4:15.5 -to 0:6:0.0
+set tt=-ss 0:0:27.0 -to 0:1:27.0
 set tt0=
 echo %tt%
 
-ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y %output%
 
+
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.webm" 
 
 
 pause
 exit
 
+ffmpeg %tt% -i %input%  -c:v libx264 -qp 1  -y  "_lossless%nnn%.mp4"
+ffmpeg %tt% -i %input%    -c:v h264_nvenc -qp 1  -y  "_lossless%nnn%.mp4"
 
+
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y %output%
 ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.webm" 
 
 
 ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless_%nnn%.mkv" 
 
 ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -avoid_negative_ts 1  -y "_lossless_%nnn%.mkv" 
+
 ffmpeg -i %input%    -c:v libvpx-vp9 -crf 10 -b:v 0  -y  "無損.webm"
 ffmpeg %tt% -i %input%  -sn -dn  -crf 10 -b:v 0  -y "_lossless.mkv" 
 

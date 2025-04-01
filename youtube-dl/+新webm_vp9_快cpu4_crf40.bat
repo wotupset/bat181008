@@ -31,7 +31,7 @@ set crf0=-crf 20 -b:v 5000k
 set crf0=-b:v 1500k -b:a 96k
 set crf0=-b:v 500k -minrate 500k -maxrate 500k -b:a 90k -r 30
 set crf0=-b:v 1500k -b:a 80k 
-set crf0= 
+set crf= 
 echo %crf%
 
 set crf20=-b:v 500K -bufsize 100k 
@@ -48,20 +48,24 @@ set wh=640
 set wh0=720
 set wh=800
 set wh0=960
-set wh=1024
-set wh=1280
+set wh0=1024
+set wh0=1280
 set wh0=1440
 set wh0=1600
 
 
 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,boxblur"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,avgblur"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+
+
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 set vf0=-vf "scale=1120:630,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
@@ -75,11 +79,15 @@ echo %vf%
 
 set af=-af "volume=+10dB" 
 set af=-af "volume=-10dB" 
-set af=-af "volume=-10dB" 
+set af=-af "loudnorm,volume=+5dB" -b:a 90k
+set af=-af "volume=+10dB" 
+
 set af=-af "volume=+5dB" 
-set af=-af "loudnorm"
-set af0=-an
-set af0=
+set af=-af "dynaudnorm=f=500:g=35:p=0.95:m=1"
+set af=-af "volume=-5dB" 
+set af0=-af "loudnorm" 
+set af=-an
+set af=
 echo %af%
 
 
@@ -98,10 +106,9 @@ echo %ppp01%
 
 
 
-set tt=-ss 0:24:19.5 -to 0:24:28.9
-set tt=-ss 0:21:9.3 -to 0:21:31.0
-set tt=-ss 0:0:8.55 -to 0:0:30.0
-set tt=-ss 0:0:6.5 -to 0:0:19.5
+set tt=-ss 0:18:30.0 -to 0:19:0.0
+set tt=-ss 0:0:9.0 -to 0:0:57.0
+set tt=-ss 0:1:5.88 -to 0:1:12.83
 set tt=
 
 
@@ -117,6 +124,12 @@ echo %output%
 
 pause
 exit
+
+上面的方法比較好 畫面比較順
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" -r 30
+
+
 反而變大了
 set vf=-vf "scale=%wh%:%wh%:flags=fast_bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
  -r 60

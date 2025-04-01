@@ -24,7 +24,7 @@ set /p input=檔案:
 
 
 set crf=-crf 40 
-set crf0=-crf 35 
+set crf=-crf 35 
 set crf0=-crf 30 -b:v 2500K
 set crf0=-crf 20 -b:v 0
 set crf0=
@@ -36,13 +36,15 @@ set crf2=
 set crf2=
 
 
-set vf=-vf "setsar=1:1,gblur"
-set vf0=
+set vf=-vf "fps=fps=30,setsar=1:1,gblur"
+set vf=
 
 
 set af=-af "volume=-12dB" 
 set af=-af "volume=-10dB" 
 set af=-af "volume=-5dB" 
+set af=-af "loudnorm,volume=+5dB"
+set af=-an
 set af=
 
 
@@ -62,13 +64,13 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:1:0.0 -to 0:1:30.0
+set tt=-ss 0:0:0.0 -to 0:0:15.0
 set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -static-thresh 2144421000  %ppp01%  -y %output%
+ffmpeg   -i %input% %tt% -c:v libvpx-vp9 -static-thresh 2144421000  %ppp01%  -y %output%
 set time1=%date%_%time%
 
 

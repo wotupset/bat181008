@@ -12,7 +12,7 @@ set vartime=%vartime%%time:~3,2%%time:~6,2%
 
 set nnn=%vardate%_%vartime%_%RANDOM%
 echo %nnn%
-set output=_vp8_快cpu4_%nnn%.webm
+set output=_vp8_測試_%nnn%.webm
 
 set /p input=檔案:
 
@@ -22,14 +22,14 @@ set wh=480
 set wh0=512
 set wh=640
 set wh0=720
-set wh=800
+set wh0=800
 set wh0=960
 set wh0=1024
 set wh0=1280
 set wh0=1600
 
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=1120:630,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
@@ -43,7 +43,7 @@ set crf0=-crf 20 -b:v 0 -r 30
 set crf=-crf 35 -b:v 3000K
 set crf=-b:v 1500K
 set crf=-b:v 1000K
-set crf=-b:v 500K
+set crf0=-b:v 500K
 set crf= 
 echo %crf%
 
@@ -53,6 +53,7 @@ echo %qqq01%
 set tt=-ss 0:0:30.0 -to 0:0:50.0
 set tt=-ss 0:4:0.0 -to 0:6:0.0
 set tt=-ss 0:4:10.0 -to 0:5:10.0
+set tt=-ss 0:0:9.0 -to 0:0:57.0
 set tt=
 echo %tt%
 

@@ -13,26 +13,30 @@ echo %nnn%
 
 
 set poi=^
-https://www.youtube.com/watch?v=fwSeXa-lFQs
+https://youtu.be/0MTVeSjcvys?si=XwhpzmIFB0wy8GOk
 
 echo %poi%
 
 
 
-set tt="*0:0:0.0-0:2:0.0"
-set tt="*0:15:30.0-0:17:30.0"
-set tt="*0:41:0.0-0:42:0.0"
-set tt="*0:0:0.0-0:1:0.0"
+
+set tt=--download-sections "*1:12:0.0-1:12:40.0"
+set tt=--download-sections "*2:0:0.0-2:0:55.0"
+set tt=--download-sections "*1:12:0.0-1:12:30.0"
+set tt=--download-sections "*0:10:0.0-0:11:15.0"
+set tt0=--download-sections "*100-200"
+
 echo %tt%
 
 set ff=-f 232+140
 set ff=-f 137+140
 set ff=-f best
+set ff=-f 628+234
 set ff=
 echo %ff%
 
 
-yt-dlp --download-sections %tt% --limit-rate 3000K -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
+yt-dlp  %tt%  --cookies "cookies推特.txt"  %ff% --limit-rate 3000K -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
 
 
 
@@ -42,7 +46,9 @@ pause
 exit
 
  -f best
---force-keyframes-at-cuts
+--force-keyframes-at-cuts 
+This is slow due to needing a re-encode 幫助有限
+https://github.com/yt-dlp/yt-dlp
 
 -f 312+140
 --force-keyframes-at-cuts 

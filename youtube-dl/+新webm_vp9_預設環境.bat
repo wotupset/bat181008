@@ -23,18 +23,22 @@ set /p input=檔案:
 set tt=-ss 0:3:27.5 -to 0:4:28.0
 set tt=-ss 0:0:27.0 -to 0:0:57.0
 set tt=-ss 0:0:54.0 -to 0:2:4.0
+set tt=-ss 0:1:30.0 -to 0:2:20.0
 set tt=
 echo %tt%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
 set cpu01=-row-mt 1 
-set cpu010=
+set cpu01=
+
+set vf=
+set vf=
 
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %qqq01% %cpu01%   -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  %qqq01% %cpu01% %vf%  -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -45,6 +49,8 @@ echo %output%
 
 pause
 exit 
+-c:v copy  -af "volume=-5dB" 
+
 -map 0:v:0 -map 0:a:0
 set cpu010=-row-mt 1 -cpu-used 1
 %cpu01%

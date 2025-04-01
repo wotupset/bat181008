@@ -59,18 +59,17 @@ set vf0=
 echo %vf%
 
 
-set af=-af "volume=+5dB" 
-set af=-af "volume=-10dB" 
 
 
-set af0=-af "loudnorm=I=-25"
-set af0=-af "loudnorm=I=-30"
-set af=-af "volume=-5dB" 
-set af=-af "volume=-10dB" 
 set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
 set af=-af "loudnorm,volume=+5dB"
-set af0=-af "volume=-15dB"
-set af0= -an
+set af=-af "loudnorm"
+set af=-af "volume=-10dB" 
+set af=-af "volume=-5dB,volumedetect"
+set af= -an
+set af=-af "dynaudnorm=f=500:g=35:p=0.90:m=10:r=0.5,volumedetect"
+set af=-af "volumedetect"
+set af=
 echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
@@ -87,7 +86,7 @@ echo %ppp01%
 set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
-set tt=-ss 0:0:32.0 -to 0:1:2.0
+set tt=-ss 0:1:0.0 -to 0:1:32.0
 set tt=
 echo %tt%
 
