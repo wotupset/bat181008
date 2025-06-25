@@ -25,13 +25,13 @@ set crf=-crf 32
 set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40 
-set crf=-crf 35 
-set crf0=-crf 30 -b:v 0
+set crf0=-crf 35 
 set crf0=-crf 20 -b:v 5000k 
 set crf0=-b:v 1500k -b:a 96k
-set crf0=-b:v 500k -minrate 500k -maxrate 500k -b:a 90k -r 30
 set crf0=-b:v 1500k -b:a 80k 
-set crf= 
+set crf0=-b:v 500k -minrate 500k -maxrate 500k -b:a 90k -r 30
+set crf0=-b:v 1000k -bufsize 100k 
+set crf0= 
 echo %crf%
 
 set crf20=-b:v 500K -bufsize 100k 
@@ -47,7 +47,7 @@ set wh0=512
 set wh=640
 set wh0=720
 set wh=800
-set wh0=960
+set wh=960
 set wh0=1024
 set wh0=1280
 set wh0=1440
@@ -66,6 +66,7 @@ set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 set vf0=-vf "scale=1120:630,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
@@ -82,11 +83,13 @@ set af=-af "volume=-10dB"
 set af=-af "loudnorm,volume=+5dB" -b:a 90k
 set af=-af "volume=+10dB" 
 
-set af=-af "volume=+5dB" 
 set af=-af "dynaudnorm=f=500:g=35:p=0.95:m=1"
 set af=-af "volume=-5dB" 
-set af0=-af "loudnorm" 
-set af=-an
+set af=-af "volume=+30dB" 
+set af=-af "loudnorm" 
+set af=-af "loudnorm,volume=+3dB" 
+set af=-af "volume=+5dB" 
+set af0=-an
 set af=
 echo %af%
 
@@ -96,7 +99,7 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
 set cpu01=-row-mt 1 -cpu-used 4
-set cpu01=-row-mt 1 
+set cpu01=-row-mt 1 -cpu-used 2
 set cpu010=
 
 set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
@@ -106,15 +109,17 @@ echo %ppp01%
 
 
 
-set tt=-ss 0:18:30.0 -to 0:19:0.0
-set tt=-ss 0:0:9.0 -to 0:0:57.0
-set tt=-ss 0:1:5.88 -to 0:1:12.83
-set tt=
+
+set tt=-ss 0:0:0.0 -to 0:0:10.0
+set tt=-ss 0:3:43.6 -to 0:4:5.0
+set tt=-ss 0:0:0.0 -to 0:0:2.5
+set tt=-ss 0:8:0.0 -to 0:9:0.0
+set tt0=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output% 
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -static-thresh 2144421000   %ppp01% -y %output% 
 set time1=%date%_%time%
 
 echo %time0%
@@ -124,6 +129,11 @@ echo %output%
 
 pause
 exit
+-static-thresh 2144421000
+
+
+ -fps_mode cfr -r 25
+ 
 
 上面的方法比較好 畫面比較順
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"

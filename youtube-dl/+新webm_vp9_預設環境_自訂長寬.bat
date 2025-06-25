@@ -19,34 +19,35 @@ set output=_vp9_預設環境自訂長寬%nnn%.webm
 
 set /p input=檔案:
 
-
+set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 35
-set crf0=-crf 30
 set crf0=-b:v 1500k
-set crf=
+set crf=-crf 30
+set crf0=
 echo %crf%
 
 set wh=400
 set wh0=480
 set wh0=512
-set wh0=640
-set wh0=720
-set wh=800
-set wh=960
-set wh=1024
-set wh0=1280 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set wh=640
+set wh=720
+set wh0=800
+set wh0=960
+set wh0=1024
+set wh=1280 
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 set vf0=-vf "scale=870:640,setsar=1:1"
 set vf0=
 
 set qqq010=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn -map 0:v:0 -map 0:a:0
 set qqq010=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 set qqq01=-an
-set qqq010=
-
-set cpu010=-row-mt 1
+set qqq01=
+ 
+set cpu010=-row-mt 1 -cpu-used 2
 set cpu01=
 
 
@@ -56,9 +57,9 @@ set ppp01=%crf% %vf% %qqq01% %cpu01%
 echo %ppp01%
 
 
-
-set tt=-ss 0:0:19.85 -to 0:0:24.5
-set tt=-ss 0:1:52.0 -to 0:1:52.85
+set tt=-ss 0:0:0.05 -to 0:0:57.5
+set tt=-ss 0:0:1.5 -to 0:0:58.0
+set tt=-ss 0:0:50.220 -to 0:0:56.220
 set tt0=
 echo %tt%
 
@@ -77,6 +78,7 @@ echo %time1%
 
 pause
 exit 
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 
 set crf0=-b:v 1500k -b:a 50k 
 

@@ -19,6 +19,7 @@ set /p input=檔案:
 echo %input%
 
 set vf=-vf "scale=1280:720,setsar=1/1" 
+set vf0=-vf "scale=720:1280,setsar=1/1" 
 set vf=
 echo %vf%
 
@@ -27,17 +28,22 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 
 set tt=-ss 0:5:37.5 -to 0:6:7.5
 set tt=-ss 0:23:0.0 -to 0:23:50.0
-set tt=-ss 0:4:15.5 -to 0:6:0.0
-set tt0=
+set tt=-ss 0:13:39.5 -to 0:14:35.0
+set tt=-ss 0:0:0.0 -to 0:0:10.0
+set tt=
 echo %tt%
 
 
 
-ffmpeg %tt% -i %input%  %vf% %qqq01%  -c:v libx264     -y  %output%
+ffmpeg %tt% -i %input% -c:v libx264  %vf% %qqq01%        -y  %output%
 
 
 pause
 exit
+-c:v h264_nvenc
+-c:v libx264
+
+ -map 0:a:1 -map 0:v:0 
 -crf 20 
 -map 0:v:0 -map 0:a:1
 -map 0:v:0 -map 0:a:1

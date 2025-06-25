@@ -18,17 +18,44 @@ set /p input=檔案:
 
 set tt=-ss 0:11:38.0 -to 0:18:33.0
 set tt=-ss 0:1:10.0 -to 0:1:45.0
-set tt=-ss 0:0:27.0 -to 0:1:27.0
+set tt=-ss 0:0:25.0 -to 0:2:25.0
+set tt=-ss 0:0:10.0 -to 0:1:20.0
 set tt0=
 echo %tt%
 
 
-
-ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.webm" 
+ffmpeg %tt%  -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.webm" 
 
 
 pause
 exit
+ -c:a libopus  -b:a 60k
+ 
+
+ffmpeg %tt% -i %input%  -c:v libx264 -qp 5  -y  "_lossless%nnn%.mp4"
+
+ffmpeg %tt%  -accurate_seek -i %input% -c:v copy -c:a copy  -y "_lossless_%nnn%.webm" 
+
+
+-af "volume=+5dB"
+
+
+ffmpeg %tt% -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mp4" 
+
+
+ffmpeg %tt% -accurate_seek -i %input% -c:v libvpx-vp9 -c:a libopus -b:a 90k  -y "vp9_lossless.webm"
+ffmpeg %tt% -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mp4" 
+
+
+ffmpeg -i %input%    -c:v libvpx-vp9 -crf 10   -y  "無損.webm"
+ffmpeg -i %input%    -c:v libvpx-vp9 -crf 10   -y  "無損.webm"
+ffmpeg -y  -i %input%   -c:v libvpx-vp9  -lossless 1  "vp9_lossless.webm"
+
+
+
+ffmpeg %tt% -accurate_seek  -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mkv" 
+
+
 
 ffmpeg %tt% -i %input%  -c:v libx264 -qp 1  -y  "_lossless%nnn%.mp4"
 ffmpeg %tt% -i %input%    -c:v h264_nvenc -qp 1  -y  "_lossless%nnn%.mp4"

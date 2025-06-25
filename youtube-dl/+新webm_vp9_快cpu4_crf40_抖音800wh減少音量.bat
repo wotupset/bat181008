@@ -25,6 +25,7 @@ set crf=-crf 45
 set crf=-crf 40
 set crf=-crf 35 
 set crf0=-crf 30 
+set crf0=-b:v 500k -b:a 90k -bufsize 500 
 set crf0=
 echo %crf%
 
@@ -41,10 +42,10 @@ set wh=400
 set wh=480
 set wh=512
 set wh=640
-set wh=720
+set wh0=720
 set wh=800
-set wh=960
-set wh0=1024
+set wh0=960
+set wh=1024
 set wh0=1280
 set wh0=1600
 
@@ -64,18 +65,26 @@ echo %vf%
 set af=-af "loudnorm=I=-24:LRA=7.0:TP=-2.0"
 set af=-af "loudnorm,volume=+5dB"
 set af=-af "loudnorm"
-set af=-af "volume=-10dB" 
+
 set af=-af "volume=-5dB,volumedetect"
-set af= -an
+set af=-an
 set af=-af "dynaudnorm=f=500:g=35:p=0.90:m=10:r=0.5,volumedetect"
 set af=-af "volumedetect"
-set af=
+
+set af=-af "volume=-20dB" 
+set af0=-af "volume=-15dB" 
+set af=-af "volume=-10dB" 
+set af=-af "loudnorm,volume=+3dB,volumedetect"
+set af=-af "volume=-3dB" 
+set af0=-af "loudnorm"
+set af0=-an
+set af0=
 echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 set cpu01=-row-mt 1 -threads 8 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8
-set cpu01=-row-mt 1
+set cpu01=-row-mt 1 -cpu-used 2
 set cpu010=
 
 
@@ -86,7 +95,7 @@ echo %ppp01%
 set tt=-ss 0:4:30.0 -to 0:5:20.0
 set tt=-ss 0:0:2.0 -to 0:1:2.0
 set tt=-ss 0:0:50.0 -to 0:1:20.0
-set tt=-ss 0:1:0.0 -to 0:1:32.0
+set tt=-ss 0:0:0.0 -to 0:0:20.0
 set tt=
 echo %tt%
 

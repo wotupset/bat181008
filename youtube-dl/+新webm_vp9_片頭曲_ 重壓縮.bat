@@ -24,35 +24,47 @@ set crf=-crf 60
 set crf=-crf 55
 set crf=-crf 50 
 set crf=-crf 45
-set crf=-crf 40
+set crf0=-crf 40
 set crf0=-crf 35
-set crf0=-b:v 100k -minrate 100k -maxrate 100k -b:a 80k 
-set crf0=-b:v 200k -b:a 80k 
+set crf=-b:v 800k -minrate 10k -bufsize 100 
+set crf0=-b:v 1200k -maxrate 1200k -minrate 500k -bufsize 100 
+set crf0=-crf 40 -b:v 800k  -b:a 90k -bufsize 500 
+set crf0=-b:v 500k -b:a 90k -bufsize 500 
+set crf0=-b:v 256k -b:a 90k -bufsize 500 
+set crf0=-b:v 400k -b:a 90k -bufsize 50
+set crf0=-b:v 256k -bufsize 50 
 set crf0=
+echo %crf%
 
 set wh=400
 set wh=480
 set wh=640
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1280
 
+
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr" 
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur" 
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 set vf0=-vf "scale=640:480,setsar=1:1,gblur,chromanr" 
 set vf0=-vf "scale=640:480,setsar=1:1" 
 set vf0=
 
 set af=-af "volume=-10dB" 
-set af=-af "volume=+5dB" 
 set af=-an
-set af0=
+set af=-af "loudnorm,volume=+4dB" -b:a 90k 
+set af=-af "loudnorm,volume=+5dB" 
+set af=-af "volume=-3dB" 
+set af=
 echo %af%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 
-set cpu01=-row-mt 1 -cpu-used 4
-set cpu01=-row-mt 1 
+
+set cpu010=-cpu-used 2
+set cpu01=-row-mt 1 -cpu-used 2
 set cpu010=
 
 
@@ -62,9 +74,10 @@ echo %ppp01%
 
 
 
-set tt=-ss 0:0:20.0 -to 0:1:50.0
-set tt=-ss 0:0:18.0 -to 0:2:28.0
-set tt=-ss 0:0:3.1 -to 0:0:43.1
+set tt=-ss 0:0:0.0 -to 0:1:32.0
+set tt=-ss 0:0:10.0 -to 0:0:30.0
+set tt=-ss 0:15:45.7 -to 0:16:17.8
+set tt=-ss 0:21:48.0 -to 0:22:38.0
 set tt0=
 echo %tt%
 
@@ -75,17 +88,32 @@ set time0=%date%_%time%
 ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output%
 set time1=%date%_%time%
 
-
-
 echo %time0%
 echo %time1%
 
-
-
-
-
 pause
 exit 
+
+銳化=檔案變大
+-vf unsharp
+-vf cas
+smartblur
+
+ffmpeg -i input.mp4 -vf "eq=contrast=1.3:brightness=0.05:saturation=1.2" output.mp4
+
+
+
+ 
+-cpu-used 2 比預設值 -cpu-used 1 成品大小更小一點點
+
+
+手動時間戳 沒必要?
+-fflags +genpts
+
+
+-g 25
+-bufsize 500 
+
 -threads 10
  -map 0:v:0 -map 0:a:1
  

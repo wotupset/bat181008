@@ -28,22 +28,32 @@ set vf=
 echo %vf%
 
 set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
-set qqq010= 
+set qqq01= 
 
 set tt=-ss 0:20:50.0 -to 0:21:0.0
 set tt=-ss 0:1:26.5 -to 0:1:48.0
-set tt=-ss 0:0:41.3 -to 0:1:4.3
+set tt=-ss 0:0:0.0 -to 0:10:0.0
 set tt0=
 echo %tt%
 
+set crf250613b=500k
+set crf250613=-b:v %crf250613b% -maxrate %crf250613b% -minrate %crf250613b% -bufsize 100k
+set crf250613=-cq 30
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc -qp 20    %vf% %qqq01%    -y  %output%
+ffmpeg %tt% -hwaccel auto -i %input% -c:v h264_nvenc %crf250613% -pix_fmt yuv420p  -y  %output%
 
 
 pause
 exit
+ -qp 10
 
+-qp 10
+-af "volume=+5dB"
+ -qp 20
+-preset fast
+
+-qp 20 
 
 -map 0:v:0 -map 0:a:0
 -an

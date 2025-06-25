@@ -20,13 +20,14 @@ set /p input=檔案:
 
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:3:33.0 -to 0:4:3.0
-set tt=-ss 0:0:32.0 -to 0:0:37.0
-set tt0=
+set tt=-ss 0:0:12.2 -to 0:0:15.35
+set tt=-ss 0:0:29.0 -to 0:0:29.75
+set tt=
 echo %tt%
 
-set vf=-vf "crop=480:480:630:70" 
-set vf=-vf "crop=800:450:980:40" 
-set vf=-vf "crop=1000:1000:830:220" 
+set vf=-vf "crop=640:640:640:180" 
+set vf=-vf "crop=600:420:500:150" 
+set vf=-vf "crop=690:690:0:390" 
 
 set output=_剪裁_自訂%nnn%.mp4
 

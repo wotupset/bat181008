@@ -25,9 +25,9 @@ set /p input=檔案:
 
 set crf=-crf 40 
 set crf=-crf 35 
-set crf0=-crf 30 -b:v 2500K
+set crf0=-crf 30 
 set crf0=-crf 20 -b:v 0
-set crf0=
+set crf=
 echo %crf%
 
 set crf2p=3000k
@@ -45,6 +45,7 @@ set af=-af "volume=-10dB"
 set af=-af "volume=-5dB" 
 set af=-af "loudnorm,volume=+5dB"
 set af=-an
+set af=-af "volumedetect,volume=-5dB"
 set af=
 
 
@@ -53,7 +54,7 @@ set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8 -cpu-used 4
 set cpu01=-row-mt 1 -threads 8
-set cpu01=-row-mt 1 
+set cpu01=-row-mt 1 -cpu-used 2
 set cpu010=
 
 
@@ -64,8 +65,8 @@ echo %ppp01%
 set tt=-ss 0:0:1.5 -t 0:0:17.5
 set tt=-ss 0:0:10.0 -to 0:0:40.0
 set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:0:0.0 -to 0:0:15.0
-set tt0=
+set tt=-ss 0:8:0.0 -to 0:9:0.0
+set tt=
 echo %tt%
 
 

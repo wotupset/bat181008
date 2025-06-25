@@ -1,16 +1,92 @@
 echo off
 chcp 65001
 
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
+set output=連接合併%nnn%.mp4
+
 set /p input=檔案:
 
 
+ffmpeg -ss 0:0:0.0  -to 0:10:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 01x.mp4
+ffmpeg -ss 0:10:0.0 -to 0:20:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 02x.mp4
+ffmpeg -ss 0:20:0.0 -to 0:30:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 03x.mp4
 
-ffmpeg -i 01.mp4 -i 02.mp4 -filter_complex "concat=n=2:v=1:a=1" -y 連接合併.mp4
+
+
+
 
 
 
 pause
 exit
+-c:v libx264
+
+ffmpeg -i 01.mp4 -i 01.mp4 -i 01.mp4 -i 01.mp4  -filter_complex "concat=n=4:v=1:a=1" -y %output%
+
+ffmpeg -f concat -i mylist.txt -c:v copy  -y output.webm
+
+ffmpeg -ss 0:13:45.0 -to 0:13:58.4  -i %input%  -y 01x.mp4
+ffmpeg -ss 0:27:40.0 -to 0:27:58.5 -i %input%  -y 02x.mp4
+ffmpeg -ss 0:28:42.8 -to 0:29:7.3 -i %input%  -y 03x.mp4
+ffmpeg -i 01x.mp4 -i 02x.mp4 -i 03x.mp4  -filter_complex "concat=n=3:v=1:a=1" -y %output%
+
+
+
+
+
+
+ffmpeg -ss 0:0:14.5 -to 0:2:49.0 -i %input% -c:v h264_nvenc -cq 10 -y 01x.mp4
+ffmpeg -ss 0:11:37.6 -to 0:14:10.6 -i %input% -c:v h264_nvenc -cq 10 -y 02x.mp4
+ffmpeg -i 01x.mp4 -i 02x.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=2:v=1:a=1" -y 連接合併.mp4
+
+
+
+ffmpeg -i 01.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01.ts
+ffmpeg -i "concat:01.ts" -c copy -bsf:a aac_adtstoasc -y 連接無損.mp4
+
+
+
+
+
+ffmpeg -i 01.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=1:v=1:a=1" -y 連接合併.mp4
+ok
+
+
+
+ffmpeg -i 01.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts 01.ts
+ffmpeg -i 02.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts 02.ts
+ffmpeg -i "concat:01.ts|02.ts" -c copy -bsf:a aac_adtstoasc 連接無損.mp4
+去掉了video encdoer metedata
+
+ffmpeg -i 01.mp4 -i 02.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=2:v=1:a=1" -y 連接合併.mp4
+去掉了video encdoer metedata
+
+ffmpeg -i 01.mp4 -i 02.mp4 -c:v h264_nvenc -cq 10 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]" -map [v] -map [a] -y 連接合併.mp4
+
+ffmpeg -i 01.mp4 -i 02.mp4 -filter_complex "concat=n=2:v=1:a=1[v][a];[v]scale=400:400[v2]" -map "[v2]" -map "[a]" -y 連接合併.mp4
+
+
+ffmpeg -ss 0:17:0.0 -to 0:17:20.0 -i %input% -c:v h264_nvenc -cq 10 -y 01x.mp4
+ffmpeg -ss 0:17:45.2 -to 0:18:6.0 -i %input% -c:v h264_nvenc -cq 10 -y 02x.mp4
+ffmpeg -i 01x.mp4 -i 02x.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=2:v=1:a=1" -y 連接合併.mp4
+
+
+
+
+
+
+
+
 
 ffmpeg -ss 0:0:0.0 -to 0:0:20.0 -i %input%  -y 01x.mp4
 ffmpeg -ss 0:3:10.0 -to 0:3:45.0 -i %input%  -y 02x.mp4

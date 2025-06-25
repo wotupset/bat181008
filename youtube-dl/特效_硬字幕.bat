@@ -15,30 +15,37 @@ echo %nnn%
 
 
 
-set tt=-ss 0:12:8.0 -to 0:12:50.0
-set tt=-ss 0:21:30.0 -to 0:21:56.0
-set tt=-ss 0:5:0.0 -to 0:5:33.0
-set tt=-ss 0:18:0.0 -to 0:19:0.0
-set tt0=
+set tt=-ss 0:1:0.0 -to 0:1:30.0
+set tt=-ss 0:8:44.0 -to 0:9:44.0
+set tt=-ss 0:1:0.0 -to 0:2:0.0
+set tt=
 
 
-ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=24:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
 
-
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -s 1280x720 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=25:force_style='Bold=1,FontSize=50,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
 
 pause
 
 exit
 pause
+-qp 20
+
+
+
+外掛字幕
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -pix_fmt yuv420p -sn -vf "subtitles=01.ass" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -pix_fmt yuv420p -sn -vf "subtitles=01.ass" -y "硬字幕%nnn%.mp4"
+
 
 魔穗風格mkv
-ffmpeg -i "01.mkv" %tt%  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=2:force_style='Bold=1,FontSize=21,BorderStyle=1,FontName=Microsoft YaHei,OutlineColour=&H00800080,SecondaryColour=&H000000FF,PrimaryColour=&H00FFFFFF'" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=2:force_style='Bold=1,FontSize=21,BorderStyle=1,FontName=Microsoft YaHei,OutlineColour=&H00800080,SecondaryColour=&H000000FF,PrimaryColour=&H00FFFFFF'" -y "硬字幕%nnn%.mp4"
 
 
-魔穗風格
+
+魔穗風格test
 ffmpeg -loop 1 -i "01.jpg" -t 10  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.srt:force_style='Bold=1,FontSize=20,BorderStyle=1,FontName=Microsoft YaHei,OutlineColour=&H00800080,SecondaryColour=&H000000FF,PrimaryColour=&H00FFFFFF'" -y "硬字幕%nnn%.mp4"
 
-巴哈風格
+巴哈風格test
 ffmpeg -loop 1 -i "01.jpg" -t 10  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.srt:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=0.2,Outline=0.5,FontName=Microsoft YaHei,Spacing=0.8,MarginV=11'" -y "硬字幕%nnn%.mp4"
 
 
@@ -46,11 +53,18 @@ ffmpeg -loop 1 -i "01.jpg" -t 10  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -v
 
 
 簡單的 半透明陰影
+
 ffmpeg -loop 1 -i "01.jpg" -t 10  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.srt:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
 ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=24:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=24:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
+
+簡單的 字幕
+ffmpeg -loop 1 -i "01.jpg" -t 10  -c:v h264_nvenc -qp 20 -pix_fmt yuv420p -sn -vf "subtitles=01.srt:force_style='Bold=1,FontSize=20,FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
+
 
 
 %tt% 一定要放在 輸入後面 不然會沒有字幕
+
 
 
 

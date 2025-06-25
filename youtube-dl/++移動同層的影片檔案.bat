@@ -15,26 +15,33 @@ echo %nnn%
 
 
 set FFF=webm
-copy *.%FFF% +,,
 mkdir %nnn%
 move *.%FFF% ./%nnn%/
 
 set FFF=mp4
-copy *.%FFF% +,,
 mkdir %nnn%
 move *.%FFF% ./%nnn%/
 
 set FFF=mkv
-copy *.%FFF% +,,
 mkdir %nnn%
 move *.%FFF% ./%nnn%/
 
+set FFF=ts
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
 
 
 
 exit
 pause
 exit
+
+set FFF=webm
+copy *.%FFF% +,,
+mkdir %nnn%
+move *.%FFF% ./%nnn%/
+
+
 
 
 

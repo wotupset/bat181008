@@ -22,32 +22,45 @@ set output=特殊%nnn%.webm
 
 
 
-set tt=-ss 0:4:20.5 -to 0:6:20.5
+
 set tt=-ss 0:0:1.0 -to 0:1:57.0
-set tt=-ss 0:4:52.0 -to 0:6:20.0
-set tt0=
+set tt=-ss 0:6:55.0 -to 0:9:55.0
+set tt=-ss 0:0:6.5 -to 0:1:33.0
+set tt=
 echo %tt%
 
 
-set af=-af "loudnorm,volume=+5dB" -b:a 90k 
+
 set af=-af "loudnorm" -b:a 90k 
 set af=-af "volume=+5dB" -b:a 90k 
-set af=-b:a 90k 
-set af0=
+set af=-b:a 85k -ac 2
+set af0=-af "loudnorm,volume=+3dB" -b:a 90k 
+set af=
 
 set vf=-vf "gblur,chromanr"
+set vf=-vf "scale=800:800:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf=-vf "scale=1280:720,setsar=1:1"
+set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
+set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
+
+set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur=sigma=1:steps=5" 
 set vf0=
 
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc  -map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  -vf "scale=800:800:force_original_aspect_ratio=decrease,setsar=1:1"  -y "FFF.mp4"  
+ffmpeg %tt% -i %input% -c:v h264_nvenc  -qp 10 -map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  %vf%   -y "FFF.mp4"  
 
 ffmpeg -i "FFF.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF01.ts
 ffmpeg -i "concat:FFF01.ts" -c copy -bsf:a aac_adtstoasc -y "FFF02.mp4"
 del "FFF01.ts"
 
+
+
+echo pause
+
+
 set time0=%date%_%time%
-ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus   -row-mt 1 -crf 45 -static-thresh 2144421000 %af% %vf%  -y %output% 
+ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -y %output% 
 del "FFF02.mp4"
 set time1=%date%_%time%
 
@@ -60,6 +73,25 @@ echo %output%
 
 pause
 exit
+
+ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus -row-mt 1 -cpu-used 2 -r 25  -crf 40  -static-thresh 2144421000  %af%   -y %output% 
+ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -y %output% 
+
+-row-mt 1 -cpu-used 2 -r 25  -crf 40  -static-thresh 2144421000
+
+-r 25
+-preset fast
+
+
+set vf=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,boxblur=10" 
+set vf=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,pixelize=8:8" 
+
+
+
+
+ 
+ 
+-static-thresh 2144421000
 -r 30
 -af "loudnorm"
 

@@ -23,7 +23,7 @@ set /p input=檔案:
 set tt=-ss 0:3:27.5 -to 0:4:28.0
 set tt=-ss 0:0:27.0 -to 0:0:57.0
 set tt=-ss 0:0:54.0 -to 0:2:4.0
-set tt=-ss 0:1:30.0 -to 0:2:20.0
+set tt=-ss 0:9:40.0 -to 0:10:6.5
 set tt=
 echo %tt%
 
