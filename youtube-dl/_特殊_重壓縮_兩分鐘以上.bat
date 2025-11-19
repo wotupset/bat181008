@@ -6,12 +6,15 @@ echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 
@@ -20,49 +23,50 @@ set /p input=檔案:
 set output=特殊%nnn%.webm
 
 
-
-
-
-set tt=-ss 0:0:1.0 -to 0:1:57.0
-set tt=-ss 0:6:55.0 -to 0:9:55.0
-set tt=-ss 0:0:6.5 -to 0:1:33.0
-set tt=
+set tt=-ss 0:11:11.0 -to 0:12:55.0
+set tt=-ss 0:0:50.0 -to 0:2:50.0
+set tt=-ss 0:0:10.0 -to 0:2:5.0
+set tt=-ss 0:6:50.0 -to 0:8:50.0
+set tt0=
 echo %tt%
 
 
 
 set af=-af "loudnorm" -b:a 90k 
 set af=-af "volume=+5dB" -b:a 90k 
-set af=-b:a 85k -ac 2
-set af0=-af "loudnorm,volume=+3dB" -b:a 90k 
+set af=-af "loudnorm,volume=+10dB" -b:a 80k 
+set af=-b:a 80k
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
+set af=-af "volume=-10dB"
 set af=
 
 set vf=-vf "gblur,chromanr"
-set vf=-vf "scale=800:800:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "scale=1280:720,setsar=1:1"
-set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
+set vf=-vf "scale=960:540,setsar=1:1"
+set vf=-s 960:540 
 
-set vf0=-vf "scale=640:640:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur=sigma=1:steps=5" 
+set wh=640
+set wh=800
+set wh0=960
+set wh0=1280
+set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=
 
 
 
-ffmpeg %tt% -i %input% -c:v h264_nvenc  -qp 10 -map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn  %vf%   -y "FFF.mp4"  
-
-ffmpeg -i "FFF.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF01.ts
-ffmpeg -i "concat:FFF01.ts" -c copy -bsf:a aac_adtstoasc -y "FFF02.mp4"
-del "FFF01.ts"
-
+ffmpeg %tt% -i %input% -c:v h264_nvenc -ac 2 -pix_fmt yuv420p -map_metadata -1 -map_chapters -1 -sn -dn %vf% %af% -y "FFF.mp4"  
 
 
 echo pause
 
+set crf=-b:v 500k -r 25
+set crf=-crf 40 -r 25
+set crf0=-crf 40
 
 set time0=%date%_%time%
-ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -y %output% 
-del "FFF02.mp4"
+ffmpeg -i "FFF.mp4" -c:v libvpx-vp9 -c:a libopus -ac 2 -pix_fmt yuv420p -vf "chromanr" %crf%   -static-thresh 2144421000 -tune-content screen -row-mt 1 -threads 6 -speed 4    -y %output% 
 set time1=%date%_%time%
+
+echo del "FFF02.mp4"
 
 echo %time0%
 echo %time1%
@@ -73,6 +77,51 @@ echo %output%
 
 pause
 exit
+-row-mt 1 -threads 6 -speed 4 
+
+-vf "chromanr" 
+-row-mt 1 -cpu-used 2 -threads 8
+
+-preset p7
+-b:v 1000k
+
+
+set vf=-filter_complex "[0:v][0:a]concat=n=1:v=1:a=1[v2][a2];[v2]scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1[v3]" -map "[v3]" -map [a2]
+
+-map_metadata -1
+-map_metadata:g -1
+-map_metadata:s -1
+
+-metadata:s handler_name="handler_name"
+-metadata:s handler_name="handler_name"
+
+ffmpeg -i "FFF.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF01.ts
+ffmpeg -i "concat:FFF01.ts" -c copy -bsf:a aac_adtstoasc -y "FFF02.mp4"
+
+
+
+
+-metadata:s:v title="title" -metadata:s:v handler_name="handler_name"
+
+ffmpeg -i "FFF.mp4" -c:v h264_nvenc  -y "FFF02.mp4"  
+del "FFF.mp4"
+
+-map 0:v:0 -map 0:a
+
+
+-filter_complex "[0:v][0:a]concat=n=1:v=1:a=1[vv][aa]" -map "[vv]" -map "[aa]"
+-filter_complex "[0:v]concat=n=1:v=1[vv]" -map "[vv]" -map 0:a 
+
+-filter_complex "[0:v]concat=n=1:v=1[v2];[v2]scale=640:480:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1[v3]"  -map "[v3]" -map 0:a 
+
+
+ffmpeg -i "FFF.mp4" -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF01.ts
+ffmpeg -i "concat:FFF01.ts" -c copy -bsf:a aac_adtstoasc -y "FFF02.mp4"
+del "FFF01.ts"
+
+
+
+ -qp 10
 
 ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus -row-mt 1 -cpu-used 2 -r 25  -crf 40  -static-thresh 2144421000  %af%   -y %output% 
 ffmpeg -i "FFF02.mp4" -c:v libvpx-vp9 -c:a libopus  -y %output% 

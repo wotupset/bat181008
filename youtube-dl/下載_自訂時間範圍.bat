@@ -5,17 +5,20 @@ echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 
 set poi=^
-https://www.youtube.com/watch?v=xuYXxqme4F0
+https://www.youtube.com/watch?v=22dnrF5ypPY
 
 
 echo "%poi%"
@@ -23,23 +26,25 @@ echo "%poi%"
 
 
 
-set tt=--download-sections "*2:0:0.0-2:0:55.0"
-set tt=--download-sections "*0:11:0.0-0:12:0.0"
-set tt=--download-sections "*0:23:30.0-0:26:0.0"
-set tt=--download-sections "*0:1:0.0-0:4:0.0"
+set tt=--download-sections "*0:31:0.0-0:34:30.0"
+set tt=--download-sections "*0:1:35.30-0:1:0.0"
+set tt=--download-sections "*0:13:0.0-0:15:0.0"
+set tt=--download-sections "*0:38:30.0-0:40:30.0"
 set tt0=--download-sections "*100-200"
 
 echo %tt%
 
 set ff=-f 232+140
 set ff=-f 243+251-drc
-set ff=-f 609+233
-set ff=-f best
-set ff0=
+set ff=-f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]/bestvideo[ext=mp4][width=720]+bestaudio[ext=m4a]
+set ff0=-f bestvideo[vcodec=vp9][height=720]+bestaudio[acodec=opus]/bestvideo[vcodec=vp9][width=720]+bestaudio[acodec=opus]
+set ff0=-f best
+set ff=-f bestvideo[ext=mp4][height=1080]+bestaudio[ext=m4a]
+set ff=
 echo %ff%
 
 
-yt-dlp  %tt%   %ff% --limit-rate 3000K -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
+yt-dlp  %tt%   %ff% --limit-rate 4000K   -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
 
 
 
@@ -47,6 +52,14 @@ yt-dlp  %tt%   %ff% --limit-rate 3000K -o _切+%nnn%-%%(id)s.%%(ext)s %poi%
 
 pause
 exit
+-f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]
+
+
+set ff=-f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]/bestvideo[ext=mp4][width=720]+bestaudio[ext=m4a]
+set ff=-f bestvideo[vcodec=vp9][height=720]+bestaudio[acodec=opus]/bestvideo[vcodec=vp9][width=720]+bestaudio[acodec=opus]
+
+
+
  --cookies "cookies推特.txt"
  -f best
 --force-keyframes-at-cuts 

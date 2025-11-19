@@ -22,9 +22,9 @@ set /p input=檔案:
 echo %input%
 
 
-set vf=-vf "scale_cuda=-1:-1,setsar=1:1,hwdownload,format=nv12" 
-set vf=-vf "hwdownload,format=nv12"
-set vf=
+set vf=-vf "scale_cuda=800:-1,setsar=1:1,hwdownload,format=nv12" 
+set vf0=-vf "hwdownload,format=nv12"
+set vf0=
 echo %vf%
 
 
@@ -33,7 +33,7 @@ set qqq01=
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:10:0.0 -to 0:11:0.0
+set tt=-ss 0:0:0.0 -to 0:0:10.0
 set tt0=
 echo %tt%
 

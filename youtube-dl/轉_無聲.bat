@@ -1,8 +1,9 @@
 chcp 65001
 echo off
-set /p input=檔案:
 
-ffmpeg -i %input%  -c:v copy -an   -y "_無聲.mkv"
+
+set /p input=檔案:
+ffmpeg -i %input%  -c:v copy -an   -y "_無聲.mp4"
 
 
 

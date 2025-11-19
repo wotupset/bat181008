@@ -24,7 +24,7 @@ echo %poi%
 
 
 
-yt-dlp  --limit-rate 2500K -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]/bestvideo[ext=mp4][width=720]+bestaudio[ext=m4a] %poi%
+yt-dlp  --limit-rate 2500K -f best*[vcodec!=none][acodec!=none][audio_channels!=none][asr!=none] %poi% -o yt-快速-%nnn%-%%(id)s.%%(ext)s
 
 goto top
 
@@ -32,6 +32,9 @@ goto top
 
 pause
 exit
+
+best*[vcodec!=none][acodec!=none]
+
 set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 

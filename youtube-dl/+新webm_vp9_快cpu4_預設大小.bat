@@ -22,12 +22,13 @@ set /p input=檔案:
 
 
 
-
+set crf=-crf 50 
 set crf=-crf 40 
-set crf=-crf 35 
-set crf0=-crf 30 
-set crf0=-crf 20 -b:v 0
-set crf=
+set crf=-crf 35
+set crf0=-crf 30
+set crf0=-crf 20 -b:v 0 -r 30
+set crf0=-b:v 5000k 
+set crf0=
 echo %crf%
 
 set crf2p=3000k
@@ -42,19 +43,22 @@ set vf=
 
 set af=-af "volume=-12dB" 
 set af=-af "volume=-10dB" 
-set af=-af "volume=-5dB" 
 set af=-af "loudnorm,volume=+5dB"
-set af=-an
 set af=-af "volumedetect,volume=-5dB"
+set af=-af "volume=-5dB" 
+set af=-an
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect" 
+set af=-af "volume=+3dB" -b:a 90k 
+set af=-af "loudnorm" 
+set af=-c:a copy
 set af=
 
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+set qqq01=-map_metadata -1 -map_chapters -1   -sn -dn 
 
 set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
-set cpu01=-row-mt 1 -threads 8 -cpu-used 4
-set cpu01=-row-mt 1 -threads 8
-set cpu01=-row-mt 1 -cpu-used 2
+set cpu01=-row-mt 1 -cpu-used 4
+set cpu01=-row-mt 1 -threads 6 -speed 4 -static-thresh 2144421000 -tune-content screen 
 set cpu010=
 
 
@@ -62,16 +66,15 @@ set ppp01=%crf% %crf2% %qqq01% %cpu01% %vf% %af%
 echo %ppp01%
 
 
-set tt=-ss 0:0:1.5 -t 0:0:17.5
-set tt=-ss 0:0:10.0 -to 0:0:40.0
-set tt=-ss 0:0:4.0 -to 0:0:44.0
-set tt=-ss 0:8:0.0 -to 0:9:0.0
-set tt=
+set tt=-ss 0:1:54.5 -to 0:2:12.5
+set tt=-ss 0:0:50.6 -to 0:2:20.1
+set tt=-ss 0:0:3.0 -to 0:0:11.0
+set tt0=
 echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg   -i %input% %tt% -c:v libvpx-vp9 -static-thresh 2144421000  %ppp01%  -y %output%
+ffmpeg   -i %input% %tt% -c:v libvpx-vp9  -pix_fmt yuv420p    %ppp01%  -y %output%
 set time1=%date%_%time%
 
 
@@ -86,6 +89,10 @@ echo %time1%
 
 pause
 exit 
+-c:a libopus  -ac 2
+-static-thresh 2144421000 -tune-content screen
+
+-map 0:v:0 -map 0:a:1
 -static-thresh 2144421000 
 -an  -map 0:v:0 -map 0:a:0
 

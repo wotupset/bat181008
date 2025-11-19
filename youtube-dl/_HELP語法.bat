@@ -1,7 +1,10 @@
 ffmpeg -h encoder=libwebp >libwebp.txt
 
 ffmpeg -h encoder=libvpx-vp9 >libvpx-vp9.txt
+ffmpeg -h encoder=libopus >libopus.txt
 ffmpeg -h encoder=libvpx >libvpx.txt
+
+
 ffmpeg -h encoder=vp9_qsv >vp9_qsv.txt
 
 

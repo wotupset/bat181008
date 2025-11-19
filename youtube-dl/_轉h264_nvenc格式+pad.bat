@@ -25,7 +25,7 @@ set wh=1280
 set wh=1920
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,pad=1280:720:-1:-1:color=black"
 set vf=-vf "scale=1280:720:force_original_aspect_ratio=decrease,setsar=1:1,pad=1280:720:-1:-1:color=black"
-set vf=-vf "scale=1920:1080:force_original_aspect_ratio=decrease,setsar=1:1,pad=1920:1080:-1:-1:color=black"
+set vf0=-vf "scale=1920:1080:force_original_aspect_ratio=decrease,setsar=1:1,pad=1920:1080:-1:-1:color=black"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,pad=720:1280:-1:-1:color=black"
 set vf0=-vf "scale=450:800,setsar=1/1" 
 set vf0=-vf "scale=1280:720,setsar=1/1" 
@@ -34,7 +34,7 @@ set vf0=
 echo %vf%
 
 set af=-af "volume=+10dB" 
-set af0=
+set af=
 echo %af%
 
 set ppp01=%vf% %af% 
@@ -44,12 +44,13 @@ set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
 set tt=-ss 1:50:35.0 -to 1:54:25.0
 set tt=-ss 0:1:31.0 -to 0:3:8.0
-set tt0=
+set tt=-ss 1:6:10.0 -to 1:7:13.0
+set tt=
 echo %tt%
 
 
 
-ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -map_metadata:g -1 -map_chapters -1 -pix_fmt yuv420p -sn -dn   -y  %output%
+ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -map_metadata -1 -map_chapters -1 -pix_fmt yuv420p -sn -dn   -y  %output%
 
 
 pause

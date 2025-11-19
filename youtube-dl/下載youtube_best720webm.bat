@@ -1,7 +1,6 @@
 echo off
 chcp 65001
 
-:top
 echo %date%
 echo %time%
 
@@ -17,16 +16,15 @@ set "rand=%rand:~-5%"
 set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
+
+
 set /p poi=youtube網址:
-echo %poi%
+echo "%poi%"
 
 
 
 
-
-yt-dlp  --limit-rate 2500K -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]/bestvideo[ext=mp4][width=720]+bestaudio[ext=m4a] %poi%
-
-goto top
+yt-dlp --limit-rate 2500K -f bestvideo[vcodec=vp9][height=720]+bestaudio[acodec=opus]/bestvideo[vcodec=vp9][width=720]+bestaudio[acodec=opus] %poi%
 
 
 
@@ -35,9 +33,24 @@ exit
 set nn01=-o yt-best-%%(title)s-%%(id)s.%%(ext)s
 echo %nn01%
 
- -f 22
-yt-dlp  --limit-rate 2500K -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a] %poi% 
-yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]/bestvideo[ext=mp4][width=720]+bestaudio[ext=m4a] %poi%
+
+yt-dlp --limit-rate 5000K  -f best  "%poi%"
+
+
+
+-f best
+--windows-filenames 只留下winsdow接受的檔名字元
+--restrict-filenames 更嚴格的檔案名稱
+
+
+:top
+goto top
+
+exit
+
+
+-f best
+yt-dlp %qq01% -f bestvideo[ext=mp4][height=720]+bestaudio[ext=m4a]   %poi%
 
 youtube-dl %qq01% -f bestvideo[ext=mp4][height=720][fps=60]+bestaudio[ext=m4a]   %poi%
 

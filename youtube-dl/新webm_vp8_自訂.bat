@@ -22,7 +22,7 @@ set wh=480
 set wh0=512
 set wh=640
 set wh0=720
-set wh0=800
+set wh=800
 set wh0=960
 set wh0=1024
 set wh0=1280
@@ -37,28 +37,30 @@ set vf0=-vf "scale=iw*2:ih*2,setsar=1:1"
 set vf0=
 echo %vf%
 
-set crf0=-crf 40 -b:v 100K
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
+set af=
+echo %af%
+
 set crf0=-crf 30
 set crf0=-crf 20 -b:v 0 -r 30 
 set crf=-crf 35 -b:v 3000K
 set crf=-b:v 1500K
 set crf=-b:v 1000K
 set crf0=-b:v 500K
-set crf= 
+set crf=-crf 50 -r 25
+set crf0= 
 echo %crf%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+set qqq01=-map_metadata -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
 echo %qqq01%
 
 set tt=-ss 0:0:30.0 -to 0:0:50.0
 set tt=-ss 0:4:0.0 -to 0:6:0.0
-set tt=-ss 0:4:10.0 -to 0:5:10.0
-set tt=-ss 0:0:9.0 -to 0:0:57.0
 set tt=
 echo %tt%
 
 
-ffmpeg  %tt%  -i %input% -c:v libvpx -c:a libopus %crf% %vf% %qqq01% -y  %output%
+ffmpeg  %tt%  -i %input% -c:v libvpx -c:a libopus  %crf% %vf% %af% %qqq01% -y  %output%
 
 
 pause

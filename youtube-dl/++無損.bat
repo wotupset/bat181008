@@ -5,30 +5,66 @@ echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 
 set /p input=檔案:
 
 set tt=-ss 0:11:38.0 -to 0:18:33.0
-set tt=-ss 0:1:10.0 -to 0:1:45.0
-set tt=-ss 0:0:25.0 -to 0:2:25.0
-set tt=-ss 0:0:10.0 -to 0:1:20.0
+set tt=-ss 0:0:0.0 -to 0:4:30.0 
+set tt=-ss 0:0:26.0 -to 0:2:1.0
 set tt0=
 echo %tt%
 
-
-ffmpeg %tt%  -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.webm" 
+ffmpeg %tt% -accurate_seek -i %input%  -c:v copy -c:a copy  -y "_lossless_%nnn%.mp4"
 
 
 pause
 exit
+
+ffmpeg %tt% -accurate_seek -i %input%  -c:v copy -c:a copy  -y "_lossless_%nnn%.webm"
+
+ffmpeg %tt% -accurate_seek -i %input%  -c:v copy -c:a copy -map_metadata -1 -map_chapters -1 -y "_lossless_%nnn%.mkv"
+
+
+
+-map_metadata -1 -map_chapters -1
+-metadata:s:v title="title" -metadata:s:v handler_name="handler_name" 
+ 
+ 
+-metadata:s:v title="title"
+-metadata:s:v handler_name="handler_name"
+
+-c:v libvpx-vp9 -c:a libopus
+ffmpeg %tt% -i %input% -c:v h264_nvenc -metadata:s:v handler_name="handler_name" -metadata:s:v encoder="encoder" -y "_lossless_%nnn%.mp4" 
+
+
+ffmpeg %tt% -accurate_seek -i %input% -c:v copy -c:a copy   -y "_lossless_%nnn%.webm" 
+
+
+-metadata:s:v handler_name="handler_name" -metadata:s:v encoder="encoder"
+
+ffmpeg %tt% -i %input% -c:v libx264 -y "_lossless_%nnn%.mp4" 
+ffmpeg %tt% -i %input% -c:v h264_nvenc -y "_lossless_%nnn%.mp4" 
+
+-c:v libx264
+-c:v h264_nvenc
+ffmpeg %tt% -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mkv" 
+
+
+-accurate_seek
+
+ffmpeg %tt%  -accurate_seek -i %input% -c:v copy -c:a copy -y "_lossless_%nnn%.mp4" 
+
  -c:a libopus  -b:a 60k
  
 

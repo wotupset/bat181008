@@ -76,6 +76,7 @@ set af0=-af "volume=-15dB"
 set af=-af "volume=-10dB" 
 set af=-af "loudnorm,volume=+3dB,volumedetect"
 set af=-af "volume=-3dB" 
+set af=-af "loudnorm=I=-10:LRA=11:TP=-1.5,volumedetect"
 set af0=-af "loudnorm"
 set af0=-an
 set af0=

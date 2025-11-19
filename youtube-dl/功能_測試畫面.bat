@@ -17,27 +17,28 @@ set "rand=%rand:~-5%"
 set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
-set /p input=檔案:
-echo %input%
 
 
 
 
 
+ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=font='Microsoft JhengHei':text='浮水印':x=10:y=10:fontsize=50:fontcolor=#FFFFFF:borderw=3:bordercolor=#00FF00" -y output_rgba.mp4
 
 cmd
 exit
 
-
-ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=font='Microsoft JhengHei':text='%%{n} %%{pts}':x=10:y=10:fontcolor=white:fontsize=50" -y output.mp4
-
+ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=font='Microsoft JhengHei':text='浮水印':x=10:y=10:fontsize=50:fontcolor=white@0.7:borderw=2:bordercolor=black:shadowcolor=red@0.5:shadowx=3:shadowy=3" -y output_pro.mp4
 
 
+ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=font='Microsoft JhengHei':text='浮水印':x=10:y=10:fontcolor=white:fontsize=50" -y output.mp4
+
+
+font='SDK_TW_Web'
+
+ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=font='Microsoft JhengHei':text='%%{n},%%{pts}':x=10:y=10:fontcolor=white:fontsize=50" -y output.mp4
 
 
 ffmpeg -f lavfi -i testsrc=size=1280x720 -t 10 -vf "drawtext=fontfile=msjh.ttf:text='%%{n} %%{pts}':x=10:y=10:fontcolor=white:fontsize=50" -y output.mp4
-
-
 
 ffmpeg -f lavfi -i gradients=type=spiral:nb_colors=4:speed=0.1 -t 10 gradient.mp4
 ffmpeg -f lavfi -i cellauto=rule=126:rate=30 -t 5 auto.mp4

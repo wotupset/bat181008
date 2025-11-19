@@ -1,42 +1,55 @@
 echo off
 chcp 65001
 
-echo %date%_%time%
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
+echo %nnn%
+
+
+set output=_h264_nvenc預設%nnn%.mp4
 
 set /p input=檔案:
 echo %input%
 
-
-
-set wh=640
-set wh=800
-set wh=1280
-set wh=1920
-set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf=-vf "scale=450:800,setsar=1/1" 
-set vf=
-echo %vf%
-
-set af=-af "volume=-5dB" 
-set af=
-echo %af%
-
-set ppp01=%vf% %af% 
-echo %ppp01%
-
-set tt=-ss 0:7:6.0 -to 0:7:41.0
-set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:0:0.0 -to 0:1:20.0
+set tt=-ss 0:0:26.0 -to 0:2:1.0
 set tt0=
 echo %tt%
 
-set output=_h264_nvenc預設.mp4
 
-ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -pix_fmt yuv420p -map 0:a -map 0:v  -y  %output%
+
+
+ffmpeg %tt% -i %input%  -c:v h264_nvenc   -y  %output%
 
 
 pause
 exit
+
+-c:v hevc_nvenc
+
+
+-qp 25
+-cq 25 
+
+
+
+
+-cq 20 
+
+-r 25
+-rc:v vbr -cq:v 30 
+
+-map 0:a -map 0:v
 :flags=bilinear
 
 

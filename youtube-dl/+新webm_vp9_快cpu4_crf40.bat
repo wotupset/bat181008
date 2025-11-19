@@ -2,17 +2,19 @@ echo off
 chcp 65001
 title 快crf
 
-
 echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 set output=_vp9_快cpu4_%nnn%.webm
@@ -20,106 +22,77 @@ set output=_vp9_快cpu4_%nnn%.webm
 set /p input=檔案:
 
 set crf=-crf 50
-set crf=-crf 30 -b:v 0 
-set crf=-crf 32
-set crf=-crf 50
 set crf=-crf 45 
 set crf=-crf 40 
-set crf0=-crf 35 
-set crf0=-crf 20 -b:v 5000k 
+set crf=-crf 35
+set crf0=-crf 30 
+set crf0=-crf 20 
 set crf0=-b:v 1500k -b:a 96k
 set crf0=-b:v 1500k -b:a 80k 
-set crf0=-b:v 500k -minrate 500k -maxrate 500k -b:a 90k -r 30
-set crf0=-b:v 1000k -bufsize 100k 
+set crf0=-b:v 500k -minrate 500k -maxrate 500k -r 30 -bufsize 100k 
+set crf0=-b:v 1000k 
 set crf0= 
 echo %crf%
 
-set crf20=-b:v 500K -bufsize 100k 
-set crf2p=1000k
-set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
-set crf2=-b:v 3000K -minrate 100k -maxrate 4000k 
-set crf2=
-echo %crf2%
 
 set wh=400
 set wh0=480
 set wh0=512
 set wh=640
-set wh0=720
+set wh=720
 set wh=800
-set wh=960
-set wh0=1024
-set wh0=1280
+set wh0=960
+set wh=1024
+set wh0=1280 
 set wh0=1440
 set wh0=1600
+set wh0=1600
 
-
-
-
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,boxblur"
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,avgblur"
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr"
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur"
-
-
+set vf0=-vf "scale=%wh%:%wh%:flags=neighbor:force_original_aspect_ratio=decrease,setsar=1:1,chromanr"
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1"
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1"
-set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
-set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
-set vf0=-vf "scale=1120:630,setsar=1:1"
+set vf0=-vf "scale=1200:800,setsar=1:1"
 set vf0=-vf "crop=800:450:670:210" 
 set vf0=-vf "scale=iw/2:ih/2,setsar=1:1"
 set vf0=-vf "scale=iw*2:ih*2,setsar=1:1"
 set vf0=
 echo %vf%
 
-    
 
 
-
-set af=-af "volume=+10dB" 
-set af=-af "volume=-10dB" 
 set af=-af "loudnorm,volume=+5dB" -b:a 90k
-set af=-af "volume=+10dB" 
-
-set af=-af "dynaudnorm=f=500:g=35:p=0.95:m=1"
+set af=-b:a 80k
+set af=-af "loudnorm,volume=+1dB" 
+set af=-an
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
 set af=-af "volume=-5dB" 
-set af=-af "volume=+30dB" 
 set af=-af "loudnorm" 
-set af=-af "loudnorm,volume=+3dB" 
-set af=-af "volume=+5dB" 
-set af0=-an
 set af=
 echo %af%
 
 
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+set qqq01=-map_metadata -1 -map_chapters -1  -sn -dn 
 
-set cpu01=-row-mt 1 -tile-columns 0 -tile-rows 0 -frame-parallel 1 -cpu-used 4
 set cpu01=-row-mt 1 -cpu-used 4
-set cpu01=-row-mt 1 -cpu-used 2
+set cpu01=-row-mt 1 -threads 6 -speed 8
+set cpu01=-row-mt 1 -threads 6 -speed 4 -static-thresh 2144421000 -tune-content screen 
 set cpu010=
 
-set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01% 
+set ppp01=%crf%  %vf% %af% %qqq01% %cpu01% 
 echo %ppp01%
 
 
-
-
-
-
-set tt=-ss 0:0:0.0 -to 0:0:10.0
-set tt=-ss 0:3:43.6 -to 0:4:5.0
-set tt=-ss 0:0:0.0 -to 0:0:2.5
-set tt=-ss 0:8:0.0 -to 0:9:0.0
+set tt=-ss 0:0:0.0 -to 0:0:13.0
+set tt=-ss 0:1:35.7 -to 0:1:38.7
+set tt=-ss 0:2:12.0 -to 0:2:55.0
+set tt=-ss 0:0:39.0 -to 0:1:9.0
 set tt0=
 
 
 
 set time0=%date%_%time%
-ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -static-thresh 2144421000   %ppp01% -y %output% 
+ffmpeg %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -ac 2 -pix_fmt yuv420p  %ppp01% -y %output% 
 set time1=%date%_%time%
 
 echo %time0%
@@ -129,6 +102,24 @@ echo %output%
 
 pause
 exit
+
+set vf0=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
+set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
+
+
+
+-metadata:s handler_name="handler_name" 
+
+set crf20=-b:v 500K -bufsize 100k 
+set crf2p=1000k
+set crf2=-b:v %crf2p% -minrate %crf2p%  -maxrate %crf2p% -bufsize 1M
+set crf2=-b:v 3000K -minrate 100k -maxrate 4000k 
+set crf2=-b:v 3000K
+set crf2=
+echo %crf2%
+
+
+
 -static-thresh 2144421000
 
 
@@ -150,8 +141,8 @@ gblur =1689
 avgblur =1406
 boxblur =977
 
-chromanr
 
+-vf "chromanr"
 
 
 -static-thresh 2144421000 

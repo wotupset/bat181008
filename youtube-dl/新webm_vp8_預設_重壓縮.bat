@@ -4,14 +4,20 @@ title vp8
 
 echo %date%
 echo %time%
-set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
+
+
 set output=_vp8_預設_%nnn%.webm
 
 
@@ -25,7 +31,7 @@ set output=_vp8_預設%RANDOM%.webm
 
 set time0=%date%_%time%
 
-ffmpeg -hwaccel cuda -threads 1 -i %input% -c:v libvpx -c:a libopus  -y %output%
+ffmpeg  -i %input% -c:v libvpx -c:a libopus  -y %output%
 
 set time1=%date%_%time%
 
@@ -39,6 +45,8 @@ echo %time1%
 
 pause
 exit
+-hwaccel cuda -threads 1
+
 -vf "scale=%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
 -s 360x360
 set oo4=-pix_fmt yuv420p -ac 2 

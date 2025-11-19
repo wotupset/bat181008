@@ -2,21 +2,21 @@ echo off
 chcp 65001
 title 下載直播
 
-
-
-
 :top
 
 echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 set /p poi=youtube網址:

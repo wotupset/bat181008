@@ -1,34 +1,34 @@
-
+echo off
+chcp 65001
+title 快crf
 
 echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
 set vartime=%time:~0,2%
-
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 
 
-set FFF=webm
-mkdir %nnn%
-move *.%FFF% ./%nnn%/
 
-set FFF=mp4
-mkdir %nnn%
-move *.%FFF% ./%nnn%/
+set ddd=%nnn%mp4
+mkdir %ddd%
 
-set FFF=mkv
-mkdir %nnn%
-move *.%FFF% ./%nnn%/
-
-set FFF=ts
-mkdir %nnn%
-move *.%FFF% ./%nnn%/
+move *.webm ./%ddd%/
+move *.mp4 ./%ddd%/
+move *.m4a ./%ddd%/
+move *.mp3 ./%ddd%/
+move *.mkv ./%ddd%/
+move *.ts ./%ddd%/
 
 
 

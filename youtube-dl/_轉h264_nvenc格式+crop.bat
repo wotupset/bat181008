@@ -11,22 +11,22 @@ echo %input%
 set wh=640
 set wh=800
 set wh=1280
-set wh=1600
+set wh0=1600
 set wh0=1920
+
 set vf=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=increase,setsar=1:1,crop=1050:590:-1:-1"
 set vf=-vf "scale=-1:900:force_original_aspect_ratio=increase,setsar=1:1,crop=1600:900:-1:-1"
 set vf0=-vf "crop=720:720:-1:300"
-set vf0=-vf "crop=564:564:345:0"
-set vf0=-vf "crop=512:512"
 set vf0=-vf "crop=720:1280"
-set vf0=-vf "crop=1280:720"
-set vf=-vf "crop=1440:1080"
+set vf=-vf "crop=1024:720"
+set vf=-vf "crop=405:720:480:0"
 set vf0=-vf "scale=450:800,setsar=1/1" 
-set vf0=-vf "scale=1440:1080,setsar=1/1" 
+set vf0=-vf "scale=1280:720,setsar=1/1" 
 set vf0=
 echo %vf%
 
 set af=-af "volume=-5dB" 
+set af=-an
 set af=
 echo %af%
 
@@ -35,17 +35,22 @@ echo %ppp01%
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:2:43.5 -to 0:2:54.5
-set tt=
+set tt=-ss 0:0:0.0 -to 0:0:2.5
+set tt=-ss 0:0:10.0 -to 0:0:20.0
+set tt0=
 echo %tt%
 
 set output=_h264_nvenc-crop.mp4
 
-ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -cq 20 -map_metadata:g -1 -pix_fmt yuv420p  -y  %output%
+ffmpeg %tt% -i %input%  %ppp01% -c:v h264_nvenc -qp 20 -map_metadata -1 -pix_fmt yuv420p  -y  %output%
 
 
 pause
 exit
+
+-cq 10
+
+
 -map 0:a -map 0:v
 
 -cq 20

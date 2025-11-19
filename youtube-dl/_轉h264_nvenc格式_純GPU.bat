@@ -25,7 +25,7 @@ echo %input%
 set wh=640
 set wh=800
 set wh=1280
-set wh=1920
+set wh0=1920
 set vf=-vf "scale_cuda=%wh%:%wh%:force_original_aspect_ratio=decrease,hwdownload,format=nv12"
 set vf0=-vf "scale_cuda=1280:720,hwdownload,format=nv12"
 set vf0=-vf "scale_cuda=1280:720"
@@ -42,7 +42,7 @@ set qqq010=
 
 set tt=-ss 0:7:6.0 -to 0:7:41.0
 set tt=-ss 0:0:0.0 -to 0:1:0.0
-set tt=-ss 0:0:0.0 -to 0:10:0.0
+set tt=-ss 0:1:0.0 -to 0:1:20.0
 set tt=
 echo %tt%
 
@@ -59,6 +59,9 @@ set time1=%date%_%time%
 echo %time0%
 echo %time1%
 echo %output%
+
+
+
 
 pause
 exit

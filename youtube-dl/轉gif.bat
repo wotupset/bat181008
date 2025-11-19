@@ -2,8 +2,10 @@ set /p input=ÀÉ®×:
 
 echo %date%_%time%
 
-ffmpeg -y -i %input% -vf "palettegen" palette.png
-ffmpeg -y -i %input% -i palette.png  -filter_complex "fps=25,paletteuse" -loop 0 "_output.gif"
+
+
+ffmpeg  -i %input%  -vf "palettegen" -y palette.png
+ffmpeg  -i %input% -i palette.png  -s 640x360 -filter_complex "paletteuse" -loop 0 -y "_output.gif"
 
 
 

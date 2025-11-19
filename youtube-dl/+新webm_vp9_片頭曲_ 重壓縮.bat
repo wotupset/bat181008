@@ -6,12 +6,15 @@ echo %date%
 echo %time%
 
 set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
-
 set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
-set nnn=%vardate%_%vartime%_%RANDOM%
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
 echo %nnn%
 
 set output=_output_vp9_oped%nnn%.webm
@@ -22,49 +25,57 @@ set /p input=檔案:
 set crf=-crf 63
 set crf=-crf 60
 set crf=-crf 55
-set crf=-crf 50 
-set crf=-crf 45
-set crf0=-crf 40
+set crf=-crf 50
+set crf=-crf 45 
+set crf=-crf 40 -r 30
 set crf0=-crf 35
-set crf=-b:v 800k -minrate 10k -bufsize 100 
+set crf0=-b:v 800k -minrate 10k -bufsize 100 
 set crf0=-b:v 1200k -maxrate 1200k -minrate 500k -bufsize 100 
 set crf0=-crf 40 -b:v 800k  -b:a 90k -bufsize 500 
 set crf0=-b:v 500k -b:a 90k -bufsize 500 
 set crf0=-b:v 256k -b:a 90k -bufsize 500 
 set crf0=-b:v 400k -b:a 90k -bufsize 50
-set crf0=-b:v 256k -bufsize 50 
+set crf0=-b:v 200k -r 50 
 set crf0=
 echo %crf%
 
-set wh=400
-set wh=480
+
+set wh0=400
+set wh0=480
 set wh=640
+set wh0=720
 set wh=800
-set wh0=960
-set wh0=1280
+set wh=960
+set wh0=1024
+set wh=1280
 
 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur,chromanr" 
-set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1,gblur" 
+
 set vf=-vf "scale=%wh%:%wh%:flags=bilinear:force_original_aspect_ratio=decrease,setsar=1:1" 
 set vf0=-vf "scale=%wh%:%wh%:force_original_aspect_ratio=decrease,setsar=1:1,fps=fps=30"
 set vf0=-vf "scale=640:480,setsar=1:1,gblur,chromanr" 
-set vf0=-vf "scale=640:480,setsar=1:1" 
+set vf0=-vf "scale=800:450,setsar=1:1" 
 set vf0=
 
-set af=-af "volume=-10dB" 
+
 set af=-an
 set af=-af "loudnorm,volume=+4dB" -b:a 90k 
-set af=-af "loudnorm,volume=+5dB" 
-set af=-af "volume=-3dB" 
-set af=
+set af=-af "volume=+3dB,volumedetect" -b:a 90k 
+set af0=-af "loudnorm,volume=+1dB" 
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
+set af=-b:a 80k 
+set af=-af "volume=-5dB" 
+set af=-af "loudnorm" 
+set af0=
 echo %af%
 
-set qqq01=-map_metadata:g -1 -map_chapters -1 -ac 2 -pix_fmt yuv420p -sn -dn 
+set qqq01=-map_metadata -1 -map_chapters -1  -sn -dn 
 
 
-set cpu010=-cpu-used 2
+
 set cpu01=-row-mt 1 -cpu-used 2
+set cpu010=-row-mt 1 -cpu-used 4
+set cpu01=-row-mt 1 -threads 6 -speed 4 -static-thresh 2144421000 -tune-content screen  
 set cpu010=
 
 
@@ -72,12 +83,10 @@ set ppp01=%crf% %crf2% %vf% %af% %qqq01% %cpu01%
 echo %ppp01%
 
 
-
-
-set tt=-ss 0:0:0.0 -to 0:1:32.0
-set tt=-ss 0:0:10.0 -to 0:0:30.0
-set tt=-ss 0:15:45.7 -to 0:16:17.8
-set tt=-ss 0:21:48.0 -to 0:22:38.0
+set tt=-ss 0:1:50.0 -to 0:3:36.0
+set tt=-ss 1:0:30.0 -to 1:2:30.0
+set tt=-ss 0:0:24.0 -to 0:1:34.0
+set tt=-ss 0:0:26.0 -to 0:2:1.0
 set tt0=
 echo %tt%
 
@@ -85,7 +94,7 @@ echo %tt%
 
 
 set time0=%date%_%time%
-ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus  -static-thresh 2144421000   %ppp01% -y %output%
+ffmpeg  %tt% -i %input% -c:v libvpx-vp9 -c:a libopus -ac 2 -pix_fmt yuv420p  %ppp01% -y %output%
 set time1=%date%_%time%
 
 echo %time0%
@@ -93,6 +102,7 @@ echo %time1%
 
 pause
 exit 
+ -metadata:s:v handler_name="handler_name"
 
 銳化=檔案變大
 -vf unsharp

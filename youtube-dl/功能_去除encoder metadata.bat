@@ -1,6 +1,7 @@
 echo off
 chcp 65001
 
+
 echo %date%
 echo %time%
 
@@ -10,69 +11,40 @@ set vartime=%time:~0,2%
 if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
 set vartime=%vartime%%time:~3,2%%time:~6,2%
 
+set nnn=%vardate%_%vartime%_%RANDOM%
+echo %nnn%
 
 
-ffmpeg -i "concat:00.ts|01.ts|02.ts|03.ts" -c copy -bsf:a aac_adtstoasc -y 連接無損.mp4
 
+set /p input=檔案:
+
+ffmpeg -i %input% -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF.ts
+ffmpeg -i "concat:FFF.ts" -c copy -bsf:a aac_adtstoasc -y 去除encoder_metadata.mp4
 
 
 
 pause
 exit
+-map_metadata -1
+-map_metadata:g -1
+-map_metadata:s -1
 
-set nnn=%vardate%_%vartime%_%RANDOM%
-echo %nnn%
-set output=連接合併%nnn%.mp4
-
-set /p input=檔案:
-
-
+-metadata:s handler_name="handler_name"
+-metadata:s handler_name="handler_name"
 
 
-
-
-
-ffmpeg -ss 0:0:0.0  -to 0:10:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 01x.mp4
-ffmpeg -ss 0:10:0.0 -to 0:20:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 02x.mp4
-ffmpeg -ss 0:20:0.0 -to 0:30:0.0 -i %input% -c:v h264_nvenc -cq 40 -y 03x.mp4
-
-ffmpeg -f concat -safe 0 -i mylist.txt -c:v copy -c:a copy -movflags +faststart -y mergedVideo.mp4
-
-ffmpeg -i file1.mp4 -i file2.mp4 -i file3.mp4 ^
-       -filter_complex "[0:v] [0:a] [1:v] [1:a] [2:v] [2:a] concat=n=3:v=1:a=1 [vv] [aa]" -map "[vv]" -map "[aa]" mergedVideo.mp4
-
-ffmpeg -i %input% -filter_complex "[0:v][0:a]concat=n=1:v=1:a=1[vv][aa]" -map "[vv]" -map "[aa]" -y mergedVideo.mp4
-
-
-	   
--c:v libx264
-
-ffmpeg -i 01.mp4 -i 01.mp4 -i 01.mp4 -i 01.mp4  -filter_complex "concat=n=4:v=1:a=1" -y %output%
-
-ffmpeg -f concat -i mylist.txt -c:v copy  -y output.webm
-
-ffmpeg -ss 0:13:45.0 -to 0:13:58.4  -i %input%  -y 01x.mp4
-ffmpeg -ss 0:27:40.0 -to 0:27:58.5 -i %input%  -y 02x.mp4
-ffmpeg -ss 0:28:42.8 -to 0:29:7.3 -i %input%  -y 03x.mp4
-ffmpeg -i 01x.mp4 -i 02x.mp4 -i 03x.mp4  -filter_complex "concat=n=3:v=1:a=1" -y %output%
+ffmpeg -i %input% -c:v h264_nvenc -filter_complex "concat=n=1:v=1:a=1" -metadata:s title="標題" -y 連接合併%nnn%.mp4
 
 
 
 
 
-
-ffmpeg -ss 0:0:14.5 -to 0:2:49.0 -i %input% -c:v h264_nvenc -cq 10 -y 01x.mp4
-ffmpeg -ss 0:11:37.6 -to 0:14:10.6 -i %input% -c:v h264_nvenc -cq 10 -y 02x.mp4
-ffmpeg -i 01x.mp4 -i 02x.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=2:v=1:a=1" -y 連接合併.mp4
+ffmpeg -i %input% -c copy -bsf:v h264_mp4toannexb -f mpegts -y FFF.ts
+ffmpeg -i "concat:FFF.ts" -c copy -bsf:a aac_adtstoasc -y 去除encoder_metadata.mp4
 
 
 
-ffmpeg -i 01.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts -y 01.ts
-ffmpeg -i "concat:01.ts" -c copy -bsf:a aac_adtstoasc -y 連接無損.mp4
-
-
-
-
+ffmpeg -i %input% -c:v h264_nvenc  -y "FFF.mp4"  
 
 ffmpeg -i 01.mp4 -c:v h264_nvenc -cq 10 -filter_complex "concat=n=1:v=1:a=1" -y 連接合併.mp4
 ok

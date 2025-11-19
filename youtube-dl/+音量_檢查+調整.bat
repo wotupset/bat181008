@@ -16,31 +16,78 @@ echo %nnn%
 
 set /p input=檔案:
 
-
-
-ffmpeg -i %input% -af "volumedetect" -f null -y NUL
-
-
-
-
-set af=-af "volume=-5dB,volumedetect"
-echo %af%
-
-
-
-ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量_dB.mkv"
+set tt=-ss 0:1:38.0 -to 0:2:1.0
+set tt=-ss 0:0:10.0 -to 0:0:30.0
+set tt=
 
 
 
 
 set af=-af "loudnorm,volumedetect"
-ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量_loudnorm.mkv"
+ffmpeg %tt% -i %input% %af% -c:v copy -y "_調整音量1.mp4"
+
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
+ffmpeg %tt% -i %input% %af% -c:v copy -y "_調整音量2.mp4"
+
+set af=-af "volume=-5dB,volumedetect" 
+ffmpeg %tt% -i %input% %af% -c:v copy -y "_調整音量3.mp4"
 
 
 
 
 pause
 exit
+
+set af=-af "dynaudnorm=p=0.5,volumedetect"
+ffmpeg %tt% -i %input% %af% -c:v copy -c:a aac -avoid_negative_ts 1 -y "_調整音量_loudnorm3.webm"
+
+
+
+ffmpeg %tt% -i %input% -af "volumedetect" -c:v copy -c:a aac -f mp4 -y NUL
+pause
+
+
+set af=-af "loudnorm=I=-5:LRA=40:TP=-5,volumedetect"
+
+
+ffmpeg -i input.mp4 -af "loudnorm=I=-16:LRA=11:TP=-1.5" output.mp4
+
+ffmpeg -i input.mp4 -af "loudnorm=I=-16:LRA=11" output.mp4
+
+
+
+I, i
+Set integrated loudness target. Range is -70.0 - -5.0. Default value is -24.0.
+
+LRA, lra
+Set loudness range target. Range is 1.0 - 50.0. Default value is 7.0.
+
+TP, tp
+Set maximum true peak. Range is -9.0 - +0.0. Default value is -2.0.
+
+
+
+
+set af=-af "loudnorm=I=-16:LRA=11,volumedetect"
+ffmpeg %tt% -i %input% %af% -c:v h264_nvenc -y "_調整音量_loudnorm2.mp4"
+
+
+set af=-af "loudnorm=I=-16:LRA=11:TP=-1.5,volumedetect"
+ffmpeg %tt% -i %input% %af% -c:v h264_nvenc -y "_調整音量_loudnorm3.mp4"
+
+set af=-af "loudnorm=I=-10:LRA=11:TP=-1.5,volumedetect"
+ffmpeg %tt% -i %input% %af% -c:v h264_nvenc -y "_調整音量_loudnorm4.mp4"
+
+
+
+set af=-af "loudnorm=I=-10:LRA=11:TP=-1.5:print_format=json"
+
+set af=-af "volume=-5dB,volumedetect"
+ffmpeg -i %input% %af%  -y "_調整音量_dB.mp4"
+
+
+
+-c:v copy
 
 set af=-af "loudnorm,volume=+10dB,volumedetect"
 ffmpeg -i %input% -c:v copy  %af%  -y "_調整音量_loudnorm2.mkv"

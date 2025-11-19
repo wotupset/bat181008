@@ -1,8 +1,22 @@
 echo off
 chcp 65001
 
-
 :top
+echo %date%
+echo %time%
+
+set vardate=%date:~2,2%%date:~5,2%%date:~8,2%
+set vartime=%time:~0,2%
+if /i %vartime% LSS 10 (set vartime=0%time:~1,1%)
+set vartime=%vartime%%time:~3,2%%time:~6,2%
+
+set "rand=%RANDOM%"
+set "rand=00000%RANDOM%"
+set "rand=%rand:~-5%"
+
+set nnn=%vardate%_%vartime%_%rand%
+echo %nnn%
+
 
 
 set /p poi=youtube網址::
@@ -13,7 +27,7 @@ yt-dlp -F %poi%
 set /p aa1=影片品質 ::
 echo %aa1%
 
-yt-dlp --limit-rate 3000K --windows-filenames -f %aa1% %poi%
+yt-dlp --limit-rate 3000K --windows-filenames -f %aa1%  -o +%nnn%-%%(id)s.%%(ext)s %poi%
 
 
 

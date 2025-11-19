@@ -15,20 +15,32 @@ echo %nnn%
 
 
 
-set tt=-ss 0:1:0.0 -to 0:1:30.0
+
 set tt=-ss 0:8:44.0 -to 0:9:44.0
-set tt=-ss 0:1:0.0 -to 0:2:0.0
-set tt=
+set tt=-ss 0:18:58.0 -to 0:19:49.0
+set tt=-ss 0:11:50.0 -to 0:12:25.0
+set tt0=
 
 
 
-ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -s 1280x720 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=25:force_style='Bold=1,FontSize=50,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc  -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=1:force_style='Bold=1,FontSize=20,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
+
+
+
+
 
 pause
 
 exit
 pause
+
+ffmpeg -i "01.mp4" %tt% -c:v h264_nvenc  -pix_fmt yuv420p -sn -vf "subtitles=01.srt:force_style='FontName=Microsoft YaHei'" -y "硬字幕%nnn%.mp4"
+
+
 -qp 20
+
+-s 1280x720
+ffmpeg -i "01.mkv" %tt% -c:v h264_nvenc -s 1280x720 -pix_fmt yuv420p -sn -vf "subtitles=01.mkv:si=25:force_style='Bold=1,FontSize=50,BorderStyle=1,Shadow=1,FontName=Microsoft YaHei,BackColour=&H80000000'" -y "硬字幕%nnn%.mp4"
 
 
 

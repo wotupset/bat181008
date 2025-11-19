@@ -1,0 +1,15 @@
+echo off
+chcp 65001
+
+
+set /p input=檔案:
+
+
+
+ffmpeg  -i %input%  -c:v h264_nvenc   -vf "scale=iw/2:ih/2,scale=2*iw:2*ih:flags=neighbor"  -y "簡易馬賽克.mp4"
+
+
+pause
+exit
+
+-cq 30
